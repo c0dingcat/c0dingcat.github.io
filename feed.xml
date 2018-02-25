@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>testcode</title>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
+    <link>http://localhost:4000/</link>
+    <description>daily log</description>
+    <pubDate>Sun, 25 Feb 2018 02:35:50 -0800</pubDate>
+    
+      <item>
+        <title>프림 알고리즘</title>
+        <link>/2018/02/24/%ED%94%84%EB%A6%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html</link>
+        <guid isPermaLink="true">/2018/02/24/%ED%94%84%EB%A6%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html</guid>
+        <description>&lt;ul&gt;
+  &lt;li&gt;최소 신장 트리를 구하는데 사용한다&lt;/li&gt;
+  &lt;li&gt;정점을 선택하고 DST와 약간은 유사하게 인접한 정점들의 최소 값을 구해서 트리에 추가한다&lt;/li&gt;
+  &lt;li&gt;minimum priority queue에 인접한 vertex와 cost 정보를 넣는다&lt;/li&gt;
+  &lt;li&gt;최소 cost를 가지는 vertex 정보를 뽑아온다&lt;/li&gt;
+  &lt;li&gt;이미 방문했는지 확인하다&lt;/li&gt;
+  &lt;li&gt;방문 안했으면 인접한 노드들을 queue에 다시 집어 넣는다&lt;/li&gt;
+  &lt;li&gt;최소 값 기준으로 계속 값을 가져와서 스패닝 트리를 만든다&lt;/li&gt;
+  &lt;li&gt;이때 시간 복잡도는 인접 해렬, 검색의 경우는 V^2&lt;/li&gt;
+  &lt;li&gt;이진 힙 및 인접리스트 O((V+E)logV)=ElogV&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
+#include &amp;lt;queue&amp;gt;
+
+using namespace std;
+
+struct adj {
+    int cost, v;
+    adj(int v1, int c):cost(c), v(v1){}
+    bool operator &amp;lt; (const adj&amp;amp; rhs) {
+        return cost &amp;lt; rhs.cost;
+    }
+};
+
+struct comp_functor {
+    bool operator()(const adj&amp;amp; lhs, const adj&amp;amp; rhs) {
+        return lhs.cost &amp;gt; rhs.cost;
+    }
+};
+
+int prim(map&amp;lt;int, vector&amp;lt;adj&amp;gt;&amp;gt;&amp;amp; input, int start) {
+    
+    map&amp;lt;int,bool&amp;gt; visited; 
+    priority_queue&amp;lt;adj, vector&amp;lt;adj&amp;gt;, comp_functor&amp;gt; que;
+    for(auto a : input[start])
+        que.push(a);
+    visited[start] = true;
+    int cost = 0 ; 
+    
+    while(!que.empty()) {
+        adj a = que.top(); que.pop();
+        if(visited[a.v])
+            continue;
+        
+        visited[a.v] = true;
+        cost += a.cost;
+        cout &amp;lt;&amp;lt; &quot;v: &quot; &amp;lt;&amp;lt; a.v &amp;lt;&amp;lt; &quot;, cost: &quot; &amp;lt;&amp;lt; a.cost &amp;lt;&amp;lt; &quot;, total: &quot; &amp;lt;&amp;lt; cost &amp;lt;&amp;lt; endl;
+        
+        for(auto adjacent : input[a.v]) {
+            if(visited[adjacent.v])
+                continue;
+            que.push(adjacent);
+        }
+    }
+    
+    return cost;    
+}
+
+void add(map&amp;lt;int,vector&amp;lt;adj&amp;gt;&amp;gt;&amp;amp; input, int v1, int v2, int c) {
+    
+    adj a1(v2,c);
+    adj a2(v1,c);
+    
+    if(!input.count(v1)) {
+        vector&amp;lt;adj&amp;gt; vec = {a1};
+        input.insert(make_pair(v1, vec));
+    }
+    else {
+        input[v1].push_back(a1);
+    }
+    
+    if(!input.count(v2)) {
+        vector&amp;lt;adj&amp;gt; vec = {a2};
+        input.insert(make_pair(v2, vec));
+    }
+    else {
+        input[v2].push_back(a2);
+    }    
+}
+
+int main() {
+    map&amp;lt;int, vector&amp;lt;adj&amp;gt;&amp;gt; input;
+    add(input,1,2,5);
+    add(input,1,3,4);
+    add(input,2,3,2);
+    add(input,3,4,6);
+    add(input,2,4,7);
+    add(input,4,5,3);
+    add(input,3,5,11);
+    add(input,4,6,8);
+    add(input,5,6,8);
+    
+    cout &amp;lt;&amp;lt; prim(input, 1) &amp;lt;&amp;lt; endl;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sat, 24 Feb 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>다익스트라 소스</title>
+        <link>/2018/02/24/%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BC.html</link>
+        <guid isPermaLink="true">/2018/02/24/%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BC.html</guid>
+        <description>&lt;ul&gt;
+  &lt;li&gt;처음 vertex에서 시작한다&lt;/li&gt;
+  &lt;li&gt;정점에 인접한 정점들과 거리를 우선순위 큐에 넣는다&lt;/li&gt;
+  &lt;li&gt;거리순으로 오름차순 정렬해서 기존에 알려진 최소거리와 비교한다&lt;/li&gt;
+  &lt;li&gt;만약 기존에 알려진 최소거리보다 작으면 기존의 최소거리를 업데이트한다&lt;/li&gt;
+  &lt;li&gt;목적지에 도착할때까지 계속 반복한다&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
+
+struct adjacent {
+    int v, cost;
+    adjacent(int v1, int c):v(v1),cost(c){}
+    bool operator&amp;lt;(const adjacent&amp;amp; adj) {
+        return cost &amp;lt; adj.cost;
+    }
+};
+
+struct less_comp_functor{
+    bool operator()(const adjacent&amp;amp; lhs, const adjacent&amp;amp; rhs) {
+        return lhs.cost &amp;gt; rhs.cost;
+    }
+};
+
+int get_or_default(map&amp;lt;int, int&amp;gt;&amp;amp; dists, int v) {
+    const int INF = 0x7fffffff;    
+    if(!dists.count(v))
+        dists.insert(make_pair(v,INF));
+    
+    return dists[v];   
+}
+
+map&amp;lt;int,int&amp;gt; djkstra(map&amp;lt;int, vector&amp;lt;adjacent&amp;gt;&amp;gt;&amp;amp; input, int start) {
+    map&amp;lt;int,int&amp;gt; dists;
+    priority_queue&amp;lt;adjacent, vector&amp;lt;adjacent&amp;gt;, less_comp_functor&amp;gt; que;
+    adjacent adj(start,0);
+    que.push(adj);
+    
+    while(!que.empty()) {
+        
+        adjacent adj = que.top(); que.pop();
+        int cost = adj.cost;
+        int v = adj.v;
+        
+        cout &amp;lt;&amp;lt; &quot;v: &quot; &amp;lt;&amp;lt; v &amp;lt;&amp;lt; &quot;, cost: &quot; &amp;lt;&amp;lt; cost &amp;lt;&amp;lt; endl;
+        
+        if(get_or_default(dists,v) &amp;gt; cost)
+            dists[v] = cost;
+        
+        for(auto a : input[v]) {
+            int there = a.v;
+            int new_cost = dists[v] + a.cost;
+        
+            if(get_or_default(dists, there) &amp;gt; new_cost){
+                dists[there] = new_cost;
+                a.cost = new_cost;
+                que.push(a);
+            }
+            
+        }
+    }
+    return dists;    
+}
+
+int main() {
+    vector&amp;lt;adjacent&amp;gt; vec1 = {adjacent(2,10), adjacent(3,30), adjacent(4,15)};
+    vector&amp;lt;adjacent&amp;gt; vec2 = {adjacent(3,5), adjacent(6,20)};
+    vector&amp;lt;adjacent&amp;gt; vec3 = {adjacent(5,20)};
+    vector&amp;lt;adjacent&amp;gt; vec4 = {adjacent(6,20)};
+    vector&amp;lt;adjacent&amp;gt; vec5 = {adjacent(6,5)};
+    vector&amp;lt;adjacent&amp;gt; vec6 = {adjacent(4,20)};
+    
+    map&amp;lt;int, vector&amp;lt;adjacent&amp;gt;&amp;gt; input = {
+        {1,vec1},
+        {4,vec2},
+        {2,vec3},
+        {5,vec4},
+        {3,vec5},
+        {6,vec6}         
+    };
+    
+    auto output = djkstra(input,1);
+    
+    for(auto o : output) {
+        cout &amp;lt;&amp;lt; o.first &amp;lt;&amp;lt; &quot;, &quot; &amp;lt;&amp;lt; o.second &amp;lt;&amp;lt; endl;
+    }
+    
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sat, 24 Feb 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+  </channel>
+</rss>

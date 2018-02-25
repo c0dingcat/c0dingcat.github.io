@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>프림 알고리즘 | testcode</title>
+	<meta name="description" content="  최소 신장 트리를 구하는데 사용한다  정점을 선택하고 DST와 약간은 유사하게 인접한 정점들의 최소 값을 구해서 트리에 추가한다  minimum priority queue에 인접한 vertex와 cost 정보를 넣는다  최소 cost를 가지는 vertex 정보를 뽑아온다  이미...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/02/24/%ED%94%84%EB%A6%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">testcode</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/rohanchandra/type-theme" title=" GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://twitter.com/twitter" title=" Twitter">
+		<i class="fa fa-fw fa-twitter"></i>
+	</a>
+</li>
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">프림 알고리즘</h1>
+    
+    <p class="meta">
+      February 24, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><ul>
+  <li>최소 신장 트리를 구하는데 사용한다</li>
+  <li>정점을 선택하고 DST와 약간은 유사하게 인접한 정점들의 최소 값을 구해서 트리에 추가한다</li>
+  <li>minimum priority queue에 인접한 vertex와 cost 정보를 넣는다</li>
+  <li>최소 cost를 가지는 vertex 정보를 뽑아온다</li>
+  <li>이미 방문했는지 확인하다</li>
+  <li>방문 안했으면 인접한 노드들을 queue에 다시 집어 넣는다</li>
+  <li>최소 값 기준으로 계속 값을 가져와서 스패닝 트리를 만든다</li>
+  <li>이때 시간 복잡도는 인접 해렬, 검색의 경우는 V^2</li>
+  <li>이진 힙 및 인접리스트 O((V+E)logV)=ElogV</li>
+</ul>
+
+<h2 id="코드">코드</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#include &lt;iostream&gt;
+#include &lt;queue&gt;
+
+using namespace std;
+
+struct adj {
+    int cost, v;
+    adj(int v1, int c):cost(c), v(v1){}
+    bool operator &lt; (const adj&amp; rhs) {
+        return cost &lt; rhs.cost;
+    }
+};
+
+struct comp_functor {
+    bool operator()(const adj&amp; lhs, const adj&amp; rhs) {
+        return lhs.cost &gt; rhs.cost;
+    }
+};
+
+int prim(map&lt;int, vector&lt;adj&gt;&gt;&amp; input, int start) {
+    
+    map&lt;int,bool&gt; visited; 
+    priority_queue&lt;adj, vector&lt;adj&gt;, comp_functor&gt; que;
+    for(auto a : input[start])
+        que.push(a);
+    visited[start] = true;
+    int cost = 0 ; 
+    
+    while(!que.empty()) {
+        adj a = que.top(); que.pop();
+        if(visited[a.v])
+            continue;
+        
+        visited[a.v] = true;
+        cost += a.cost;
+        cout &lt;&lt; "v: " &lt;&lt; a.v &lt;&lt; ", cost: " &lt;&lt; a.cost &lt;&lt; ", total: " &lt;&lt; cost &lt;&lt; endl;
+        
+        for(auto adjacent : input[a.v]) {
+            if(visited[adjacent.v])
+                continue;
+            que.push(adjacent);
+        }
+    }
+    
+    return cost;    
+}
+
+void add(map&lt;int,vector&lt;adj&gt;&gt;&amp; input, int v1, int v2, int c) {
+    
+    adj a1(v2,c);
+    adj a2(v1,c);
+    
+    if(!input.count(v1)) {
+        vector&lt;adj&gt; vec = {a1};
+        input.insert(make_pair(v1, vec));
+    }
+    else {
+        input[v1].push_back(a1);
+    }
+    
+    if(!input.count(v2)) {
+        vector&lt;adj&gt; vec = {a2};
+        input.insert(make_pair(v2, vec));
+    }
+    else {
+        input[v2].push_back(a2);
+    }    
+}
+
+int main() {
+    map&lt;int, vector&lt;adj&gt;&gt; input;
+    add(input,1,2,5);
+    add(input,1,3,4);
+    add(input,2,3,2);
+    add(input,3,4,6);
+    add(input,2,4,7);
+    add(input,4,5,3);
+    add(input,3,5,11);
+    add(input,4,6,8);
+    add(input,5,6,8);
+    
+    cout &lt;&lt; prim(input, 1) &lt;&lt; endl;
+}
+</code></pre></div></div>
+</section>
+  
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>
