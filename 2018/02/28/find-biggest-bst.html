@@ -2,8 +2,8 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>About | testcode</title>
-	<meta name="description" content="daily log">
+	<title>아주 큰 트리에서 가장 큰 BST 찾기 | testcode</title>
+	<meta name="description" content="  문제: You are given a very large binary tree, return the root node of the largest BST in the given tree  왼쪽, 오른쪽 순환하면서 BST 조건에 맞는 노드를 찾기 시작한다  왼쪽 노드">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/about/">
+	<link rel="canonical" href="/2018/02/28/find-biggest-bst.html">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
@@ -139,18 +139,71 @@
 </header>
 
     <div class="content">
-      <article class="feature-image">
-  <header style="background-image: url('/assets/img/sample_feature_img_2.png')">
-    <h1 class="title">About</h1>
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">아주 큰 트리에서 가장 큰 BST 찾기</h1>
     
+    <p class="meta">
+      February 28, 2018
+      
+    </p>
   </header>
-  <section class="post-content"><p>Type Theme is a free and open-source theme for <a href="http://jekyllrb.com/">Jekyll</a>, licensed under the MIT License.</p>
+  <section class="post-content"><ul>
+  <li>문제: You are given a very large binary tree, return the root node of the largest BST in the given tree</li>
+  <li>왼쪽, 오른쪽 순환하면서 BST 조건에 맞는 노드를 찾기 시작한다</li>
+  <li>왼쪽 노드</li>
+</ul>
 
-<p>Head over to the <a href="https://rohanchandra.github.io/project/type/">theme’s documentation</a> for much more information about Type Theme or to install this theme on your own Jekyll site.</p>
+<p>```
+int find_biggest_bst(node* ptr, int&amp; min, int &amp;max, int&amp; total_nodes, node*&amp; head) {<br />
+    if(!ptr)
+        return 0;</p>
 
-<p>This file is an example of a page in Jekyll, that automatically shows up in the header navigation, you can delete or modify this file freely.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int left = find_biggest_bst(ptr, min, max, total_nodes, head);
+int current_min = (left ==0)?ptr-&gt;value: min;
+if((left==-1) || (left != 0 &amp;&amp; ptr-&gt;value &gt; max)) {
+    return -1;
+}
+
+int right = find_biggest_bst(ptr, min, max, total_nodes, head);
+int current_max = (right == 0)? ptr-&gt;value:max;
+if(right == -1 || (right != 0 &amp;&amp; ptr-&gt;value &lt; min)) {
+    return -1;
+}
+
+int total = left + right + 1;
+current_min = min;
+current_max = max;
+
+if(total_nodes &lt; total) {
+    total_ndoes = total;
+}
+return total; } '''
+</code></pre></div></div>
 </section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#그래프">#그래프</a>
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#BST">#BST</a>
+    
+    <a class="tag" href="/tags#Linked List">#Linked List</a>
+    
+  </div>
+</footer>
+
+
 </article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
 
     </div>
     

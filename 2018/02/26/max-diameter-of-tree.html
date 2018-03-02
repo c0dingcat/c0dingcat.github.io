@@ -2,8 +2,8 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>About | testcode</title>
-	<meta name="description" content="daily log">
+	<title>트리의 최장 직경 구하기 | testcode</title>
+	<meta name="description" content="  어느 한 노드가 있을 경우 최장 직경은..  왼쪽에서 가장 큰 height와 오른쪽에서 가장 큰 height에 1을 더한 값과  왼쪽에서의 가능 큰 직경, 오른쪽에서의 가장 큰 직경  이 세 값 중에서 가장 큰 값을 고르면 된다">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/about/">
+	<link rel="canonical" href="/2018/02/26/max-diameter-of-tree.html">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
@@ -139,18 +139,66 @@
 </header>
 
     <div class="content">
-      <article class="feature-image">
-  <header style="background-image: url('/assets/img/sample_feature_img_2.png')">
-    <h1 class="title">About</h1>
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">트리의 최장 직경 구하기</h1>
     
+    <p class="meta">
+      February 26, 2018
+      
+    </p>
   </header>
-  <section class="post-content"><p>Type Theme is a free and open-source theme for <a href="http://jekyllrb.com/">Jekyll</a>, licensed under the MIT License.</p>
+  <section class="post-content"><ul>
+  <li>어느 한 노드가 있을 경우 최장 직경은..</li>
+  <li>왼쪽에서 가장 큰 height와 오른쪽에서 가장 큰 height에 1을 더한 값과</li>
+  <li>왼쪽에서의 가능 큰 직경, 오른쪽에서의 가장 큰 직경</li>
+  <li>이 세 값 중에서 가장 큰 값을 고르면 된다</li>
+</ul>
 
-<p>Head over to the <a href="https://rohanchandra.github.io/project/type/">theme’s documentation</a> for much more information about Type Theme or to install this theme on your own Jekyll site.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct node {
+    node* left, *right
+};
 
-<p>This file is an example of a page in Jekyll, that automatically shows up in the header navigation, you can delete or modify this file freely.</p>
+int height(node* ptr) {
+    if(!ptr)
+        return 0;
+    
+    int lh = height(ptr-&gt;left);
+    int rh = height(ptr-&gt;right);
+    return 1 + max(lh, rh);
+}
+
+int diameter(node* ptr) {
+    if(!ptr)
+        return 0;
+    
+    int lh = height(ptr-&gt;left);
+    int rh = height(ptr-&gt;right);
+    int ld = diameter(ptr-&gt;left);
+    int rd = diameter(ptr-&gt;right);
+    return max(1+lh+rh, max(ld,rd));
+}
+</code></pre></div></div>
 </section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#트리">#트리</a>
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+  </div>
+</footer>
+
+
 </article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
 
     </div>
     

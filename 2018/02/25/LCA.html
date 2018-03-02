@@ -2,8 +2,8 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>About | testcode</title>
-	<meta name="description" content="daily log">
+	<title>Lowest Common Ancestor | testcode</title>
+	<meta name="description" content="출처  http://www.geeksforgeeks.org/lowest-common-ancestor-binary-tree-set-1/">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/about/">
+	<link rel="canonical" href="/2018/02/25/LCA.html">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
@@ -139,18 +139,73 @@
 </header>
 
     <div class="content">
-      <article class="feature-image">
-  <header style="background-image: url('/assets/img/sample_feature_img_2.png')">
-    <h1 class="title">About</h1>
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Lowest Common Ancestor</h1>
     
+    <p class="meta">
+      February 25, 2018
+      
+    </p>
   </header>
-  <section class="post-content"><p>Type Theme is a free and open-source theme for <a href="http://jekyllrb.com/">Jekyll</a>, licensed under the MIT License.</p>
+  <section class="post-content"><h2 id="출처">출처</h2>
+<ul>
+  <li>http://www.geeksforgeeks.org/lowest-common-ancestor-binary-tree-set-1/</li>
+</ul>
 
-<p>Head over to the <a href="https://rohanchandra.github.io/project/type/">theme’s documentation</a> for much more information about Type Theme or to install this theme on your own Jekyll site.</p>
+<h2 id="분석">분석</h2>
+<ul>
+  <li>트리를 DFS 방식으로 재귀호출한다</li>
+  <li>비교 해야 하는 두 값이 n1,n2라고 가정한다</li>
+  <li>만약 노드의 값이 n1, n2와 동일하면, 그 노드가 LCA</li>
+  <li>왼쪽과 오른쪽 노드의 값을 재귀호출로 검사</li>
+  <li>왼쪽 트리에서 n1의 값이 발견되고, 오른쪽에 n2가 발견되면 그 서브트리의 루트가 LCA</li>
+  <li>왼쪽에서 n1,n2 값이 발견되면 왼쪽을 검사해서 LCA 리턴</li>
+</ul>
 
-<p>This file is an example of a page in Jekyll, that automatically shows up in the header navigation, you can delete or modify this file freely.</p>
+<h2 id="코드">코드</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class node {
+public:
+      int val;
+      node* left_ptr;
+      node* right_ptr:
+};
+
+node* findLCA(node* tree_ptr, int n1, int n2){
+      if(tree_ptr-&gt;val == n1 || tree_ptr-&gt;val == n2)
+          return tree_ptr;
+
+      node* left_ptr = findLCA(tree_ptr-&gt;left, n1,n2);
+      node* right_ptr = findLCA(tree_ptr-&gt;right,n1,n2);
+
+      if(left_ptr &amp;&amp; right_ptr)
+         return tree_ptr;
+
+      return (left_ptr!=NULL)?left_ptr:right_ptr;
+}
+</code></pre></div></div>
 </section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#트리">#트리</a>
+    
+    <a class="tag" href="/tags#LCA">#LCA</a>
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+  </div>
+</footer>
+
+
 </article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
 
     </div>
     

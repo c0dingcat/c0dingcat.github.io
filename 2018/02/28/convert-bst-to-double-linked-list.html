@@ -1,0 +1,72 @@
+
+<hr />
+<p>layout: post
+title: BST를 Double Linked List로 변환하기
+tags: [그래프,알고리즘, BST, Linked List]
+—</p>
+
+<ul>
+  <li>왼쪽 노드를 계속 순환해서 최소값이 될때까지 순환한다</li>
+  <li>최소값이 되면, 그 노드의 값을 헤드값으로 저장하고 부모노드 및 오른쪽 노드를 계속 추가해서 리스트를 만든다</li>
+  <li>노드를 추가할때 현재 노드의 이전 노드 값이 prev값과 동일한지 확인할 필요가 있다.</li>
+</ul>
+
+<p>’’’</p>
+
+<p>struct node {
+    node(int n): value(n){}
+    int value;
+    node* left, * right;
+};</p>
+
+<p>void insert_before(node* prev, node* current) {
+    node* temp = current-&gt;left;
+    if(prev) {
+        cout « “prev - n: “ « prev-&gt;value « endl;
+        prev-&gt;right = current;
+        prev-&gt;left = temp;
+    }</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if(temp &amp;&amp; temp != prev) {
+    cout &lt;&lt; "temp-n: " &lt;&lt; temp-&gt;value &lt;&lt; endl;
+    temp-&gt;right = prev;    
+}
+cout &lt;&lt; "after prev, temp" &lt;&lt; endl;
+current-&gt;left = prev; }
+</code></pre></div></div>
+
+<p>void bst_to_ddl(node* ptr, node<em>&amp; prev, node</em>&amp; head, int&amp; min) {
+    if(!ptr)
+        return;</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bst_to_ddl(ptr-&gt;left, prev, head, min);
+insert_before(prev, ptr);
+prev = ptr;
+
+if(ptr-&gt;value &lt; min) {
+    cout &lt;&lt; "min: " &lt;&lt; ptr-&gt;value &lt;&lt; endl;
+    min = ptr-&gt;value;
+    head = ptr;
+}
+
+bst_to_ddl(ptr-&gt;right, prev, head, min); }
+</code></pre></div></div>
+
+<p>int main() {
+    node* root_ptr = new node(4);
+    root_ptr-&gt;left = new node(2);
+    root_ptr-&gt;right = new node(5);
+    root_ptr-&gt;left-&gt;right = new node(3);
+    root_ptr-&gt;left-&gt;left = new node(1);</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int min = 100;
+node* prev_ptr = nullptr;
+node* head_ptr;
+bst_to_ddl(root_ptr, prev_ptr, head_ptr, min);
+
+node* current_ptr = head_ptr;
+while(current_ptr) {
+    cout &lt;&lt; current_ptr-&gt;value &lt;&lt; endl;
+    current_ptr = current_ptr-&gt;right;
+} } '''
+</code></pre></div></div>

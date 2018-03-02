@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>median valud of BST | testcode</title>
+	<meta name="description" content="문제">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/02/17/median-value-of-bst.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">testcode</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">median valud of BST</h1>
+    
+    <p class="meta">
+      February 17, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><h2 id="문제">문제</h2>
+
+<p>Given a Binary Search Tree, find median of it. If no. of nodes are even: then median = ((n/2th node + (n+1)/2th node) /2 If no. of nodes are odd : then median = (n+1)th node. For example, median of below BST is 12. <img src="http://cfile24.uf.tistory.com/image/9992AE455A8E6D471891E7" alt="" /></p>
+
+<h2 id="분석">분석</h2>
+
+<ul>
+  <li>O(N)으로 풀기 위해서는 정상적으로 트리를 순환하는 방식을 사용해야 한다</li>
+  <li>Median 값을 찾기 위해서는 현재 몇번째 노드를 순환하는지를 알아야 한다</li>
+  <li>현재 순환한 노드 값이 중간 값인지를 파악하기 위해서는 전체 노드의 수를 알아야 한다</li>
+  <li>후위 혹은 전위로 순환하면서 방문한 노드이 수를 파악한다</li>
+  <li>노드의 수가 전체 노드의 중간이며 Median 값을 구한다</li>
+</ul>
+
+<h2 id="코드">코드</h2>
+<ul>
+  <li>현재 방문하고 있는 노드의 수를 잘 세는 것이 필요하다</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class node { 
+public: 
+    node(int n):val(n) {} 
+    int val; 
+    node* left; 
+    node* right;  
+};
+
+int count(node* ptr) { 
+    return (!ptr)?0:1 + count(ptr-&gt;left) + count(ptr-&gt;right);  
+}
+
+int median(node* ptr, int total, int&amp; pos) {
+
+    if(!ptr)
+        return 0;
+
+    int right = median(ptr-&gt;right, total, pos);
+
+    pos++;
+
+    if(pos == total/2 &amp;&amp; total%2 == 0) 
+        return (ptr-&gt;val + ptr-&gt;right-&gt;val)/2;
+    if(pos == (total/2+1) &amp;&amp; total%2==1)
+        return ptr-&gt;val;
+
+    int left = median(ptr-&gt;left, total, pos);
+
+    return right + left;
+}
+
+int main() { 
+    node* root = new node(20);
+    root-&gt;right = new node(22);
+    root-&gt;left = new node(8);
+    root-&gt;left-&gt;left = new node(4);
+    root-&gt;left-&gt;right = new node(12);
+    root-&gt;left-&gt;right-&gt;left = new node(10);
+    root-&gt;left-&gt;right-&gt;right = new node(14);
+
+    int pos = 0;
+    int c = count(root);
+    int m = median(root, c, pos);
+    cout &lt;&lt; "count: " &lt;&lt; c &lt;&lt; ", " &lt;&lt; c/2 &lt;&lt; ", m: " &lt;&lt; m &lt;&lt; endl;
+}
+</code></pre></div></div>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#다익스트라">#다익스트라</a>
+    
+    <a class="tag" href="/tags#그래프">#그래프</a>
+    
+    <a class="tag" href="/tags#최소거리">#최소거리</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

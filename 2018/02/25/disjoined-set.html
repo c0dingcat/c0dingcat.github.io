@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>디스조인트 셋 | testcode</title>
+	<meta name="description" content="출처  https://ko.wikipedia.org/wiki/%EC%84%9C%EB%A1%9C%EC%86%8C_%EC%A7%91%ED%95%A9%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0  https://ratsgo.github.io/data%20structu...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/02/25/disjoined-set.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">testcode</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">디스조인트 셋</h1>
+    
+    <p class="meta">
+      February 25, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><h2 id="출처">출처</h2>
+<ul>
+  <li>https://ko.wikipedia.org/wiki/%EC%84%9C%EB%A1%9C%EC%86%8C_%EC%A7%91%ED%95%A9<em>%EC%9E%90%EB%A3%8C</em>%EA%B5%AC%EC%A1%B0</li>
+  <li>https://ratsgo.github.io/data%20structure&amp;algorithm/2017/11/12/disjointset/</li>
+  <li>http://js1jj2sk3.tistory.com/m/category/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/Disjoint-set%20%EB%94%94%EC%8A%A4%EC%A1%B0%EC%9D%B8%ED%8A%B8-%EC%85%8B</li>
+  <li>http://bowbowbow.tistory.com/26</li>
+</ul>
+
+<h2 id="설명">설명</h2>
+<ul>
+  <li>서로 중복되지 않은 부분집합들로 나누워진 정보들을 저장</li>
+  <li>set A, set B: B가 A의 모든 요소를 포함하는 경우: A = subset of B, B = superset of A</li>
+  <li>set A, set B: A와 B가 공유하는 원소가 없다면: A와 B는 mutually disjoint</li>
+  <li>임의의 셋을 분할(partition): 서로 중복되는 원소가 없도록 셋을 나눔</li>
+  <li>분할된 셋들을 합치면 원래의 셋으로 복원</li>
+</ul>
+
+<h2 id="연산">연산</h2>
+<ul>
+  <li>make-set(x): 초기화 연산, x를 유일한 요소로 하는 셋을 만듬</li>
+  <li>union(x,y): x가 속한 셋과 y가 속한 셋을 합침</li>
+  <li>셋들을 합칠때에는 대표값들을 서로 연결해 줌</li>
+  <li>set A (3) (3&lt;-4), set B (1) (1&lt;-2)</li>
+  <li>untion(A,B)(3) (2-&gt;1-&gt;3&lt;-4)</li>
+  <li>find(x): x가 속한 셋의 대표값(루트노드 값)을 반환</li>
+</ul>
+
+<h2 id="find-연산">find 연산</h2>
+<ul>
+  <li>구조에 따라서 여러가지 방법으로 find가 가능하지만..</li>
+  <li>재귀적인 방식으로 find 연산을 구현한 방식을 표현하면..</li>
+  <li>
+    <p>선형시간으로 탐색이 가능</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function find(x)
+  if x.parent != x:
+      x.parent = Find(x.parent)
+  return x.parent
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="union-연산">union 연산</h2>
+
+<ul>
+  <li>
+    <p>두 셋의 대표들을 찾아 연결해 주면 된다.</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function union(x,y):
+  xRoot = find(x)
+  yRoot = find(y)
+  yRoot.parent = xRoot
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="일반적인-set-collection과의-비교">일반적인 set collection과의 비교</h2>
+
+<ul>
+  <li>일반적인 stl에서 구현된 set의 경우 BST 구조를 가져서, 일반적인 연산의 경우 log의 시간을 가진다</li>
+  <li>disjoint set은 노드에 parent 하나만 추가해서 선형적인 시간에 값을 가져올 수 있음</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct disjoined_set {
+    map&lt;char, char&gt; parent;
+    void init_set(vector&lt;char&gt; vertext) {
+        for(auto ch : vertext)
+            parent.insert(make_pair(ch,ch));
+    }
+    
+    char find_parent(char ch) {
+        if(find_parent(ch) == ch)
+            return ch;
+        
+        return parent[ch] = find_parent(parent[ch]);
+    }
+    
+    bool same_set(char c1, char c2) {
+        char c1_parent = find_parent(c1);
+        char c2_parent = find_parent(c2);
+        
+        if(c1_parent == c2_parent)
+            return true;
+        return false;
+    }
+    
+    void merge(char c1, char c2) {
+        if(same_set(c1, c2))
+            return;
+        
+        parent[c2_parent] = c1_parent;
+    }
+}
+</code></pre></div></div>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#그래프">#그래프</a>
+    
+    <a class="tag" href="/tags#디스조인트">#디스조인트</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

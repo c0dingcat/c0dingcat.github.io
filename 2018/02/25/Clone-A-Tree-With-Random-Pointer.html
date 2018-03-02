@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>Clone a binary tree with random pointers | testcode</title>
+	<meta name="description" content="  Clone a Binary Tree with Random Pointers  Given a Binary Tree where every node has following structure.  The random pointer points to any random node of th...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/02/25/Clone-A-Tree-With-Random-Pointer.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">testcode</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Clone a binary tree with random pointers</h1>
+    
+    <p class="meta">
+      February 25, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><ul>
+  <li>Clone a Binary Tree with Random Pointers</li>
+  <li>Given a Binary Tree where every node has following structure.</li>
+  <li>The random pointer points to any random node of the binary tree and can even point to NULL, clone the given binary tree.</li>
+</ul>
+
+<h2 id="관찰">관찰</h2>
+<ul>
+  <li>쉽게 할 수 있는 방법은 map을 사용하는 방식</li>
+  <li>노드 하나를 추가할때 마다 이전 노드의 키와 새로 생성한 노드의 주소를 맵에 추가한다</li>
+  <li>트리 생성이 완료되면 한바퀴 트리를 순회하면서 메모리 주소를 맵에서 꺼내서 업데이트 한다</li>
+</ul>
+
+<h2 id="코드">코드</h2>
+<ul>
+  <li>맵 혹은 해시 테이블을 사용할 경우는 특별한 부분이 없다</li>
+  <li>트리를 순회하면서 노드들을 복사하고, 기존에 있던 노드 값과 그에 대응되어 생긴 노드의 주소 값을 맵에 넣는다</li>
+  <li>복사가 끝나면, 다시 한 번 순회해서 random 포인터를 새로 생긴 노드 값으로 업데이트 한다</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct node{
+    int value;
+    node* left, *right, *random;
+    node(int n, node* rand):value(n),random(rand){}
+};
+
+void copy_node(node* ptr_src, 
+               node* ptr_dst, 
+               map&lt;node*, node*&gt;&amp; mem_table) {
+    if(ptr_src == nullptr)
+        return;
+    
+    if(ptr_src-&gt;left) {
+        ptr_dst-&gt;left = new node(ptr_src-&gt;left-&gt;value, ptr_src-&gt;left-&gt;random);
+        mem_table.insert(make_pair(ptr_src-&gt;left, ptr_dst-&gt;left));
+        copy_node(ptr_src-&gt;left, ptr_dst-&gt;left, mem_table);
+    }
+    
+    if(ptr_src-&gt;right) {
+        ptr_dst-&gt;right = new node(ptr_src-&gt;right-&gt;value, ptr_src-&gt;right-&gt;random);
+        mem_table.insert(make_pair(ptr_src-&gt;right, ptr_dst-&gt;right));
+        copy_node(ptr_src-&gt;right, ptr_dst-&gt;right, mem_table);
+    }
+}
+
+void update_random_ptr(node* ptr_src, node* ptr_dst, map&lt;node*,node*&gt;&amp; mem_table) {
+    
+    if(ptr_src == nullptr)
+        return;
+    
+    if(ptr_src-&gt;left)
+        update_random_ptr(ptr_src-&gt;left,  ptr_dst-&gt;left, mem_table);
+    
+    if(ptr_dst-&gt;random)
+        ptr_dst-&gt;random = mem_table[ptr_src-&gt;random];
+    
+    if(ptr_src-&gt;right)
+        update_random_ptr(ptr_src-&gt;right, ptr_dst-&gt;right, mem_table);
+}
+
+node* clone_tree(node* ptr) {    
+    node* clone_ptr = new node(ptr-&gt;value, ptr-&gt;random);
+    node* pos_ptr = ptr;
+    map&lt;node*, node*&gt; mem_table;
+    copy_node(ptr, clone_ptr, mem_table);
+    update_random_ptr(ptr, clone_ptr, mem_table);
+    return clone_ptr;    
+}
+</code></pre></div></div>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#트리">#트리</a>
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

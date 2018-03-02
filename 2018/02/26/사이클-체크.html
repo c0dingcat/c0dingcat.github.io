@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>사이클 체크 | testcode</title>
+	<meta name="description" content="  사이클 확인 알고지름  DFS 방식을 활용해서 사이클이 있는지 확인한다  현재 순환중이면 상태를 VISTING으로 변경해서 순환이 끝나지 않았음에도 불구하고 다시 체크하러 오는지 확인하다  현재 노드들을 순환중인데도 불구하고 다시 확인하러 오면 사이클이 있음  시간 복잡도는 O...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/02/26/%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%B2%B4%ED%81%AC.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">testcode</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">사이클 체크</h1>
+    
+    <p class="meta">
+      February 26, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><ul>
+  <li>사이클 확인 알고지름</li>
+  <li>DFS 방식을 활용해서 사이클이 있는지 확인한다</li>
+  <li>현재 순환중이면 상태를 VISTING으로 변경해서 순환이 끝나지 않았음에도 불구하고 다시 체크하러 오는지 확인하다</li>
+  <li>현재 노드들을 순환중인데도 불구하고 다시 확인하러 오면 사이클이 있음</li>
+  <li>시간 복잡도는 O(E+V)</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>using namespace std;
+
+enum STATUS {
+  NOT_VISITED,
+    VISITING,
+    VISITED
+};
+
+bool hasCycle(map&lt;int,vector&lt;int&gt;&gt;&amp; input,
+             map&lt;int, int&gt;&amp; visited,
+             int here) {
+    if(visited[here] == VISITING){
+        cout &lt;&lt; here &lt;&lt; " confirmed visiting" &lt;&lt; endl;
+        return true;
+    }
+    else if(visited[here] == VISITED)
+        return false;
+    
+    visited[here] = VISITING;
+    cout &lt;&lt; here &lt;&lt; " visiting " &lt;&lt; endl;
+    
+    for(int there : input[here]) {
+        cout &lt;&lt; there &lt;&lt; " checking " &lt;&lt; endl;
+        if(hasCycle(input, visited, there))
+            return true;
+    }
+    visited[here] = VISITED;
+    return false;
+}
+
+void process(const vector&lt;vector&lt;int&gt;&gt;&amp; input, map&lt;int, vector&lt;int&gt;&gt;&amp; output)
+{
+    for(auto entry : input) {
+        int u = entry[0];
+        int v = entry[1];
+            
+        if(!output.count(u)) {
+            vector&lt;int&gt; vec = { v };
+            output.insert(make_pair(u, vec));
+        }
+        else {
+            output[u].push_back(v);
+        }
+    }
+}
+
+int main() {
+    vector&lt;vector&lt;int&gt;&gt; input = {
+        {1,2},
+        {1,3},
+        {2,3},
+        {3,4},
+        {2,4},
+        {3,5},
+        {4,5},
+        {4,6},
+        {5,6},
+    };
+    
+    map&lt;int, vector&lt;int&gt;&gt; source;
+    process(input, source);
+    map&lt;int,int&gt; visited;
+    for(auto kvp : source)
+        visited.insert(make_pair(kvp.first,0));
+
+    bool cycle = hasCycle(source, visited, 1);
+    cout &lt;&lt; "cycle: " &lt;&lt; cycle &lt;&lt; endl;
+}
+</code></pre></div></div>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#그래프">#그래프</a>
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#사이클">#사이클</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

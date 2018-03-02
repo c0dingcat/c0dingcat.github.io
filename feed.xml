@@ -5,209 +5,751 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
     <link>http://localhost:4000/</link>
     <description>daily log</description>
-    <pubDate>Sun, 25 Feb 2018 02:35:50 -0800</pubDate>
+    <pubDate>Thu, 01 Mar 2018 20:07:52 -0800</pubDate>
     
       <item>
-        <title>프림 알고리즘</title>
-        <link>/2018/02/24/%ED%94%84%EB%A6%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html</link>
-        <guid isPermaLink="true">/2018/02/24/%ED%94%84%EB%A6%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html</guid>
+        <title>정렬된 LinkedList를 BST로 변환하기</title>
+        <link>/2018/02/28/longest-panlindrome-string.html</link>
+        <guid isPermaLink="true">/2018/02/28/longest-panlindrome-string.html</guid>
         <description>&lt;ul&gt;
-  &lt;li&gt;최소 신장 트리를 구하는데 사용한다&lt;/li&gt;
-  &lt;li&gt;정점을 선택하고 DST와 약간은 유사하게 인접한 정점들의 최소 값을 구해서 트리에 추가한다&lt;/li&gt;
-  &lt;li&gt;minimum priority queue에 인접한 vertex와 cost 정보를 넣는다&lt;/li&gt;
-  &lt;li&gt;최소 cost를 가지는 vertex 정보를 뽑아온다&lt;/li&gt;
-  &lt;li&gt;이미 방문했는지 확인하다&lt;/li&gt;
-  &lt;li&gt;방문 안했으면 인접한 노드들을 queue에 다시 집어 넣는다&lt;/li&gt;
-  &lt;li&gt;최소 값 기준으로 계속 값을 가져와서 스패닝 트리를 만든다&lt;/li&gt;
-  &lt;li&gt;이때 시간 복잡도는 인접 해렬, 검색의 경우는 V^2&lt;/li&gt;
-  &lt;li&gt;이진 힙 및 인접리스트 O((V+E)logV)=ElogV&lt;/li&gt;
+  &lt;li&gt;Given a string, find the longest substring which is palindrome. For example, if the given string is “forgeeksskeegfor”, the output should be “geeksskeeg”.&lt;/li&gt;
+  &lt;li&gt;워낙 유명한 문제라.. 문제에 대한 설명은 생략한다&lt;/li&gt;
+  &lt;li&gt;brute-force, dynamic programming 아니면 매 인덱스마다 좌우로 찾는 이 방법이 있다.&lt;/li&gt;
+  &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;’’’
+int getMaxLengthOfPanlindrome(const string&amp;amp; input, int low, int high, int maxLength, int&amp;amp; start) {
+    int len = input.size();&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;while (low &amp;gt;= 0 &amp;amp;&amp;amp; high &amp;lt; len &amp;amp;&amp;amp; input[low] == input[high])
+{
+    if (high - low + 1 &amp;gt; maxLength)
+    {
+        start = low;
+        maxLength = high - low + 1;
+        cout &amp;lt;&amp;lt; low &amp;lt;&amp;lt; &quot;, &quot; &amp;lt;&amp;lt; input[low] &amp;lt;&amp;lt; &quot;, &quot; &amp;lt;&amp;lt; high &amp;lt;&amp;lt; &quot;, &quot; &amp;lt;&amp;lt; input[high] &amp;lt;&amp;lt; endl;
+    }
+    --low;
+    ++high;
+}  
+return maxLength;   }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;int findLongestPanlindromeString(const string&amp;amp; input) {&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int maxLength = 1;  // The result (length of LPS)
+int start = 0; 
+ 
+for (int i = 1; i &amp;lt; input.size(); ++i)
+{
+    // 회문이 짝수인 경우
+    int low = i - 1;
+    int high = i;
+    maxLength = getMaxLengthOfPanlindrome(input, low, high, maxLength, start);
+ 
+    // 회문이 홀수인 경우
+    low = i - 1;
+    high = i + 1;
+    maxLength = getMaxLengthOfPanlindrome(input, low, high,maxLength, start);
+}
+ 
+cout &amp;lt;&amp;lt; &quot;Longest palindrome substring is: &quot; &amp;lt;&amp;lt; endl;
+cout &amp;lt;&amp;lt; input.substr(start, start + maxLength - 1);
+ 
+return maxLength;     } '''
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Wed, 28 Feb 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>Longest Increasing Sequence</title>
+        <link>/2018/02/28/longest-increasing-sequence.html</link>
+        <guid isPermaLink="true">/2018/02/28/longest-increasing-sequence.html</guid>
+        <description>
+</description>
+        <pubDate>Wed, 28 Feb 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>정렬된 LinkedList를 BST로 변환하기</title>
+        <link>/2018/02/28/linkedlist-to-bst.html</link>
+        <guid isPermaLink="true">/2018/02/28/linkedlist-to-bst.html</guid>
+        <description>&lt;ul&gt;
+  &lt;li&gt;정렬된 linkedlist를 binary search 방식으로 BST로 변환한다&lt;/li&gt;
+  &lt;li&gt;0~n개의 노드가 있을떄 중간 노드(n/2)의 값을 구하고 왼쪽 노드는 왼쪽 중간 노드를 구해서 (0~n/2의 중간값 n/4) 값을 설정한다&lt;/li&gt;
+  &lt;li&gt;오른쪽 노드의 값은 n/2에서 n까지의 중간값을 구해서 설정하는 방식으로 재귀적으로 호출해서 BST를 완성한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;’’’
+tnode* llist_to_bst(lnode* head, lnode* tail) {&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if(head == nullptr)
+    return nullptr;
+
+lnode* fast_ptr = head;
+lnode* slow_ptr = slow;
+while(fast_ptr != nullptr &amp;amp;&amp;amp; fast_ptr != tail) {
+    fast_ptr = fast_ptr-&amp;gt;next;
+    slow_ptr = slow_ptr-&amp;gt;next;
+    if(fast_ptr!= nullptr &amp;amp;&amp;amp; fast_ptr != tail)
+        fast_ptr = fast_ptr-&amp;gt;next;
+}
+
+tnode * ptr = new tnode(slow_ptr-&amp;gt;value);
+ptr-&amp;gt;left = llist_to_bst(head, slow_ptr);
+ptr-&amp;gt;right = llist_to_bst(slow_ptr-&amp;gt;next, tail);
+return ptr; } '''
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Wed, 28 Feb 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>아주 큰 트리에서 가장 큰 BST 찾기</title>
+        <link>/2018/02/28/find-biggest-bst.html</link>
+        <guid isPermaLink="true">/2018/02/28/find-biggest-bst.html</guid>
+        <description>&lt;ul&gt;
+  &lt;li&gt;문제: You are given a very large binary tree, return the root node of the largest BST in the given tree&lt;/li&gt;
+  &lt;li&gt;왼쪽, 오른쪽 순환하면서 BST 조건에 맞는 노드를 찾기 시작한다&lt;/li&gt;
+  &lt;li&gt;왼쪽 노드&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;```
+int find_biggest_bst(node* ptr, int&amp;amp; min, int &amp;amp;max, int&amp;amp; total_nodes, node*&amp;amp; head) {&lt;br /&gt;
+    if(!ptr)
+        return 0;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int left = find_biggest_bst(ptr, min, max, total_nodes, head);
+int current_min = (left ==0)?ptr-&amp;gt;value: min;
+if((left==-1) || (left != 0 &amp;amp;&amp;amp; ptr-&amp;gt;value &amp;gt; max)) {
+    return -1;
+}
+
+int right = find_biggest_bst(ptr, min, max, total_nodes, head);
+int current_max = (right == 0)? ptr-&amp;gt;value:max;
+if(right == -1 || (right != 0 &amp;amp;&amp;amp; ptr-&amp;gt;value &amp;lt; min)) {
+    return -1;
+}
+
+int total = left + right + 1;
+current_min = min;
+current_max = max;
+
+if(total_nodes &amp;lt; total) {
+    total_ndoes = total;
+}
+return total; } '''
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Wed, 28 Feb 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>Convert Bst To Double Linked List</title>
+        <link>/2018/02/28/convert-bst-to-double-linked-list.html</link>
+        <guid isPermaLink="true">/2018/02/28/convert-bst-to-double-linked-list.html</guid>
+        <description>
+&lt;hr /&gt;
+&lt;p&gt;layout: post
+title: BST를 Double Linked List로 변환하기
+tags: [그래프,알고리즘, BST, Linked List]
+—&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;왼쪽 노드를 계속 순환해서 최소값이 될때까지 순환한다&lt;/li&gt;
+  &lt;li&gt;최소값이 되면, 그 노드의 값을 헤드값으로 저장하고 부모노드 및 오른쪽 노드를 계속 추가해서 리스트를 만든다&lt;/li&gt;
+  &lt;li&gt;노드를 추가할때 현재 노드의 이전 노드 값이 prev값과 동일한지 확인할 필요가 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;’’’&lt;/p&gt;
+
+&lt;p&gt;struct node {
+    node(int n): value(n){}
+    int value;
+    node* left, * right;
+};&lt;/p&gt;
+
+&lt;p&gt;void insert_before(node* prev, node* current) {
+    node* temp = current-&amp;gt;left;
+    if(prev) {
+        cout « “prev - n: “ « prev-&amp;gt;value « endl;
+        prev-&amp;gt;right = current;
+        prev-&amp;gt;left = temp;
+    }&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if(temp &amp;amp;&amp;amp; temp != prev) {
+    cout &amp;lt;&amp;lt; &quot;temp-n: &quot; &amp;lt;&amp;lt; temp-&amp;gt;value &amp;lt;&amp;lt; endl;
+    temp-&amp;gt;right = prev;    
+}
+cout &amp;lt;&amp;lt; &quot;after prev, temp&quot; &amp;lt;&amp;lt; endl;
+current-&amp;gt;left = prev; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;void bst_to_ddl(node* ptr, node&lt;em&gt;&amp;amp; prev, node&lt;/em&gt;&amp;amp; head, int&amp;amp; min) {
+    if(!ptr)
+        return;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bst_to_ddl(ptr-&amp;gt;left, prev, head, min);
+insert_before(prev, ptr);
+prev = ptr;
+
+if(ptr-&amp;gt;value &amp;lt; min) {
+    cout &amp;lt;&amp;lt; &quot;min: &quot; &amp;lt;&amp;lt; ptr-&amp;gt;value &amp;lt;&amp;lt; endl;
+    min = ptr-&amp;gt;value;
+    head = ptr;
+}
+
+bst_to_ddl(ptr-&amp;gt;right, prev, head, min); }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;int main() {
+    node* root_ptr = new node(4);
+    root_ptr-&amp;gt;left = new node(2);
+    root_ptr-&amp;gt;right = new node(5);
+    root_ptr-&amp;gt;left-&amp;gt;right = new node(3);
+    root_ptr-&amp;gt;left-&amp;gt;left = new node(1);&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int min = 100;
+node* prev_ptr = nullptr;
+node* head_ptr;
+bst_to_ddl(root_ptr, prev_ptr, head_ptr, min);
+
+node* current_ptr = head_ptr;
+while(current_ptr) {
+    cout &amp;lt;&amp;lt; current_ptr-&amp;gt;value &amp;lt;&amp;lt; endl;
+    current_ptr = current_ptr-&amp;gt;right;
+} } '''
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Wed, 28 Feb 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>크루스칼 알고리즘</title>
+        <link>/2018/02/26/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html</link>
+        <guid isPermaLink="true">/2018/02/26/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html</guid>
+        <description>&lt;ul&gt;
+  &lt;li&gt;크루스칼 알고리즘&lt;/li&gt;
+  &lt;li&gt;edge의 cost별로 정렬한다&lt;/li&gt;
+  &lt;li&gt;하나씩 빼서 cycle을 만드는지 확인한다&lt;/li&gt;
+  &lt;li&gt;사이클을 만들지 않는 edge들만 뽑아서 리턴한다&lt;/li&gt;
+  &lt;li&gt;상당히 간단하다&lt;/li&gt;
+  &lt;li&gt;사이클을 만드는데 사용하는 disjoined_set 알고리즘은 간단하지만 효과적이다&lt;/li&gt;
+  &lt;li&gt;시간 복잡도는 모든 edge에 대해 정렬하기 때문에 O(ElogE)&lt;/li&gt;
+  &lt;li&gt;disjoined set의 경우는 시간복잡도가 ELogE보다 작기 때문에, 정렬하는데 드는 시간이 driving force&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+using namespace std;
+
+struct edge {
+    int u,v,cost;
+    edge(int u1, int v1, int c):u(u1), v(v1), cost(c) {}
+    bool operator &amp;lt; (const edge&amp;amp; e) {
+        return cost &amp;lt; e.cost;
+    }
+};
+
+struct disjoined_set {
+    map&amp;lt;int,int&amp;gt; parent;
+    void init(vector&amp;lt;edge&amp;gt;&amp;amp; edges) {
+        for(auto e : edges) {
+            if(!parent.count(e.u))
+                parent.insert(make_pair(e.u, e.u));
+            
+            if(!parent.count(e.v))
+                parent.insert(make_pair(e.v, e.v));
+        }
+    }
+    
+    int find_parent(int u) {
+        if(parent[u] == u)
+            return u;
+        cout &amp;lt;&amp;lt; &quot;u: &quot; &amp;lt;&amp;lt; u &amp;lt;&amp;lt; &quot;, u_parent: &quot; &amp;lt;&amp;lt; parent[u] &amp;lt;&amp;lt; endl;
+        
+        return parent[u] = find_parent(parent[u]);
+    }
+    
+    bool same_set(int u, int v) {
+        cout &amp;lt;&amp;lt; &quot;before same_set&quot; &amp;lt;&amp;lt; endl;
+        if(find_parent(u) == find_parent(v))
+            return true;
+        
+        cout &amp;lt;&amp;lt; &quot;false&quot; &amp;lt;&amp;lt;endl;
+        return false;
+    }
+    
+    void merge(int u, int v){
+        int u_parent = find_parent(u);
+        int v_parent = find_parent(v);
+        cout &amp;lt;&amp;lt; &quot;u_parent: &quot; &amp;lt;&amp;lt; u_parent &amp;lt;&amp;lt; &quot;, v_parent: &quot; &amp;lt;&amp;lt; v_parent &amp;lt;&amp;lt; endl;
+        if(u_parent == v_parent)
+            return;
+        
+        parent[v_parent] = u_parent;            
+    }
+};
+
+vector&amp;lt;edge&amp;gt; kruskal(vector&amp;lt;edge&amp;gt;&amp;amp; input) {
+    sort(input.begin(), input.end());
+    vector&amp;lt;edge&amp;gt; output;
+    disjoined_set ds;
+    ds.init(input);
+    
+    for(auto e : input) {
+        cout &amp;lt;&amp;lt; &quot;edge u: &quot; &amp;lt;&amp;lt; e.u &amp;lt;&amp;lt; &quot;, v: &quot; &amp;lt;&amp;lt; e.v &amp;lt;&amp;lt; &quot;, cost: &quot; &amp;lt;&amp;lt; e.cost &amp;lt;&amp;lt;endl;
+        if(!ds.same_set(e.u, e.v)) {
+            cout &amp;lt;&amp;lt; &quot;ds.same_set &quot; &amp;lt;&amp;lt; endl;
+            output.push_back(e);
+            ds.merge(e.u, e.v);
+        }
+    }
+    cout &amp;lt;&amp;lt; &quot;output&quot; &amp;lt;&amp;lt; endl;
+    return output;
+}
+
+int main() {
+    edge e1(1,3,4);
+    edge e2(1,2,5);
+    edge e3(2,3,2);
+    edge e4(2,4,7);
+    edge e5(3,4,6);
+    edge e6(3,5,11);
+    edge e7(4,5,3);
+    edge e8(4,6,8);
+    edge e9(5,6,8);
+
+    vector&amp;lt;edge&amp;gt; edges = {e1,e2,e3,e4,e5,e6,e7,e8,e9};
+    vector&amp;lt;edge&amp;gt; output = kruskal(edges);
+    
+    for(edge e : output)
+        cout &amp;lt;&amp;lt; &quot;edge u: &quot; &amp;lt;&amp;lt; e.u &amp;lt;&amp;lt; &quot;, v: &quot; &amp;lt;&amp;lt; e.v &amp;lt;&amp;lt; &quot;, cost: &quot; &amp;lt;&amp;lt; e.cost &amp;lt;&amp;lt;endl;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Mon, 26 Feb 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>사이클 체크</title>
+        <link>/2018/02/26/%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%B2%B4%ED%81%AC.html</link>
+        <guid isPermaLink="true">/2018/02/26/%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%B2%B4%ED%81%AC.html</guid>
+        <description>&lt;ul&gt;
+  &lt;li&gt;사이클 확인 알고지름&lt;/li&gt;
+  &lt;li&gt;DFS 방식을 활용해서 사이클이 있는지 확인한다&lt;/li&gt;
+  &lt;li&gt;현재 순환중이면 상태를 VISTING으로 변경해서 순환이 끝나지 않았음에도 불구하고 다시 체크하러 오는지 확인하다&lt;/li&gt;
+  &lt;li&gt;현재 노드들을 순환중인데도 불구하고 다시 확인하러 오면 사이클이 있음&lt;/li&gt;
+  &lt;li&gt;시간 복잡도는 O(E+V)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;using namespace std;
+
+enum STATUS {
+  NOT_VISITED,
+    VISITING,
+    VISITED
+};
+
+bool hasCycle(map&amp;lt;int,vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; input,
+             map&amp;lt;int, int&amp;gt;&amp;amp; visited,
+             int here) {
+    if(visited[here] == VISITING){
+        cout &amp;lt;&amp;lt; here &amp;lt;&amp;lt; &quot; confirmed visiting&quot; &amp;lt;&amp;lt; endl;
+        return true;
+    }
+    else if(visited[here] == VISITED)
+        return false;
+    
+    visited[here] = VISITING;
+    cout &amp;lt;&amp;lt; here &amp;lt;&amp;lt; &quot; visiting &quot; &amp;lt;&amp;lt; endl;
+    
+    for(int there : input[here]) {
+        cout &amp;lt;&amp;lt; there &amp;lt;&amp;lt; &quot; checking &quot; &amp;lt;&amp;lt; endl;
+        if(hasCycle(input, visited, there))
+            return true;
+    }
+    visited[here] = VISITED;
+    return false;
+}
+
+void process(const vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; input, map&amp;lt;int, vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; output)
+{
+    for(auto entry : input) {
+        int u = entry[0];
+        int v = entry[1];
+            
+        if(!output.count(u)) {
+            vector&amp;lt;int&amp;gt; vec = { v };
+            output.insert(make_pair(u, vec));
+        }
+        else {
+            output[u].push_back(v);
+        }
+    }
+}
+
+int main() {
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; input = {
+        {1,2},
+        {1,3},
+        {2,3},
+        {3,4},
+        {2,4},
+        {3,5},
+        {4,5},
+        {4,6},
+        {5,6},
+    };
+    
+    map&amp;lt;int, vector&amp;lt;int&amp;gt;&amp;gt; source;
+    process(input, source);
+    map&amp;lt;int,int&amp;gt; visited;
+    for(auto kvp : source)
+        visited.insert(make_pair(kvp.first,0));
+
+    bool cycle = hasCycle(source, visited, 1);
+    cout &amp;lt;&amp;lt; &quot;cycle: &quot; &amp;lt;&amp;lt; cycle &amp;lt;&amp;lt; endl;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Mon, 26 Feb 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>Permutation</title>
+        <link>/2018/02/26/permutation.html</link>
+        <guid isPermaLink="true">/2018/02/26/permutation.html</guid>
+        <description>
+</description>
+        <pubDate>Mon, 26 Feb 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>트리의 최장 직경 구하기</title>
+        <link>/2018/02/26/max-diameter-of-tree.html</link>
+        <guid isPermaLink="true">/2018/02/26/max-diameter-of-tree.html</guid>
+        <description>&lt;ul&gt;
+  &lt;li&gt;어느 한 노드가 있을 경우 최장 직경은..&lt;/li&gt;
+  &lt;li&gt;왼쪽에서 가장 큰 height와 오른쪽에서 가장 큰 height에 1을 더한 값과&lt;/li&gt;
+  &lt;li&gt;왼쪽에서의 가능 큰 직경, 오른쪽에서의 가장 큰 직경&lt;/li&gt;
+  &lt;li&gt;이 세 값 중에서 가장 큰 값을 고르면 된다&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct node {
+    node* left, *right
+};
+
+int height(node* ptr) {
+    if(!ptr)
+        return 0;
+    
+    int lh = height(ptr-&amp;gt;left);
+    int rh = height(ptr-&amp;gt;right);
+    return 1 + max(lh, rh);
+}
+
+int diameter(node* ptr) {
+    if(!ptr)
+        return 0;
+    
+    int lh = height(ptr-&amp;gt;left);
+    int rh = height(ptr-&amp;gt;right);
+    int ld = diameter(ptr-&amp;gt;left);
+    int rd = diameter(ptr-&amp;gt;right);
+    return max(1+lh+rh, max(ld,rd));
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Mon, 26 Feb 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>Find Largest Bst</title>
+        <link>/2018/02/26/find-largest-bst.html</link>
+        <guid isPermaLink="true">/2018/02/26/find-largest-bst.html</guid>
+        <description>
+</description>
+        <pubDate>Mon, 26 Feb 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>섬의 개수 세기</title>
+        <link>/2018/02/26/connect-all-the-nodes.html</link>
+        <guid isPermaLink="true">/2018/02/26/connect-all-the-nodes.html</guid>
+        <description>&lt;ul&gt;
+  &lt;li&gt;next 노드를 구하기 위해서는 부모노드의 next를 타고 가서 왼쪽 노드가 있는지 확인한다 없으면 오른쪽 노드&lt;/li&gt;
+  &lt;li&gt;왼쪽 오른쪽 자식 노드가 존재하지 않으면 또 부모 노드의 옆의 노드로 가서 위와 동일하게 반복한다&lt;/li&gt;
+  &lt;li&gt;횡으로 탐색이 끝나면, 다음 자식 노드로 내려가기 위해서 왼쪽 자식 노드 혹은 오른쪽 자식 노드의 값을 사용해서 동일하게 옆의 노드를 체크한다&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct node {
+    int n;
+    node* left, * right, * next;
+};
+
+node* findNext(node* ptr) {
+    node* next = ptr-&amp;gt;next;
+    while(next) {
+        if(next-&amp;gt;left)
+            return next-&amp;gt;left;
+        if(next-&amp;gt;right)
+            return next-&amp;gt;right;
+        next  = next-&amp;gt;next;
+    }
+    return next;
+};
+
+void connectNext(node* ptr) {
+    
+    node* level_ptr = ptr;    
+    while(level_ptr) {
+        node * current = level_ptr;     
+        while(current) {
+            if(current-&amp;gt;left)
+                current-&amp;gt;left-&amp;gt;next = (!current-&amp;gt;right) ? current-&amp;gt;right: findNext(current);
+            
+            if(current-&amp;gt;right)
+                current-&amp;gt;right = findNext(current);
+            current = current-&amp;gt;next;
+        }
+            
+        if(level_ptr-&amp;gt;left)
+            level_ptr = level_ptr-&amp;gt;left;
+        else
+        if(level_ptr-&amp;gt;right)
+            level_ptr = level_ptr-&amp;gt;right;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Mon, 26 Feb 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>Number Of Islands</title>
+        <link>/2018/02/25/number-of-islands.html</link>
+        <guid isPermaLink="true">/2018/02/25/number-of-islands.html</guid>
+        <description>
+</description>
+        <pubDate>Sun, 25 Feb 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>Longest substring without repeating characters</title>
+        <link>/2018/02/25/longest-substring-without-repeating-characters.html</link>
+        <guid isPermaLink="true">/2018/02/25/longest-substring-without-repeating-characters.html</guid>
+        <description>&lt;p&gt;##출처:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;https://leetcode.com/problems/longest-substring-without-repeating-characters/description/&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Given a string, find the length of the longest substring without repeating characters.
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Examples:
+Given &quot;abcabcbb&quot;, the answer is &quot;abc&quot;, which the length is 3.
+Given &quot;bbbbb&quot;, the answer is &quot;b&quot;, with the length of 1.
+Given &quot;pwwkew&quot;, the answer is &quot;wke&quot;, with the length of 3. Note that the answer must be a substring, &quot;pwke&quot; is a subsequence and not a substring.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;분석&quot;&gt;분석&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Sliding Window 방식을 사용한다&lt;/li&gt;
+  &lt;li&gt;큐에 캐릭터를 집어 넣는다&lt;/li&gt;
+  &lt;li&gt;반복된 문자가 나오면, 지금까지 쌓아놓았던 문자의 수를 기억한다&lt;/li&gt;
+  &lt;li&gt;큐에서 문자를 계속 poping한다. 새로 집어 넣으려고 하는 문자와 동일한 문자가 나올때까지&lt;/li&gt;
+  &lt;li&gt;반복되는 문자가 발견되면, 다시 카운트를 시작한다&lt;/li&gt;
+  &lt;li&gt;O(N)으로 해결 가능&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class Solution {
+public:
+    int popAndCount(char c, vector&amp;amp; bvec, queue&amp;amp; cqueue) {
+        auto size = cqueue.size();
+        while(!cqueue.empty() &amp;amp;&amp;amp; cqueue.front() != c) {
+            bvec[cqueue.front()] = false;
+            cqueue.pop();
+        }
+
+        if(cqueue.front() == c) {
+            bvec[c] = false;
+            cqueue.pop();
+        }  
+        
+        return size;        
+    }
+    
+    int lengthOfLongestSubstring(string input) {
+        queue cqueue;
+        vector bvec(128);
+        auto maxValue = 0 ; 
+        
+        for(auto i = 0; i &amp;lt; input.length(); i++) {   
+            char c = input[i];    
+            if(bvec[c]) {
+                auto count = popAndCount(c, bvec, cqueue);
+                maxValue = std::max(maxValue, count);
+            }
+
+            cqueue.push(c);
+            bvec[c] = true;
+        }
+        
+        if(!cqueue.empty()) {
+            auto count = 0;
+            while(!cqueue.empty()) {
+                count++;
+                cqueue.pop();
+            }
+            maxValue = std::max(maxValue, count);
+        }
+        return maxValue;    
+    }
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sun, 25 Feb 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>빛은 트리의 왼쪽에 떨어진다</title>
+        <link>/2018/02/25/light-is-failing-to-the-left-side-of-tree.html</link>
+        <guid isPermaLink="true">/2018/02/25/light-is-failing-to-the-left-side-of-tree.html</guid>
+        <description>&lt;p&gt;Light is falling on a tree from left side you have to find all the nodes on which this light will fall.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;일반적인 트리 문제&lt;/li&gt;
+  &lt;li&gt;왼쪽에서만 보이는 트리들을 필터링해서 보여주면 된다&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
-#include &amp;lt;queue&amp;gt;
-
-using namespace std;
-
-struct adj {
-    int cost, v;
-    adj(int v1, int c):cost(c), v(v1){}
-    bool operator &amp;lt; (const adj&amp;amp; rhs) {
-        return cost &amp;lt; rhs.cost;
-    }
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct node {
+    int value;
+    node* left, *right;
 };
 
-struct comp_functor {
-    bool operator()(const adj&amp;amp; lhs, const adj&amp;amp; rhs) {
-        return lhs.cost &amp;gt; rhs.cost;
+void filter_nodes_from_leftside(node* ptr, const int level, int&amp;amp; max_level) {
+    if(!ptr)
+        return;
+    
+    if(level &amp;gt; max_level) {
+        max_level = level;
+        cout &amp;lt;&amp;lt; ptr-&amp;gt;value &amp;lt;&amp;lt; endl;
     }
-};
-
-int prim(map&amp;lt;int, vector&amp;lt;adj&amp;gt;&amp;gt;&amp;amp; input, int start) {
-    
-    map&amp;lt;int,bool&amp;gt; visited; 
-    priority_queue&amp;lt;adj, vector&amp;lt;adj&amp;gt;, comp_functor&amp;gt; que;
-    for(auto a : input[start])
-        que.push(a);
-    visited[start] = true;
-    int cost = 0 ; 
-    
-    while(!que.empty()) {
-        adj a = que.top(); que.pop();
-        if(visited[a.v])
-            continue;
-        
-        visited[a.v] = true;
-        cost += a.cost;
-        cout &amp;lt;&amp;lt; &quot;v: &quot; &amp;lt;&amp;lt; a.v &amp;lt;&amp;lt; &quot;, cost: &quot; &amp;lt;&amp;lt; a.cost &amp;lt;&amp;lt; &quot;, total: &quot; &amp;lt;&amp;lt; cost &amp;lt;&amp;lt; endl;
-        
-        for(auto adjacent : input[a.v]) {
-            if(visited[adjacent.v])
-                continue;
-            que.push(adjacent);
-        }
-    }
-    
-    return cost;    
-}
-
-void add(map&amp;lt;int,vector&amp;lt;adj&amp;gt;&amp;gt;&amp;amp; input, int v1, int v2, int c) {
-    
-    adj a1(v2,c);
-    adj a2(v1,c);
-    
-    if(!input.count(v1)) {
-        vector&amp;lt;adj&amp;gt; vec = {a1};
-        input.insert(make_pair(v1, vec));
-    }
-    else {
-        input[v1].push_back(a1);
-    }
-    
-    if(!input.count(v2)) {
-        vector&amp;lt;adj&amp;gt; vec = {a2};
-        input.insert(make_pair(v2, vec));
-    }
-    else {
-        input[v2].push_back(a2);
-    }    
-}
-
-int main() {
-    map&amp;lt;int, vector&amp;lt;adj&amp;gt;&amp;gt; input;
-    add(input,1,2,5);
-    add(input,1,3,4);
-    add(input,2,3,2);
-    add(input,3,4,6);
-    add(input,2,4,7);
-    add(input,4,5,3);
-    add(input,3,5,11);
-    add(input,4,6,8);
-    add(input,5,6,8);
-    
-    cout &amp;lt;&amp;lt; prim(input, 1) &amp;lt;&amp;lt; endl;
+    filter_nodes_from_leftside(ptr-&amp;gt;left, level+1, max_level);
+    filter_nodes_from_leftside(ptr-&amp;gt;right, level+1, max_level);
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
-        <pubDate>Sat, 24 Feb 2018 00:00:00 -0800</pubDate>
+        <pubDate>Sun, 25 Feb 2018 00:00:00 -0800</pubDate>
       </item>
     
       <item>
-        <title>다익스트라 소스</title>
-        <link>/2018/02/24/%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BC.html</link>
-        <guid isPermaLink="true">/2018/02/24/%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BC.html</guid>
-        <description>&lt;ul&gt;
-  &lt;li&gt;처음 vertex에서 시작한다&lt;/li&gt;
-  &lt;li&gt;정점에 인접한 정점들과 거리를 우선순위 큐에 넣는다&lt;/li&gt;
-  &lt;li&gt;거리순으로 오름차순 정렬해서 기존에 알려진 최소거리와 비교한다&lt;/li&gt;
-  &lt;li&gt;만약 기존에 알려진 최소거리보다 작으면 기존의 최소거리를 업데이트한다&lt;/li&gt;
-  &lt;li&gt;목적지에 도착할때까지 계속 반복한다&lt;/li&gt;
+        <title>디스조인트 셋</title>
+        <link>/2018/02/25/disjoined-set.html</link>
+        <guid isPermaLink="true">/2018/02/25/disjoined-set.html</guid>
+        <description>&lt;h2 id=&quot;출처&quot;&gt;출처&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;https://ko.wikipedia.org/wiki/%EC%84%9C%EB%A1%9C%EC%86%8C_%EC%A7%91%ED%95%A9&lt;em&gt;%EC%9E%90%EB%A3%8C&lt;/em&gt;%EA%B5%AC%EC%A1%B0&lt;/li&gt;
+  &lt;li&gt;https://ratsgo.github.io/data%20structure&amp;amp;algorithm/2017/11/12/disjointset/&lt;/li&gt;
+  &lt;li&gt;http://js1jj2sk3.tistory.com/m/category/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/Disjoint-set%20%EB%94%94%EC%8A%A4%EC%A1%B0%EC%9D%B8%ED%8A%B8-%EC%85%8B&lt;/li&gt;
+  &lt;li&gt;http://bowbowbow.tistory.com/26&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
+&lt;h2 id=&quot;설명&quot;&gt;설명&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;서로 중복되지 않은 부분집합들로 나누워진 정보들을 저장&lt;/li&gt;
+  &lt;li&gt;set A, set B: B가 A의 모든 요소를 포함하는 경우: A = subset of B, B = superset of A&lt;/li&gt;
+  &lt;li&gt;set A, set B: A와 B가 공유하는 원소가 없다면: A와 B는 mutually disjoint&lt;/li&gt;
+  &lt;li&gt;임의의 셋을 분할(partition): 서로 중복되는 원소가 없도록 셋을 나눔&lt;/li&gt;
+  &lt;li&gt;분할된 셋들을 합치면 원래의 셋으로 복원&lt;/li&gt;
+&lt;/ul&gt;
 
-struct adjacent {
-    int v, cost;
-    adjacent(int v1, int c):v(v1),cost(c){}
-    bool operator&amp;lt;(const adjacent&amp;amp; adj) {
-        return cost &amp;lt; adj.cost;
-    }
-};
+&lt;h2 id=&quot;연산&quot;&gt;연산&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;make-set(x): 초기화 연산, x를 유일한 요소로 하는 셋을 만듬&lt;/li&gt;
+  &lt;li&gt;union(x,y): x가 속한 셋과 y가 속한 셋을 합침&lt;/li&gt;
+  &lt;li&gt;셋들을 합칠때에는 대표값들을 서로 연결해 줌&lt;/li&gt;
+  &lt;li&gt;set A (3) (3&amp;lt;-4), set B (1) (1&amp;lt;-2)&lt;/li&gt;
+  &lt;li&gt;untion(A,B)(3) (2-&amp;gt;1-&amp;gt;3&amp;lt;-4)&lt;/li&gt;
+  &lt;li&gt;find(x): x가 속한 셋의 대표값(루트노드 값)을 반환&lt;/li&gt;
+&lt;/ul&gt;
 
-struct less_comp_functor{
-    bool operator()(const adjacent&amp;amp; lhs, const adjacent&amp;amp; rhs) {
-        return lhs.cost &amp;gt; rhs.cost;
-    }
-};
+&lt;h2 id=&quot;find-연산&quot;&gt;find 연산&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;구조에 따라서 여러가지 방법으로 find가 가능하지만..&lt;/li&gt;
+  &lt;li&gt;재귀적인 방식으로 find 연산을 구현한 방식을 표현하면..&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;선형시간으로 탐색이 가능&lt;/p&gt;
 
-int get_or_default(map&amp;lt;int, int&amp;gt;&amp;amp; dists, int v) {
-    const int INF = 0x7fffffff;    
-    if(!dists.count(v))
-        dists.insert(make_pair(v,INF));
-    
-    return dists[v];   
-}
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function find(x)
+  if x.parent != x:
+      x.parent = Find(x.parent)
+  return x.parent
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-map&amp;lt;int,int&amp;gt; djkstra(map&amp;lt;int, vector&amp;lt;adjacent&amp;gt;&amp;gt;&amp;amp; input, int start) {
-    map&amp;lt;int,int&amp;gt; dists;
-    priority_queue&amp;lt;adjacent, vector&amp;lt;adjacent&amp;gt;, less_comp_functor&amp;gt; que;
-    adjacent adj(start,0);
-    que.push(adj);
-    
-    while(!que.empty()) {
-        
-        adjacent adj = que.top(); que.pop();
-        int cost = adj.cost;
-        int v = adj.v;
-        
-        cout &amp;lt;&amp;lt; &quot;v: &quot; &amp;lt;&amp;lt; v &amp;lt;&amp;lt; &quot;, cost: &quot; &amp;lt;&amp;lt; cost &amp;lt;&amp;lt; endl;
-        
-        if(get_or_default(dists,v) &amp;gt; cost)
-            dists[v] = cost;
-        
-        for(auto a : input[v]) {
-            int there = a.v;
-            int new_cost = dists[v] + a.cost;
-        
-            if(get_or_default(dists, there) &amp;gt; new_cost){
-                dists[there] = new_cost;
-                a.cost = new_cost;
-                que.push(a);
-            }
-            
-        }
-    }
-    return dists;    
-}
+&lt;h2 id=&quot;union-연산&quot;&gt;union 연산&lt;/h2&gt;
 
-int main() {
-    vector&amp;lt;adjacent&amp;gt; vec1 = {adjacent(2,10), adjacent(3,30), adjacent(4,15)};
-    vector&amp;lt;adjacent&amp;gt; vec2 = {adjacent(3,5), adjacent(6,20)};
-    vector&amp;lt;adjacent&amp;gt; vec3 = {adjacent(5,20)};
-    vector&amp;lt;adjacent&amp;gt; vec4 = {adjacent(6,20)};
-    vector&amp;lt;adjacent&amp;gt; vec5 = {adjacent(6,5)};
-    vector&amp;lt;adjacent&amp;gt; vec6 = {adjacent(4,20)};
-    
-    map&amp;lt;int, vector&amp;lt;adjacent&amp;gt;&amp;gt; input = {
-        {1,vec1},
-        {4,vec2},
-        {2,vec3},
-        {5,vec4},
-        {3,vec5},
-        {6,vec6}         
-    };
-    
-    auto output = djkstra(input,1);
-    
-    for(auto o : output) {
-        cout &amp;lt;&amp;lt; o.first &amp;lt;&amp;lt; &quot;, &quot; &amp;lt;&amp;lt; o.second &amp;lt;&amp;lt; endl;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;두 셋의 대표들을 찾아 연결해 주면 된다.&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function union(x,y):
+  xRoot = find(x)
+  yRoot = find(y)
+  yRoot.parent = xRoot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;일반적인-set-collection과의-비교&quot;&gt;일반적인 set collection과의 비교&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;일반적인 stl에서 구현된 set의 경우 BST 구조를 가져서, 일반적인 연산의 경우 log의 시간을 가진다&lt;/li&gt;
+  &lt;li&gt;disjoint set은 노드에 parent 하나만 추가해서 선형적인 시간에 값을 가져올 수 있음&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct disjoined_set {
+    map&amp;lt;char, char&amp;gt; parent;
+    void init_set(vector&amp;lt;char&amp;gt; vertext) {
+        for(auto ch : vertext)
+            parent.insert(make_pair(ch,ch));
     }
     
+    char find_parent(char ch) {
+        if(find_parent(ch) == ch)
+            return ch;
+        
+        return parent[ch] = find_parent(parent[ch]);
+    }
+    
+    bool same_set(char c1, char c2) {
+        char c1_parent = find_parent(c1);
+        char c2_parent = find_parent(c2);
+        
+        if(c1_parent == c2_parent)
+            return true;
+        return false;
+    }
+    
+    void merge(char c1, char c2) {
+        if(same_set(c1, c2))
+            return;
+        
+        parent[c2_parent] = c1_parent;
+    }
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
-        <pubDate>Sat, 24 Feb 2018 00:00:00 -0800</pubDate>
+        <pubDate>Sun, 25 Feb 2018 00:00:00 -0800</pubDate>
       </item>
     
   </channel>

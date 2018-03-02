@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>Longest substring without repeating characters | testcode</title>
+	<meta name="description" content="##출처:  https://leetcode.com/problems/longest-substring-without-repeating-characters/description/">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/02/25/longest-substring-without-repeating-characters.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">testcode</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Longest substring without repeating characters</h1>
+    
+    <p class="meta">
+      February 25, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><p>##출처:</p>
+<ul>
+  <li>https://leetcode.com/problems/longest-substring-without-repeating-characters/description/</li>
+</ul>
+
+<h2 id="문제">문제</h2>
+<ul>
+  <li>Given a string, find the length of the longest substring without repeating characters.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Examples:
+Given "abcabcbb", the answer is "abc", which the length is 3.
+Given "bbbbb", the answer is "b", with the length of 1.
+Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="분석">분석</h2>
+<ul>
+  <li>Sliding Window 방식을 사용한다</li>
+  <li>큐에 캐릭터를 집어 넣는다</li>
+  <li>반복된 문자가 나오면, 지금까지 쌓아놓았던 문자의 수를 기억한다</li>
+  <li>큐에서 문자를 계속 poping한다. 새로 집어 넣으려고 하는 문자와 동일한 문자가 나올때까지</li>
+  <li>반복되는 문자가 발견되면, 다시 카운트를 시작한다</li>
+  <li>O(N)으로 해결 가능</li>
+</ul>
+
+<h2 id="코드">코드</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Solution {
+public:
+    int popAndCount(char c, vector&amp; bvec, queue&amp; cqueue) {
+        auto size = cqueue.size();
+        while(!cqueue.empty() &amp;&amp; cqueue.front() != c) {
+            bvec[cqueue.front()] = false;
+            cqueue.pop();
+        }
+
+        if(cqueue.front() == c) {
+            bvec[c] = false;
+            cqueue.pop();
+        }  
+        
+        return size;        
+    }
+    
+    int lengthOfLongestSubstring(string input) {
+        queue cqueue;
+        vector bvec(128);
+        auto maxValue = 0 ; 
+        
+        for(auto i = 0; i &lt; input.length(); i++) {   
+            char c = input[i];    
+            if(bvec[c]) {
+                auto count = popAndCount(c, bvec, cqueue);
+                maxValue = std::max(maxValue, count);
+            }
+
+            cqueue.push(c);
+            bvec[c] = true;
+        }
+        
+        if(!cqueue.empty()) {
+            auto count = 0;
+            while(!cqueue.empty()) {
+                count++;
+                cqueue.pop();
+            }
+            maxValue = std::max(maxValue, count);
+        }
+        return maxValue;    
+    }
+};
+</code></pre></div></div>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#LST">#LST</a>
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>섬의 개수 세기 | testcode</title>
+	<meta name="description" content="  next 노드를 구하기 위해서는 부모노드의 next를 타고 가서 왼쪽 노드가 있는지 확인한다 없으면 오른쪽 노드  왼쪽 오른쪽 자식 노드가 존재하지 않으면 또 부모 노드의 옆의 노드로 가서 위와 동일하게 반복한다  횡으로 탐색이 끝나면, 다음 자식 노드로 내려가기 위해서 왼쪽 ...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/02/26/connect-all-the-nodes.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">testcode</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">섬의 개수 세기</h1>
+    
+    <p class="meta">
+      February 26, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><ul>
+  <li>next 노드를 구하기 위해서는 부모노드의 next를 타고 가서 왼쪽 노드가 있는지 확인한다 없으면 오른쪽 노드</li>
+  <li>왼쪽 오른쪽 자식 노드가 존재하지 않으면 또 부모 노드의 옆의 노드로 가서 위와 동일하게 반복한다</li>
+  <li>횡으로 탐색이 끝나면, 다음 자식 노드로 내려가기 위해서 왼쪽 자식 노드 혹은 오른쪽 자식 노드의 값을 사용해서 동일하게 옆의 노드를 체크한다</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct node {
+    int n;
+    node* left, * right, * next;
+};
+
+node* findNext(node* ptr) {
+    node* next = ptr-&gt;next;
+    while(next) {
+        if(next-&gt;left)
+            return next-&gt;left;
+        if(next-&gt;right)
+            return next-&gt;right;
+        next  = next-&gt;next;
+    }
+    return next;
+};
+
+void connectNext(node* ptr) {
+    
+    node* level_ptr = ptr;    
+    while(level_ptr) {
+        node * current = level_ptr;     
+        while(current) {
+            if(current-&gt;left)
+                current-&gt;left-&gt;next = (!current-&gt;right) ? current-&gt;right: findNext(current);
+            
+            if(current-&gt;right)
+                current-&gt;right = findNext(current);
+            current = current-&gt;next;
+        }
+            
+        if(level_ptr-&gt;left)
+            level_ptr = level_ptr-&gt;left;
+        else
+        if(level_ptr-&gt;right)
+            level_ptr = level_ptr-&gt;right;
+    }
+}
+</code></pre></div></div>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#그래프">#그래프</a>
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>
