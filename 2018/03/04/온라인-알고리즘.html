@@ -2,8 +2,8 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>아주 큰 트리에서 가장 큰 BST 찾기 | c0dingcat</title>
-	<meta name="description" content="문제  You are given a very large binary tree, return the root node of the largest BST in the given tree">
+	<title>외계 신호 분석 - 온라인 알고리즘 | c0dingcat</title>
+	<meta name="description" content="문제  알고리즘 문제해결 전력 19.6 - 외계신호 분석  신호 생성 방식 A[0] = 1983, A[i] = (A[i-1]*214013+2531011) mod 232  슬라이딩 윈도우 기법으로 한꺼번에 많은 메모리를 할당하지 않고, 바로 합이 k가 되는 숫자들을 구하고 있음">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/2018/02/28/find-biggest-bst.html">
+	<link rel="canonical" href="/2018/03/04/%EC%98%A8%EB%9D%BC%EC%9D%B8-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="c0dingcat" href="/feed.xml" />
@@ -147,56 +147,46 @@
     <div class="content">
       <article >
   <header style="background-image: url('/')">
-    <h1 class="title">아주 큰 트리에서 가장 큰 BST 찾기</h1>
+    <h1 class="title">외계 신호 분석 - 온라인 알고리즘</h1>
     
     <p class="meta">
-      February 28, 2018
+      March 4, 2018
       
     </p>
   </header>
   <section class="post-content"><h2 id="문제">문제</h2>
 <ul>
-  <li>You are given a very large binary tree, return the root node of the largest BST in the given tree</li>
-</ul>
-
-<h2 id="분석">분석</h2>
-<ul>
-  <li>왼쪽, 오른쪽 순환하면서 BST 조건에 맞는 노드를 찾기 시작한다</li>
-  <li>현재 노드 값이 알려진 Max 값보다 크게 되면 BST가 아니다</li>
-  <li>현재 노드의 값이 알려진 Min 값보다 작다면 BST가 아니다</li>
-  <li>왼쪽 노드가 BST이고, 오른쪽 노드가 BST라면 두 개의 값을 합치고 +1 해서 현재까지 알려진 최대 BST보다 큰 트리인지 비교한다</li>
-  <li>만약 크다면 현재 노드 값을 헤드값으로 기억한다</li>
+  <li>알고리즘 문제해결 전력 19.6 - 외계신호 분석</li>
+  <li>신호 생성 방식 A[0] = 1983, A[i] = (A[i-1]*214013+2531011) mod 2<sup>32</sup></li>
+  <li>슬라이딩 윈도우 기법으로 한꺼번에 많은 메모리를 할당하지 않고, 바로 합이 k가 되는 숫자들을 구하고 있음</li>
 </ul>
 
 <h2 id="코드">코드</h2>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int find_biggest_bst(
-    node* ptr, 
-    int&amp; min, int &amp;max, 
-    int&amp; total_nodes, 
-    node*&amp; head) {  
-    if(!ptr)
-        return 0;
-    
-    int left = find_biggest_bst(ptr, min, max, total_nodes, head);
-    int current_min = (left ==0)?ptr-&gt;value: min;
-    if((left==-1) || (left != 0 &amp;&amp; ptr-&gt;value &gt; max)) {
-        return -1;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct asig {
+    unsigned seed;
+    asig():seed(1983){}
+    unsinged next() {
+        unsigned ret = seed;
+        seed = ((seed*214013u)+2531011u);
+        return ret % 1000 + 1;
     }
-    
-    int right = find_biggest_bst(ptr, min, max, total_nodes, head);
-    int current_max = (right == 0)? ptr-&gt;value:max;
-    if(right == -1 || (right != 0 &amp;&amp; ptr-&gt;value &lt; min)) {
-        return -1;
-    }
-    
-    int total = left + right + 1;
-    current_min = min;
-    current_max = max;
+}
 
-    if(total_nodes &lt; total) {
-        total_ndoes = total;
+int countRanges(int k, int n) {
+    asig sig_;
+    queue&lt;int&gt; range;
+    int ret = 0, rangeSum = 0;
+    for(int i = 0 ;  i &lt; n ; i++) {
+        int new_sig = sig_.next();
+        rangeSum += new_sig;
+        range.push(new_sig);
+
+        while(rangeSum &gt;k){
+            rangeSum -= range.front(); range.pop();
+        }
+        if(rangeSum == k) ret++;
     }
-    return total;
+    return ret;
 }
 </code></pre></div></div>
 </section>
@@ -204,11 +194,9 @@
 <footer>
   <div class="tags">
     
-    <a class="tag" href="/tags#트리">#트리</a>
-    
     <a class="tag" href="/tags#알고리즘">#알고리즘</a>
     
-    <a class="tag" href="/tags#BST">#BST</a>
+    <a class="tag" href="/tags#온라인 알고리즘">#온라인 알고리즘</a>
     
   </div>
 </footer>

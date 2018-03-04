@@ -91,6 +91,8 @@
 			
 			
 			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -158,6 +160,50 @@
 
 <script>
   window.store = {
+    
+      "2018-03-04-ec-98-a8-eb-9d-bc-ec-9d-b8-ec-95-8c-ea-b3-a0-eb-a6-ac-ec-a6-98-html": {
+        "title": "외계 신호 분석 - 온라인 알고리즘",
+        "tags": "알고리즘, 온라인 알고리즘",
+        "date": "March 4, 2018",
+        "author": "",
+        "category": "",
+        "content": "문제  알고리즘 문제해결 전력 19.6 - 외계신호 분석  신호 생성 방식 A[0] = 1983, A[i] = (A[i-1]*214013+2531011) mod 232  슬라이딩 윈도우 기법으로 한꺼번에 많은 메모리를 할당하지 않고, 바로 합이 k가 되는 숫자들을 구하고 있음코드struct asig {    unsigned seed;    asig():seed(1983){}    unsinged next() {        unsigned ret = seed;        seed = ((seed*214013u)+2531011u);        return ret % 1000 + 1;    }}int countRanges(int k, int n) {    asig sig_;    queue&lt;int&gt; range;    int ret = 0, rangeSum = 0;    for(int i = 0 ;  i &lt; n ; i++) {        int new_sig = sig_.next();        rangeSum += new_sig;        range.push(new_sig);        while(rangeSum &gt;k){            rangeSum -= range.front(); range.pop();        }        if(rangeSum == k) ret++;    }    return ret;}",
+        "url": "//2018/03/04/%EC%98%A8%EB%9D%BC%EC%9D%B8-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html"
+      }
+      ,
+    
+      "2018-03-04-eb-b9-84-eb-8c-80-ec-b9-ad-ed-83-80-ec-9d-bc-eb-a7-81-html": {
+        "title": "비대칭 타일링",
+        "tags": "알고리즘, DP, 확률과 경우의 수, 비대칭, 타일링",
+        "date": "March 4, 2018",
+        "author": "",
+        "category": "",
+        "content": "문제  타일링 문제 + 대칭 타일링을 제외하 경우의 수 탐색  대칭 타일링 방법을 전체 경우에서 제외 혹은 비대칭 타일링 방법을 직접 카운트  책 참조코드int asymmetric(int width) {    if(width%2 ==1)        return (tiling(width) - tiling(width/2) + MOD) %MOD;    int ret = }",
+        "url": "//2018/03/04/%EB%B9%84%EB%8C%80%EC%B9%AD-%ED%83%80%EC%9D%BC%EB%A7%81.html"
+      }
+      ,
+    
+      "2018-03-04-eb-8b-ac-ed-8c-bd-ec-9d-b4-ec-9a-b0-eb-ac-bc-html": {
+        "title": "우물을 기어 오르는 달팽이",
+        "tags": "알고리즘, DP, 확률과 경우의 수, 달팽이",
+        "date": "March 4, 2018",
+        "author": "",
+        "category": "",
+        "content": "문제  깊이가 n인 우물이 있고, 우물의 맨 밑바닥에는 달팽이가 있다  맑은 날에는 2미터를 기어 올라갈 수 있지만, 비가 내리면 1미터를 올라갈 수 있음  비올 확률이 50%일때, m일 안에 달팽이가 우물 끝까지 올라갈 수 있는 확률  점화식 climb(n) = f(n+1,2) + f(n+1,1)코드struct snail {    int n,m;    int vector&lt;map&lt;int,int&gt;&gt;&amp; cache;    int climb(int days, int climbed) {        if(days &gt;= m) return climbed &gt;= n ? 1 : 0;        int&amp; ret = cache[days][climbed];        if(ret != -1) return ret;        return ret = climb(days+1, climbed +2) + climb(days+1, climbed+1);    }}",
+        "url": "//2018/03/04/%EB%8B%AC%ED%8C%BD%EC%9D%B4-%EC%9A%B0%EB%AC%BC.html"
+      }
+      ,
+    
+      "2018-03-04-knapsack-problem-html": {
+        "title": "Knapsack problem",
+        "tags": "알고리즘, DP, 확률과 경우의 수, knapsack",
+        "date": "March 4, 2018",
+        "author": "",
+        "category": "",
+        "content": "문제  배낭에 절박도를 최대화할 수 있는 물건들의 목록들을 계산하는 방법 코드int asymmetric(int width) {    if(width%2 ==1)        return (tiling(width) - tiling(width/2) + MOD) %MOD;    int ret = }",
+        "url": "//2018/03/04/knapsack-problem.html"
+      }
+      ,
     
       "2018-03-03-ed-83-80-ec-9d-bc-eb-a7-81-html": {
         "title": "타일링 방법의 수 세기",
