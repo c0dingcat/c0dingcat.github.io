@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>최장 공통 부분 수열 - Longest Common Subsequence | testcode</title>
+	<meta name="description" content="설명  두 문자열이 주어졌을 때, 두 문자열에 모두 포함된 가장 긴 공통 부분 문자열을 찾는 프로그램을 작성하시오.  두 문자열 ABRACADABRA와 ECADADABRBCRDARA의 공통 부분 문자열은 CA, CADA, ADABR, 빈 문자열 등이 있다. 이 중에서 가장 긴 공통...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/03/01/longest-common-sequence.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/ohhocat.jpg" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">testcode</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">최장 공통 부분 수열 - Longest Common Subsequence</h1>
+    
+    <p class="meta">
+      March 1, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><h2 id="설명">설명</h2>
+<ul>
+  <li>두 문자열이 주어졌을 때, 두 문자열에 모두 포함된 가장 긴 공통 부분 문자열을 찾는 프로그램을 작성하시오.</li>
+  <li>두 문자열 ABRACADABRA와 ECADADABRBCRDARA의 공통 부분 문자열은 CA, CADA, ADABR, 빈 문자열 등이 있다. 이 중에서 가장 긴 공통 부분 문자열은 ADABR이며, 길이는 5이다. 또, 두 문자열이 UPWJCIRUCAXIIRGL와 SBQNYBSBZDFNEV인 경우에는 가장 긴 공통 부분 문자열은 빈 문자열이다.</li>
+  <li>두 개의 문자열에 대한 테이블을 만든다</li>
+  <li>LCS(X<sub>i</sub>, Y<sub>j</sub>) = 0 if x<sub>i</sub> = 0 or y<sub>j</sub> = 0</li>
+  <li>LCS(X<sub>i</sub>, Y<sub>j</sub>) = LCS(X<sub>i-1</sub>, Y<sub>j-1</sub>) +  1 if x<sub>i</sub> = y<sub>j</sub></li>
+  <li>LCS(X<sub>i</sub>, Y<sub>j</sub>) = longest(LCS(X<sub>i-1</sub>, Y<sub>j</sub>),LCS(X<sub>i</sub>, Y<sub>j-1</sub>))  if x<sub>i</sub> != y<sub>j</sub></li>
+</ul>
+
+<h2 id="코드">코드</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int LCS(const string&amp; input, const string&amp; compare) {
+    
+    if(input.size() == 0 || compare.size() == 0)
+        return 0 ;
+    
+    vector&lt;vector&lt;int&gt;&gt; table;
+    for(int i = 0 ; i &lt; input.size(); i++){
+        vector&lt;int&gt; v(compare.size(), 0);
+        table.push_back(v);
+    }
+    
+    if(input[0] == compare[0])
+        table[0][0] = 1;
+    
+    for(int x = 1; x &lt; input.size(); x++) {
+        for(int y = 1; y &lt; compare.size(); y++){
+            if(input[x] == compare[y]) {
+                table[x][y] = table[x-1][y-1] + 1;
+            }
+            else {
+                table[x][y] = max(table[x][y-1], table[x-1][y]);
+            }
+        }
+    }
+    int ret = table[input.size()-1][compare.size()-1]; 
+    return ret;
+}
+</code></pre></div></div>
+
+<ul>
+  <li>아래의 설명은 http://hsp1116.tistory.com/37 에서 가져옴</li>
+  <li>A<sub>i</sub> == B<sub>j</sub>일 때 LCS(i,j) = LCS(i-1,j-1) + 1 이기 떄문에 LCS(i,j) &gt; LCS(i-1,j-1)</li>
+  <li>LCX(i,j) = max(LCS(i-1,j),LCS(i,j-1))의 경우:</li>
+  <li>A<sub>i</sub> != B<sub>j</sub>일 지라도, LCS(i,j) = max(LCS(i-1,j),LCS(i,j-1))를 통해 LCS(i-1,j-1) + 1가 도출 될 수 있다.</li>
+  <li>LCS(i-1,j), LCS(i,j-1)이 둘 다 LCS(i,j)보다 작고 LCS(i-1,j-1)이 LCS(i,j)보다 작은 경우가 Ai==Bj일 때이다.</li>
+  <li>LCS[i][j] &gt; LCS[i-1][j-1] &amp;&amp; LCS[i][j] &gt; LCS[i][j-1] &amp;&amp; LCS[i][j] &gt; LCS[i-1][j])를 조건으로 코드를 구현하면 된다.</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void backTracking(int m, int n){
+    if(m==0 || n ==0) return;
+    if(cache[m][n] &amp;gt; cache[m-1][n-1] &amp;amp;&amp;amp; cache[m][n] &amp;gt; cache[m][n-1] &amp;amp;&amp;amp; cache[m][n] &amp;gt; cache[m-1][n]){
+        &lt;span style="color: rgb(174, 174, 174);" data-evernote-id="407" class="js-evernote-checked"&gt;//문자열 인덱스는 캐시 인덱스보다 1씩 더 작다. &lt;/span&gt;
+        output = input[n-1] + output;
+        backTracking(m-1, n-1);
+    }else if(cache[m][n] &amp;gt; cache[m-1][n] &amp;amp;&amp;amp; cache[m][n] == cache[m][n-1]){
+        backTracking(m, n-1);
+    }else{
+          backTracking(m-1, n);
+    }
+}
+</code></pre></div></div>
+
+<h2 id="참고-및-추가-설명">참고 및 추가 설명</h2>
+<ul>
+  <li>출처: https://www.acmicpc.net/problem/5582</li>
+  <li>추가 설명: https://ko.wikipedia.org/wiki/%EC%B5%9C%EC%9E%A5<em>%EA%B3%B5%ED%86%B5</em>%EB%B6%80%EB%B6%84_%EC%88%98%EC%97%B4</li>
+</ul>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#DP">#DP</a>
+    
+    <a class="tag" href="/tags#Longest Common Subsequence">#Longest Common Subsequence</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>와일드카드 스트링 매치 | testcode</title>
+	<meta name="description" content="와일드카드 스트링 매칭  흔히쓰는 와일드카드 ?, *을 사용해서 문자열이 해당 패턴에 일치하는지 파악한다  예) he?p =&gt; help (O), he?p =&gt; helpp (X), hp =&gt; help (O), hp =&gt; helpp (O)  DP를 사용해서 문제를...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/03/02/%EC%99%80%EC%9D%BC%EB%93%9C%EC%B9%B4%EB%93%9C%EB%A7%A4%EC%B9%AD.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/ohhocat.jpg" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">testcode</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">와일드카드 스트링 매치</h1>
+    
+    <p class="meta">
+      March 2, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><h2 id="와일드카드-스트링-매칭">와일드카드 스트링 매칭</h2>
+<ul>
+  <li>흔히쓰는 와일드카드 ?, *을 사용해서 문자열이 해당 패턴에 일치하는지 파악한다</li>
+  <li>예) he?p =&gt; help (O), he?p =&gt; helpp (X), h<em>p =&gt; help (O), h</em>p =&gt; helpp (O)</li>
+  <li>DP를 사용해서 문제를 풀 수 있다</li>
+</ul>
+
+<h2 id="관찰">관찰</h2>
+<ul>
+  <li>문자열와 패턴을 각각 W, S라고 하자.</li>
+  <li>만약 현재 위치 w,s에 대해 W[w] != S[s]이면 해당 없음</li>
+  <li>W[w] == S[s] 이거나 W[w] == ‘?’이면 매칭이고, 다음 글자 를 계속 조사</li>
+  <li>매칭하지 않아도 W[w] == ‘*‘이면 이후의 글자들을 전부 조사해서 매칭이 되는지의 여부를 파악한다</li>
+  <li>W의 w+1과 S의 s+1 이후의 값들을 확인해서 하나라도 참이면 답은 참이 된다</li>
+  <li>시간복잡도는 O(n<sup>2</sup>)</li>
+</ul>
+
+<h2 id="점화식">점화식</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    bool matchWords(vector&lt;vector&lt;int&gt;&gt;&amp; cache, 
+        const string&amp; W,
+        int w, 
+        const string&amp; S,
+        int s) {
+
+            int&amp; ret = cache[w][s];
+            if(ret != -1)
+                return ret;
+            
+            while(s &lt; S.size() &amp;&amp; w &lt; W.size() &amp;&amp;
+                    (W[w] == '?' || W[w] == S[s]) {
+                        ++w;
+                        ++s;
+                    }
+            
+            if(w==W.size()) return ret = (s==S.size());
+            if(W[w] == '*') {
+                if(matchWords(cache, W, w+1, S, s) ||
+                    (s &lt; S.size() &amp;&amp; matchWords(cache, W, w, S, s+1))
+                    return ret = 1;
+            }
+
+            return ret = 0;
+        }
+</code></pre></div></div>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#DP">#DP</a>
+    
+    <a class="tag" href="/tags#와일드카드">#와일드카드</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

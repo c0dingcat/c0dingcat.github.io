@@ -1,1 +1,251 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>최장 증가 수열 - Longest increasing subsequence | testcode</title>
+	<meta name="description" content="  최장 증가 수열 문제 - DP로 풀거나 lower_bound 사용해서 풀 수 있음  DP의 경우는 O(N^2), lower_bound의 경우는 O(NlogN)">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/02/28/longest-increasing-sequence.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/ohhocat.jpg" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">testcode</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">최장 증가 수열 - Longest increasing subsequence</h1>
+    
+    <p class="meta">
+      February 28, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><ul>
+  <li>최장 증가 수열 문제 - DP로 풀거나 lower_bound 사용해서 풀 수 있음</li>
+  <li>DP의 경우는 O(N^2), lower_bound의 경우는 O(NlogN)</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int getMaxLIS(const vector&lt;int&gt;&amp; input, int pos, int value, int current) {
+    if(pos &gt;= input.size())
+        return current;
+       
+    if(input[pos] &gt; value) {
+        return getMaxLIS(input, pos+1, input[pos], current+1);
+    }
+    else {
+        return getMaxLIS(input, pos+2, value, current);
+    }
+}
+
+int findMaxLIS(const vector&lt;int&gt;&amp; input) {
+    int maxLIS = 0 ;
+    for(int i = 0; i &lt; input.size(); i++) {
+        maxLIS = max(maxLIS, getMaxLIS(input,i+1,input[i],1));
+    }
+    return maxLIS;
+}
+
+int main() {
+    vector&lt;int&gt; input = {10,20,40,25,20,50,30,70,85};
+    cout &lt;&lt; "maxLIS: " &lt;&lt; findMaxLIS(input) &lt;&lt; endl;
+}
+</code></pre></div></div>
+
+<ul>
+  <li>Lower Bound 사용 - O(NLogN)</li>
+  <li>하나씩 숫자를 스트리밍하면서 low bound를 구하면 최장으로 증가할 수 있는 수열의 최대 길이 값을 구할 수 있다</li>
+  <li>알고리즘 출처: http://jason9319.tistory.com/113</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void get_lower_bound(vector&lt;int&gt;&amp; input, int val) {
+    if (input.back() &lt; val) {
+        input.push_back(val);
+    }
+    else {
+        auto it = lower_bound(input.begin(), input.end(), val);
+        *it = val;
+    }
+}
+ 
+int LIS(const vector&lt;int&gt;&amp; input) {
+    vector&lt;int&gt; min_bound;
+    const int MAX = 0x7fffffff;
+    min_bound.push_back(MAX);
+    
+    for(int i = 0; i &lt; input.size(); i++ ) {
+        get_lower_bound(min_bound, input[i]);
+    }
+    
+    return min_bound.size();
+}
+</code></pre></div></div>
+
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#DP">#DP</a>
+    
+    <a class="tag" href="/tags#LIS">#LIS</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

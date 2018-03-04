@@ -2,8 +2,8 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>섬의 개수 세기 | testcode</title>
-	<meta name="description" content="  next 노드를 구하기 위해서는 부모노드의 next를 타고 가서 왼쪽 노드가 있는지 확인한다 없으면 오른쪽 노드  왼쪽 오른쪽 자식 노드가 존재하지 않으면 또 부모 노드의 옆의 노드로 가서 위와 동일하게 반복한다  횡으로 탐색이 끝나면, 다음 자식 노드로 내려가기 위해서 왼쪽 ...">
+	<title>삼각형 위의 최대 경로 개수 세기 | testcode</title>
+	<meta name="description" content="출처  알고리즘 문제 해결 전략 - 8.11 경우의 수와 확률">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/2018/02/26/connect-all-the-nodes.html">
+	<link rel="canonical" href="/2018/03/03/%EC%82%BC%EA%B0%81%ED%98%95-%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C-%EA%B0%9C%EC%88%98%EC%84%B8%EA%B8%B0.html">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
@@ -145,55 +145,55 @@
     <div class="content">
       <article >
   <header style="background-image: url('/')">
-    <h1 class="title">섬의 개수 세기</h1>
+    <h1 class="title">삼각형 위의 최대 경로 개수 세기</h1>
     
     <p class="meta">
-      February 26, 2018
+      March 3, 2018
       
     </p>
   </header>
-  <section class="post-content"><ul>
-  <li>next 노드를 구하기 위해서는 부모노드의 next를 타고 가서 왼쪽 노드가 있는지 확인한다 없으면 오른쪽 노드</li>
-  <li>왼쪽 오른쪽 자식 노드가 존재하지 않으면 또 부모 노드의 옆의 노드로 가서 위와 동일하게 반복한다</li>
-  <li>횡으로 탐색이 끝나면, 다음 자식 노드로 내려가기 위해서 왼쪽 자식 노드 혹은 오른쪽 자식 노드의 값을 사용해서 동일하게 옆의 노드를 체크한다</li>
+  <section class="post-content"><h2 id="출처">출처</h2>
+<ul>
+  <li>알고리즘 문제 해결 전략 - 8.11 경우의 수와 확률</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct node {
-    int n;
-    node* left, * right, * next;
-};
+<h2 id="문제설명">문제설명</h2>
+<ul>
+  <li>이전의 문제는 최대 경로의 합을 구했을뿐, 경로 자체는 구하지 않았다</li>
+  <li>최대 경로는 유일하지 않을 수도 있다</li>
+  <li>문제를 해결하기 위해 두 개의 다른 동적 계획법 문제를 해결</li>
+  <li>합을 먼저 구하고, 그 합을 구하는 도중에 만든 캐싱을 통해 패스를 구현</li>
+</ul>
 
-node* findNext(node* ptr) {
-    node* next = ptr-&gt;next;
-    while(next) {
-        if(next-&gt;left)
-            return next-&gt;left;
-        if(next-&gt;right)
-            return next-&gt;right;
-        next  = next-&gt;next;
-    }
-    return next;
-};
-
-void connectNext(node* ptr) {
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct triangle {
+    vector&lt;vector&lt;int&gt;&gt; input;
+    vector&lt;vector&lt;int&gt;&gt; cache;
+    vector&lt;vector&lt;int&gt;&gt; countCache;
     
-    node* level_ptr = ptr;    
-    while(level_ptr) {
-        node * current = level_ptr;     
-        while(current) {
-            if(current-&gt;left)
-                current-&gt;left-&gt;next = (!current-&gt;right) ? current-&gt;right: findNext(current);
-            
-            if(current-&gt;right)
-                current-&gt;right = findNext(current);
-            current = current-&gt;next;
-        }
-            
-        if(level_ptr-&gt;left)
-            level_ptr = level_ptr-&gt;left;
-        else
-        if(level_ptr-&gt;right)
-            level_ptr = level_ptr-&gt;right;
+    int path(int y, int x) {
+        if(y == input.size() -1)
+            return input[y][x];
+        
+        int&amp; ret = cache[y][x];
+        if(ret != -1)
+            return ret;
+        
+        return ret = max(path(y+1,x), path(y+1,x+1))+input[y][x];
+    }
+    
+    int count(int y, int x) {
+        if(y==input.size()-1)
+            return 1;
+        
+        int &amp; ret = countCache[y][x];
+        if(ret!=-1)
+            return ret;
+        
+        if(path(y+1,x+1)&gt;=path(y+1,x))
+            ret += path(y+1,x+1);
+        if(path(y+1,x+1)&lt;=path(y+1,x))
+            ret += path(y+1,x);
+        return ret;
     }
 }
 </code></pre></div></div>
@@ -202,9 +202,11 @@ void connectNext(node* ptr) {
 <footer>
   <div class="tags">
     
-    <a class="tag" href="/tags#그래프">#그래프</a>
-    
     <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#DP">#DP</a>
+    
+    <a class="tag" href="/tags#tiling">#tiling</a>
     
   </div>
 </footer>

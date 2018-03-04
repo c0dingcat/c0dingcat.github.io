@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/blog/page4/">
+	<link rel="canonical" href="/blog/page7/">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
@@ -151,22 +151,22 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/02/28/longest-increasing-sequence.html">
-            최장 증가 수열 - Longest increasing subsequence
+          <a class="post-link" href="/2018/02/25/LCA.html">
+            Lowest Common Ancestor
           </a>
         </h1>
         <p class="meta">
-          February 28, 2018
+          February 25, 2018
         </p>
       </header>
       <div class="excerpt">
-        <ul>
-  <li>최장 증가 수열 문제 - DP로 풀거나 lower_bound 사용해서 풀 수 있음</li>
-  <li>DP의 경우는 O(N^2), lower_bound의 경우는 O(NlogN)</li>
+        <h2 id="출처">출처</h2>
+<ul>
+  <li>http://www.geeksforgeeks.org/lowest-common-ancestor-binary-tree-set-1/</li>
 </ul>
 
 
-        <a class="button" href="/2018/02/28/longest-increasing-sequence.html">
+        <a class="button" href="/2018/02/25/LCA.html">
           Continue reading
         </a>
       </div>
@@ -175,23 +175,23 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/02/28/linkedlist-to-bst.html">
-            정렬된 LinkedList를 BST로 변환하기
+          <a class="post-link" href="/2018/02/25/Clone-A-Tree-With-Random-Pointer.html">
+            Clone a binary tree with random pointers
           </a>
         </h1>
         <p class="meta">
-          February 28, 2018
+          February 25, 2018
         </p>
       </header>
       <div class="excerpt">
         <ul>
-  <li>정렬된 linkedlist를 binary search 방식으로 BST로 변환한다</li>
-  <li>0~n개의 노드가 있을떄 중간 노드(n/2)의 값을 구하고 왼쪽 노드는 왼쪽 중간 노드를 구해서 (0~n/2의 중간값 n/4) 값을 설정한다</li>
-  <li>오른쪽 노드의 값은 n/2에서 n까지의 중간값을 구해서 설정하는 방식으로 재귀적으로 호출해서 BST를 완성한다.</li>
+  <li>Clone a Binary Tree with Random Pointers</li>
+  <li>Given a Binary Tree where every node has following structure.</li>
+  <li>The random pointer points to any random node of the binary tree and can even point to NULL, clone the given binary tree.</li>
 </ul>
 
 
-        <a class="button" href="/2018/02/28/linkedlist-to-bst.html">
+        <a class="button" href="/2018/02/25/Clone-A-Tree-With-Random-Pointer.html">
           Continue reading
         </a>
       </div>
@@ -200,78 +200,77 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/02/28/find-biggest-bst.html">
-            아주 큰 트리에서 가장 큰 BST 찾기
+          <a class="post-link" href="/2018/02/24/%ED%94%84%EB%A6%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
+            프림 알고리즘
           </a>
         </h1>
         <p class="meta">
-          February 28, 2018
+          February 24, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <ul>
+  <li>최소 신장 트리를 구하는데 사용한다</li>
+  <li>정점을 선택하고 DST와 약간은 유사하게 인접한 정점들의 최소 값을 구해서 트리에 추가한다</li>
+  <li>minimum priority queue에 인접한 vertex와 cost 정보를 넣는다</li>
+  <li>최소 cost를 가지는 vertex 정보를 뽑아온다</li>
+  <li>이미 방문했는지 확인하다</li>
+  <li>방문 안했으면 인접한 노드들을 queue에 다시 집어 넣는다</li>
+  <li>최소 값 기준으로 계속 값을 가져와서 스패닝 트리를 만든다</li>
+  <li>이때 시간 복잡도는 인접 해렬, 검색의 경우는 V^2</li>
+  <li>이진 힙 및 인접리스트 O((V+E)logV)=ElogV</li>
+</ul>
+
+
+        <a class="button" href="/2018/02/24/%ED%94%84%EB%A6%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/02/24/%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BC.html">
+            다익스트라 알고리즘
+          </a>
+        </h1>
+        <p class="meta">
+          February 24, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <ul>
+  <li>처음 vertex에서 시작한다</li>
+  <li>정점에 인접한 정점들과 거리를 우선순위 큐에 넣는다</li>
+  <li>거리순으로 오름차순 정렬해서 기존에 알려진 최소거리와 비교한다</li>
+  <li>만약 기존에 알려진 최소거리보다 작으면 기존의 최소거리를 업데이트한다</li>
+  <li>목적지에 도착할때까지 계속 반복한다</li>
+</ul>
+
+
+        <a class="button" href="/2018/02/24/%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BC.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/02/17/median-value-of-bst.html">
+            median valud of BST
+          </a>
+        </h1>
+        <p class="meta">
+          February 17, 2018
         </p>
       </header>
       <div class="excerpt">
         <h2 id="문제">문제</h2>
-<ul>
-  <li>You are given a very large binary tree, return the root node of the largest BST in the given tree</li>
-</ul>
 
 
-        <a class="button" href="/2018/02/28/find-biggest-bst.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/02/28/convert-bst-to-double-linked-list.html">
-            Convert Bst To Double Linked List
-          </a>
-        </h1>
-        <p class="meta">
-          February 28, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        
-<hr />
-<p>layout: post
-title: BST를 Double Linked List로 변환하기
-tags: [그래프,알고리즘, BST, Linked List]
-—</p>
-
-
-        <a class="button" href="/2018/02/28/convert-bst-to-double-linked-list.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/02/26/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
-            크루스칼 알고리즘
-          </a>
-        </h1>
-        <p class="meta">
-          February 26, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        <ul>
-  <li>크루스칼 알고리즘</li>
-  <li>edge의 cost별로 정렬한다</li>
-  <li>하나씩 빼서 cycle을 만드는지 확인한다</li>
-  <li>사이클을 만들지 않는 edge들만 뽑아서 리턴한다</li>
-  <li>상당히 간단하다</li>
-  <li>사이클을 만드는데 사용하는 disjoined_set 알고리즘은 간단하지만 효과적이다</li>
-  <li>시간 복잡도는 모든 edge에 대해 정렬하기 때문에 O(ElogE)</li>
-  <li>disjoined set의 경우는 시간복잡도가 ELogE보다 작기 때문에, 정렬하는데 드는 시간이 driving force</li>
-</ul>
-
-
-        <a class="button" href="/2018/02/26/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
+        <a class="button" href="/2018/02/17/median-value-of-bst.html">
           Continue reading
         </a>
       </div>
@@ -282,16 +281,11 @@ tags: [그래프,알고리즘, BST, Linked List]
   
   <div class="pagination">
     
-    <a href="/blog/page3" class="button" >
+    <a href="/blog/page6" class="button" >
       <i class="fa fa-chevron-left"></i>
       Prev
     </a>
     
-    
-    <a href="/blog/page5" class="button" >
-      Next
-      <i class="fa fa-chevron-right"></i>
-    </a>
     
   </div>
   

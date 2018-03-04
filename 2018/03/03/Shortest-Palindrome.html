@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>KMP 알고리즘 | testcode</title>
+	<meta name="description" content="Shortest Palindrome">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/03/03/Shortest-Palindrome.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/ohhocat.jpg" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">testcode</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">KMP 알고리즘</h1>
+    
+    <p class="meta">
+      March 3, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><h2 id="shortest-palindrome">Shortest Palindrome</h2>
+
+<h3 id="출처">출처</h3>
+<ul>
+  <li>https://leetcode.com/problems/shortest-palindrome/description/</li>
+</ul>
+
+<h3 id="문제">문제</h3>
+<ul>
+  <li>주어진 스티링 S에 대해서 글자들을 앞부분에 더해서 회문으로 만들 수 있다. 이때, 가장 짧은 글자를 더해서 만들 수 있는 회문을 구하라.</li>
+  <li>Given “aacecaaa”, return “aaacecaaa”.
+Given “abcd”, return “dcbabcd”.</li>
+</ul>
+
+<h3 id="분석">분석</h3>
+<ul>
+  <li>Bruteforce로 할 수 있는 방법:
+    <ul>
+      <li>S를 reverse 해서 reversed 된 스트링의 substring과 S의 서브스트링을 비교한다.</li>
+      <li>Time complexity: O(N2)</li>
+      <li>Space complexity: O(N)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>string shortestPalindrome(string s)
+{
+ int n = s.size();
+ string rev(s);
+ reverse(rev.begin(), rev.end());
+ int j = 0;
+ for (int i = 0; i &lt; n; i++) {
+  if (s.substr(0, n - i) == rev.substr(i))
+      return rev.substr(0, i) + s;
+ }
+ return "";
+}
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>KMP 방식을 사용한다
+    <ul>
+      <li>KMP 방식에 따라 Fail function lookup table 을 만들면 얼마만큼의 prefix가 현재까지 매칭되었는지를 알 수 있고 이 값을 사용해서 panlindrome을 만들기 위해 필요한 문자열을 알 수 있게 된다.</li>
+      <li>입력 S을 reverse한후 ‘#’ 와 함께 원래 입력에 더한다 string input = s + ‘#’ + reverse(s)</li>
+      <li>’#’은 원래 값과 reverse된 문자열이 섞이지 않도록 필요</li>
+      <li>KMP fail_function을 만들어서 surfix와 동일한 prefix의 최장 길이를 구할 수 있고 이 길이를 알면 reverse된 문자열에서 필요한 문자열을 뽑아낼 수 있다
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  string shortestPalindrome(string input) {
+        
+  int n = input.length();
+  string rev(input);
+  std::reverse(rev.begin(), rev.end());
+        
+  string source = input + "#" + rev;
+  int len = source.size();   
+         
+  vector&lt;int&gt; fail_table(len, 0);
+        
+  for(int pos = 1; pos &lt; len; pos++){
+      int last_match_pos = fail_table[pos-1];
+      while(last_match_pos &gt; 0 
+            &amp;&amp; source[pos] != source[last_match_pos])
+          last_match_pos = fail_table[last_match_pos-1];
+            
+      if(source[pos] == source[last_match_pos])
+          ++last_match_pos;
+            
+      fail_table[pos] = last_match_pos;
+  } 
+        
+  return rev.substr(0, n - fail_table[len - 1]) + input;         
+  }
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#문자열">#문자열</a>
+    
+    <a class="tag" href="/tags#KMP">#KMP</a>
+    
+    <a class="tag" href="/tags#Panlindrome">#Panlindrome</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

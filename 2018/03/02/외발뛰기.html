@@ -2,8 +2,8 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>섬의 개수 세기 | testcode</title>
-	<meta name="description" content="  next 노드를 구하기 위해서는 부모노드의 next를 타고 가서 왼쪽 노드가 있는지 확인한다 없으면 오른쪽 노드  왼쪽 오른쪽 자식 노드가 존재하지 않으면 또 부모 노드의 옆의 노드로 가서 위와 동일하게 반복한다  횡으로 탐색이 끝나면, 다음 자식 노드로 내려가기 위해서 왼쪽 ...">
+	<title>외발뛰기 | testcode</title>
+	<meta name="description" content="외발뛰기  게임판의 왼쪽 칸 위에서 오른쪽 칸에 도착하는 하는 것이 가능하는지 파악하는 것이 목적  각 게임판에 있는 숫자만큼 아래나 오른쪽으로 이동 가능  DP를 사용하며, 메모이제이션을 사용해서 문제를 빨리 해결 가능  미로의 끝까지 가는 것을 확인하는 것이 목적이기 때문에, ...">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/2018/02/26/connect-all-the-nodes.html">
+	<link rel="canonical" href="/2018/03/02/%EC%99%B8%EB%B0%9C%EB%9B%B0%EA%B8%B0.html">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
@@ -145,56 +145,49 @@
     <div class="content">
       <article >
   <header style="background-image: url('/')">
-    <h1 class="title">섬의 개수 세기</h1>
+    <h1 class="title">외발뛰기</h1>
     
     <p class="meta">
-      February 26, 2018
+      March 2, 2018
       
     </p>
   </header>
-  <section class="post-content"><ul>
-  <li>next 노드를 구하기 위해서는 부모노드의 next를 타고 가서 왼쪽 노드가 있는지 확인한다 없으면 오른쪽 노드</li>
-  <li>왼쪽 오른쪽 자식 노드가 존재하지 않으면 또 부모 노드의 옆의 노드로 가서 위와 동일하게 반복한다</li>
-  <li>횡으로 탐색이 끝나면, 다음 자식 노드로 내려가기 위해서 왼쪽 자식 노드 혹은 오른쪽 자식 노드의 값을 사용해서 동일하게 옆의 노드를 체크한다</li>
+  <section class="post-content"><h2 id="외발뛰기">외발뛰기</h2>
+<p><img src="/assets/img/jumpgame.png" alt="외발뛰기" /></p>
+<ul>
+  <li>게임판의 왼쪽 칸 위에서 오른쪽 칸에 도착하는 하는 것이 가능하는지 파악하는 것이 목적</li>
+  <li>각 게임판에 있는 숫자만큼 아래나 오른쪽으로 이동 가능</li>
+  <li>DP를 사용하며, 메모이제이션을 사용해서 문제를 빨리 해결 가능</li>
+  <li>미로의 끝까지 가는 것을 확인하는 것이 목적이기 때문에, 아래로 바로 내려가거나 오른쪽으로 가는 두 가지 방법중 한가지라도 걸리면, true가 된다</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>점화식: f(x, y) = (f(x, y + map[y][x])</td>
+          <td> </td>
+          <td>f(x+ map[y][x], y))</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct node {
-    int n;
-    node* left, * right, * next;
-};
-
-node* findNext(node* ptr) {
-    node* next = ptr-&gt;next;
-    while(next) {
-        if(next-&gt;left)
-            return next-&gt;left;
-        if(next-&gt;right)
-            return next-&gt;right;
-        next  = next-&gt;next;
-    }
-    return next;
-};
-
-void connectNext(node* ptr) {
+<h2 id="코드">코드</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bool jump(vector&lt;vector&lt;int&gt;&gt;&amp; map, vector&lt;vector&lt;int&gt;&gt;&amp; cache, int x, int y) {
+    int width = map[0].size();
+    int height = map.size();
+    if (x &gt;= width || y &gt;= height )
+        return false;
     
-    node* level_ptr = ptr;    
-    while(level_ptr) {
-        node * current = level_ptr;     
-        while(current) {
-            if(current-&gt;left)
-                current-&gt;left-&gt;next = (!current-&gt;right) ? current-&gt;right: findNext(current);
-            
-            if(current-&gt;right)
-                current-&gt;right = findNext(current);
-            current = current-&gt;next;
-        }
-            
-        if(level_ptr-&gt;left)
-            level_ptr = level_ptr-&gt;left;
-        else
-        if(level_ptr-&gt;right)
-            level_ptr = level_ptr-&gt;right;
-    }
+    if(x==width=1 &amp;&amp; y == height-1)
+        return true;
+
+    int&amp; val = cache[y][x];
+    if(val != -1)
+        return (val==1);
+    
+    int jumpSize = map[y][x];
+    return val = (jump(map, cache, x+jumpSize, y) || jump(map,cache, x, y+jumpSize));
 }
 </code></pre></div></div>
 </section>
@@ -202,9 +195,9 @@ void connectNext(node* ptr) {
 <footer>
   <div class="tags">
     
-    <a class="tag" href="/tags#그래프">#그래프</a>
-    
     <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#DP">#DP</a>
     
   </div>
 </footer>

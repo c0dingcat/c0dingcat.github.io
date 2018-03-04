@@ -2,8 +2,8 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>섬의 개수 세기 | testcode</title>
-	<meta name="description" content="  next 노드를 구하기 위해서는 부모노드의 next를 타고 가서 왼쪽 노드가 있는지 확인한다 없으면 오른쪽 노드  왼쪽 오른쪽 자식 노드가 존재하지 않으면 또 부모 노드의 옆의 노드로 가서 위와 동일하게 반복한다  횡으로 탐색이 끝나면, 다음 자식 노드로 내려가기 위해서 왼쪽 ...">
+	<title>합친 LIS | testcode</title>
+	<meta name="description" content="출처  알고리즘 문제 해결 전랙 1권 8.5">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/2018/02/26/connect-all-the-nodes.html">
+	<link rel="canonical" href="/2018/03/03/JIS.html">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
@@ -145,56 +145,52 @@
     <div class="content">
       <article >
   <header style="background-image: url('/')">
-    <h1 class="title">섬의 개수 세기</h1>
+    <h1 class="title">합친 LIS</h1>
     
     <p class="meta">
-      February 26, 2018
+      March 3, 2018
       
     </p>
   </header>
-  <section class="post-content"><ul>
-  <li>next 노드를 구하기 위해서는 부모노드의 next를 타고 가서 왼쪽 노드가 있는지 확인한다 없으면 오른쪽 노드</li>
-  <li>왼쪽 오른쪽 자식 노드가 존재하지 않으면 또 부모 노드의 옆의 노드로 가서 위와 동일하게 반복한다</li>
-  <li>횡으로 탐색이 끝나면, 다음 자식 노드로 내려가기 위해서 왼쪽 자식 노드 혹은 오른쪽 자식 노드의 값을 사용해서 동일하게 옆의 노드를 체크한다</li>
+  <section class="post-content"><h2 id="출처">출처</h2>
+<ul>
+  <li>알고리즘 문제 해결 전랙 1권 8.5</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct node {
-    int n;
-    node* left, * right, * next;
-};
+<h2 id="문제">문제</h2>
+<ul>
+  <li>두 개의 정수 수열 A와 B에서 각각 길이 0 이상의 증가 부분 수열을 얻은 뒤에 이들을 크기 순서대로 합친 것을 합친 증가 부분 수열이라고 함</li>
+  <li>A와 B가 주어질때 합친 LIS의 길이를 계산하는 프로그램을 작성하시오</li>
+  <li>이걸 왜 DP로 풀었는지는 의문이다</li>
+  <li>그냥 합치면 되는거 아닌가?</li>
+</ul>
 
-node* findNext(node* ptr) {
-    node* next = ptr-&gt;next;
-    while(next) {
-        if(next-&gt;left)
-            return next-&gt;left;
-        if(next-&gt;right)
-            return next-&gt;right;
-        next  = next-&gt;next;
-    }
-    return next;
-};
+<h2 id="코드">코드</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const long long NEGINF = numeric_limit&lt;long long&gt;::min();
 
-void connectNext(node* ptr) {
+int jlis(vector&lt;vector&lt;int&gt;&gt;&amp; cache, 
+         const vector&lt;int&gt;&amp; A, int pos_a, 
+         const vector&lt;int&gt;&amp; B, int pos_b) {
     
-    node* level_ptr = ptr;    
-    while(level_ptr) {
-        node * current = level_ptr;     
-        while(current) {
-            if(current-&gt;left)
-                current-&gt;left-&gt;next = (!current-&gt;right) ? current-&gt;right: findNext(current);
-            
-            if(current-&gt;right)
-                current-&gt;right = findNext(current);
-            current = current-&gt;next;
+    // -1부터 시작할 수 있기 때문에 인덱스에 +1을 해준다
+    int&amp; ret = cache[pos_a+1][pos_b+1];
+    if(ret!= -1) return ret;
+    
+    ret = 2; // 무조건 두개 이상의 요소가 있기 때문에...
+    long long a = (pos_a == -1)?NEGINF:A[pos_a];
+    long long b = (pos_b == -1)?NEGINF:B[pos_b];
+    long long max_element = max(a,b);
+    
+    for(int ap = pos_a+1; ap &lt; A.size(); ap++)
+        if(max_element &lt; A[ap])
+            ret = max(ret, jlis(cache, A, ap, B, pos_b)+1);
+    
+    for(int bp = pos_b + 1; bp &lt; B.size(); bp++){
+        if(max_element &lt; B[bp]){
+            ret = max(ret, jlis(cache, A, pos_a, B, bp) +1);
         }
-            
-        if(level_ptr-&gt;left)
-            level_ptr = level_ptr-&gt;left;
-        else
-        if(level_ptr-&gt;right)
-            level_ptr = level_ptr-&gt;right;
     }
+    return ret;
 }
 </code></pre></div></div>
 </section>
@@ -202,9 +198,9 @@ void connectNext(node* ptr) {
 <footer>
   <div class="tags">
     
-    <a class="tag" href="/tags#그래프">#그래프</a>
-    
     <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#DP">#DP</a>
     
   </div>
 </footer>

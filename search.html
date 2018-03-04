@@ -43,7 +43,7 @@
 	<div class="branding">
 		
 		<a href="/">
-			<img class="avatar" src="/assets/img/avatar.png" alt=""/>
+			<img class="avatar" src="/assets/img/ohhocat.jpg" alt=""/>
 		</a>
 		
 		<h1 class="site-title">
@@ -77,6 +77,10 @@
 					tags
 				</a>
 			</li>
+			
+			
+			
+			
 			
 			
 			
@@ -155,6 +159,160 @@
 <script>
   window.store = {
     
+      "2018-03-03-ed-83-80-ec-9d-bc-eb-a7-81-html": {
+        "title": "타일링 방법의 수 세기",
+        "tags": "알고리즘, DP, tiling",
+        "date": "March 3, 2018",
+        "author": "",
+        "category": "",
+        "content": "출처  알고리즘 문제 해결 전략 - 8.11 경우의 수와 확률문제설명  2n 크기의 사각형을 21 크기의 타일로 채우는 방법의 수를 계산하는 문제  타일을 길게 붙이거나 (21) 혹은 옆으로 누워서 붙이는 경우 (2n)로 붙이는 경우를 생각해서 계산  즉, f(n) = f(n-1) + f(n-2)const int mod_num = 1000000007;int tiling(const vector&lt;int&gt;&amp; input, int width) {    if(width &lt;=1) return 1;    int &amp; ret = cache[width];    if(ret !=-1) return ret;    return ret = (tiling(input, width-2) + tiling(input, width-1))%mod_num;}",
+        "url": "//2018/03/03/%ED%83%80%EC%9D%BC%EB%A7%81.html"
+      }
+      ,
+    
+      "2018-03-03-ec-9b-90-ec-a3-bc-ec-9c-a8-ec-99-b8-ec-9a-b0-ea-b8-b0-html": {
+        "title": "원주율 외우기",
+        "tags": "알고리즘, DP",
+        "date": "March 3, 2018",
+        "author": "",
+        "category": "",
+        "content": "출처  알고리즘 문제 해결 전략 - 문제 8.7관찰  원주율을 몇 만 자리까지 외우기 위해 일반적으로 쓰는 방법은 3~5글자 정도로 끓어서 외운다  주어진 숫자에 대해 최소의 난이도를 구하는 방법을 계산하시오    경우                  예                   난이도모든 숫자가 같을때               ex)333,55555         1숫자가 1씩 증가 혹은 감소         ex)23456,3210        2두개의 숫자가 번갈아 가면서 나타날때  ex)323, 54545       4...      코드  DP를 써서 점화식을 먼저 세운다  F(L) = min(F(L,3), F(L,4), F(L,5))  F(L,3) -&gt; min(F(L,4), F(L,5), F(L,6)) + classify(L,3)  classify하는 부분은 경우에 따라 파싱하면 됨  DP의 점화식에 따른 구현을 눈여겨 보도록 하자int classify(const string&amp; input, int spos, int length) {    /// 문자열을 끓어서 classify 해서 돌려준다}int memorize(const string&amp; input, vector&lt;int&gt;&amp; cache, int begin) {    if(begin == input.size())        return 0;        int&amp; ret = cache[begin];    if(ret != -1)        return ret;    ret = INF;    // 3~5글자 사이로 끓어 읽어서 최소값을 구한다    for(int L = 3 ; L &lt;= 5; ++L) {        if(begin + L &lt;= input.size()) {            ret = min(ret,                     memorize(input, cache, begin+L) + classify(input, begin, L));        }    }    return ret;}",
+        "url": "//2018/03/03/%EC%9B%90%EC%A3%BC%EC%9C%A8%EC%99%B8%EC%9A%B0%EA%B8%B0.html"
+      }
+      ,
+    
+      "2018-03-03-ec-82-bc-ea-b0-81-ed-98-95-ec-b5-9c-eb-8c-80-ea-b2-bd-eb-a1-9c-ea-b0-9c-ec-88-98-ec-84-b8-ea-b8-b0-html": {
+        "title": "삼각형 위의 최대 경로 개수 세기",
+        "tags": "알고리즘, DP, tiling",
+        "date": "March 3, 2018",
+        "author": "",
+        "category": "",
+        "content": "출처  알고리즘 문제 해결 전략 - 8.11 경우의 수와 확률문제설명  이전의 문제는 최대 경로의 합을 구했을뿐, 경로 자체는 구하지 않았다  최대 경로는 유일하지 않을 수도 있다  문제를 해결하기 위해 두 개의 다른 동적 계획법 문제를 해결  합을 먼저 구하고, 그 합을 구하는 도중에 만든 캐싱을 통해 패스를 구현struct triangle {    vector&lt;vector&lt;int&gt;&gt; input;    vector&lt;vector&lt;int&gt;&gt; cache;    vector&lt;vector&lt;int&gt;&gt; countCache;        int path(int y, int x) {        if(y == input.size() -1)            return input[y][x];                int&amp; ret = cache[y][x];        if(ret != -1)            return ret;                return ret = max(path(y+1,x), path(y+1,x+1))+input[y][x];    }        int count(int y, int x) {        if(y==input.size()-1)            return 1;                int &amp; ret = countCache[y][x];        if(ret!=-1)            return ret;                if(path(y+1,x+1)&gt;=path(y+1,x))            ret += path(y+1,x+1);        if(path(y+1,x+1)&lt;=path(y+1,x))            ret += path(y+1,x);        return ret;    }}",
+        "url": "//2018/03/03/%EC%82%BC%EA%B0%81%ED%98%95-%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C-%EA%B0%9C%EC%88%98%EC%84%B8%EA%B8%B0.html"
+      }
+      ,
+    
+      "2018-03-03-get-max-even-sum-from-tree-html": {
+        "title": "Get Max Even Sum From Tree",
+        "tags": "",
+        "date": "March 3, 2018",
+        "author": "",
+        "category": "",
+        "content": "문제  output the maximum EVEN sum along any path  ![/assets/img/maxevensum.png]  트리의 각 노드들을 더해서 최대값이자 짝수인 값을 구하기  짝수가 된다는 말에 잘 주목을 해야 할 것 같다  답이 없어서 정확하게 파악은 안되지만…  모든 경로마다의 합을 구해서 정렬을 해서 짝수를 구하는 방법이 있지만, 이건 별로 안좋아할듯  그게 아니면 짝수가 되는 경우를 확인해서 최대 값을 구하는 방법이 있을것 같다  문제가 워낙 간단하게 나와서 정확한 제약조건은 알 길이 없지만, 만약 정할 수 있다면 루트를 거쳐야 한다와 마이너스 값은 허용되지 않음 두가지 경우를 설정하고 싶다  루트를 거쳐야 한다면 루트가 홀수인 경우는 왼쪽이 홀수 아니면 오른쪽이 홀수 값을 리턴해야 한다  루트가 짝수인 경우는 왼쪽, 오른쪽 둘다 홀수 혹은 짝수가 되어야 한다  그리고 post order 방식으로 트리를 순환하고, 노도의 값을 먼저 더해서 노드의 왼쪽 오른쪽 노드의 탐색이 끝난 후에 값을 확인한다#include &lt;iostream&gt;struct node {    int value;    node* left, *right;    node(int n):value(n){}};int oddNodeAdd(node* ptr, int total) {    if(!ptr)        return total;        int left = oddNodeAdd(ptr-&gt;left, total + ptr-&gt;value);    int right = oddNodeAdd(ptr-&gt;right, total + ptr-&gt;value);        int ld = left % 2, rd = right % 2;    if(ld == 1 &amp;&amp; rd ==1)        return max(left, right);        if(ld==1 &amp;&amp; rd==0)        return ld;        if(rd==1 &amp;&amp; ld==0)         return rd;        return total;}int evenNodeAdd(node* ptr, int total) {        if(!ptr)        return 0 ;        int left = evenNodeAdd(ptr-&gt;left, total + ptr-&gt;value);    int right = evenNodeAdd(ptr-&gt;right, total + ptr-&gt;value);        //     int ld = left %2, rd = right%2;        if((ld ==0&amp;&amp;rd ==0)) {        return max(left, right);    }        if(ld==1&amp;&amp;ld==0) {        return rd;    }        if(ld==0&amp;&amp;rd==1) {        return ld;    }    return total;}int getMaxEvenNumber(node* ptr) {        int maxValue = 0 ;    int oddLeft = oddNodeAdd(ptr-&gt;left,0);    int oddRight = oddNodeAdd(ptr-&gt;right, 0);    int evenLeft = evenNodeAdd(ptr-&gt;right,0);    int evenRight = evenNodeAdd(ptr-&gt;right,0);        maxValue = max(oddLeft + oddRight, evenLeft + evenRight);    maxValue = max(maxValue, max(oddLeft+evenRight, evenLeft+oddRight));    maxValue = maxValue + ptr-&gt;value;         return maxValue;}int main() {    node* ptr = new node(10);    ptr-&gt;left = new node(2);    ptr-&gt;left-&gt;left = new node(1);    ptr-&gt;left-&gt;right = new node(101);    ptr-&gt;right = new node(5);    ptr-&gt;right-&gt;right = new node(13);      cout &lt;&lt; getMaxEvenNumber(ptr);}",
+        "url": "//2018/03/03/get-max-even-sum-from-tree.html"
+      }
+      ,
+    
+      "2018-03-03-shortest-palindrome-html": {
+        "title": "KMP 알고리즘",
+        "tags": "알고리즘, 문자열, KMP, Panlindrome",
+        "date": "March 3, 2018",
+        "author": "",
+        "category": "",
+        "content": "Shortest Palindrome출처  https://leetcode.com/problems/shortest-palindrome/description/문제  주어진 스티링 S에 대해서 글자들을 앞부분에 더해서 회문으로 만들 수 있다. 이때, 가장 짧은 글자를 더해서 만들 수 있는 회문을 구하라.  Given “aacecaaa”, return “aaacecaaa”.Given “abcd”, return “dcbabcd”.분석  Bruteforce로 할 수 있는 방법:          S를 reverse 해서 reversed 된 스트링의 substring과 S의 서브스트링을 비교한다.      Time complexity: O(N2)      Space complexity: O(N)        string shortestPalindrome(string s){ int n = s.size(); string rev(s); reverse(rev.begin(), rev.end()); int j = 0; for (int i = 0; i &lt; n; i++) {  if (s.substr(0, n - i) == rev.substr(i))      return rev.substr(0, i) + s; } return \"\";}                      KMP 방식을 사용한다          KMP 방식에 따라 Fail function lookup table 을 만들면 얼마만큼의 prefix가 현재까지 매칭되었는지를 알 수 있고 이 값을 사용해서 panlindrome을 만들기 위해 필요한 문자열을 알 수 있게 된다.      입력 S을 reverse한후 ‘#’ 와 함께 원래 입력에 더한다 string input = s + ‘#’ + reverse(s)      ’#’은 원래 값과 reverse된 문자열이 섞이지 않도록 필요      KMP fail_function을 만들어서 surfix와 동일한 prefix의 최장 길이를 구할 수 있고 이 길이를 알면 reverse된 문자열에서 필요한 문자열을 뽑아낼 수 있다          string shortestPalindrome(string input) {          int n = input.length();  string rev(input);  std::reverse(rev.begin(), rev.end());          string source = input + \"#\" + rev;  int len = source.size();              vector&lt;int&gt; fail_table(len, 0);          for(int pos = 1; pos &lt; len; pos++){      int last_match_pos = fail_table[pos-1];      while(last_match_pos &gt; 0             &amp;&amp; source[pos] != source[last_match_pos])          last_match_pos = fail_table[last_match_pos-1];                  if(source[pos] == source[last_match_pos])          ++last_match_pos;                  fail_table[pos] = last_match_pos;  }           return rev.substr(0, n - fail_table[len - 1]) + input;           }                    ",
+        "url": "//2018/03/03/Shortest-Palindrome.html"
+      }
+      ,
+    
+      "2018-03-03-kmp-ec-95-8c-ea-b3-a0-eb-a6-ac-ec-a6-98-html": {
+        "title": "KMP 알고리즘",
+        "tags": "알고리즘, 문자열, KMP",
+        "date": "March 3, 2018",
+        "author": "",
+        "category": "",
+        "content": "출처  http://www.crocus.co.kr/559  http://jason9319.tistory.com/130KMP 알고리즘(KMP Algorithm)  www.crocus.co.kr  KMP 방식을 요약하면..          패턴의 substring을 만들어서 prefix 와 suffix가 같을때의 최장 길이를 찾는다ex) aba =&gt; 1, aabaa =&gt;2, acdefa =&gt; 1 ..      패턴의 substring 매칭에 대한 테이블을 만든다              void fail_function(const string&amp; input, vector&lt;int&gt;&amp; output) {  output.resize(input.size(),0);    int last_pos = 0;  for(auto pos = 1; pos &lt; input.size(); pos++) {  while(last_pos &gt;0 &amp;&amp; input[pos] != input[last_pos])      last_pos = output[last_pos-1];          if(input[pos] == input[last_pos])      output[pos] = ++last_pos;  }}                      source = aabaabaaaabaabaadaabaabac가 있다고 가정하자.  pattern = aabaabac를 찾으려 한다면 표를 다음과 같이 이용하면 된다.    aabaaba[a]aabaabaadaabaabacaabaaba[c]        비교결과 :: aabaaba까지 같다. 따라서 arr[i]의 7번째 인덱스에서 a와 c가 틀렸으니,aabaaba의 f[6] = 4 따라서 (7-4) = 3인 arr[3]부터 다시 확인한다.    aabaabaa[a]abaabaadaabaabac aabaa[b]ac        비교결과 :: aabaa까지 같다. 따라서 arr[i]의 8번째 인덱스에서 a와 b가 틀렸으니, aabaa의 f[i] = 2 따라서 (8-2) = 6인 arr[6]부터 다시 확인한다.    aabaabaa[a]abaabaadaabaabac　　　 aa[b]aabac        비교결과 :: aa까지 같다. 따라서 arr[i]의 8번째 인덱스에서 a와 b가 틀렸으니, aa의 f[i] = 1 따라서 (8-1) = 7인 arr[7]부터 다시 확인한다.    aabaabaa[a]abaabaadaabaabac　　　 aa[b]aabac        비교결과 :: aa까지 같다. 따라서 arr[i]의 9번째 인덱스에서 a와 b가 틀렸으니, aa의 f[i] = 1 따라서 (9-1) = 8인 arr[8]부터 다시 확인한다.    aabaabaaa[a]baabaadaabaabac　　　  aa[b]aabac        비교결과 :: aabaaba까지 같다. 따라서 arr[i]의 15번째 인덱스에서 a와 c가 틀렸으니, aabaaba의 f[i] = 4 따라서 (15-4) = 11인 arr[11]부터 다시 확인한다.    aabaabaaaabaaba[a]daabaabac　　　　　aabaaba[c]        비교결과 :: aabaa까지 같다. 따라서 arr[i]의 16번째 인덱스에서 d와 b가 틀렸으니, aabaa의 f[i] = 2 따라서 (16-2) = 14인 arr[14]부터 다시 확인한다.    aabaabaaaabaabaa[d]aabaabac　　　　　　 aabaa[b]ac        비교결과 :: aa까지 같다. 따라서 arr[i]의 16번째 인덱스에서 d와 b가 틀렸으니, aa의 f[i] = 1 따라서 (16-1) = 15인 arr[15]부터 다시 확인한다.    aabaabaaaabaabaa[d]aabaabac　　　　　　    aa[b]aabac        비교결과 :: a까지 같다. 따라서 arr[i]의 16번째 인덱스에서 d와 a가 틀렸으니, a의 f[i] = 0  따라서 (16-0) = 16인 arr[16]부터 다시 확인한다.    aabaabaaaabaabaa[d]aabaabac　　　　　　　   a[a]baabac        비교결과 :: 같은 것이 없다. 따라서 arr[17]부터 다시 확인한다.    aabaabaaaabaabaad[aabaabac]　　　　　　　      [aabaabac]        비교결과 :: 모두 일치. 정답을 도출한다.( 일치하는 문자열의 시작 인덱스 :: 17, 일차하는 문자열의 개수 :: 1)출처: http://www.crocus.co.kr/559 [Crocus]주의점:  머릿속으로 생각하기는 쉬우나 Fail Function 을 만드는 코드가 생각보다는 코딩하기가 헷갈린다.void kmp(const string&amp; input, const string&amp; pattern, vector&lt;int&gt;&amp; output) {    vector&lt;int&gt; fail_table;    fail_function(pattern, fail_table);       int last_pos = 0 ;    for(auto pos = 0; pos &lt; input.size(); pos++) {        while(last_pos &gt; 0 &amp;&amp; input[pos] != pattern[last_pos])            last_pos = fail_table[last_pos-1];                if(input[pos] == pattern[last_pos]){            if(last_pos == pattern.size() -1) {                output.push_back(pos);                last_pos = fail_table[last_pos-1];            }            else {                last_pos++;            }        }    }}",
+        "url": "//2018/03/03/KMP-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html"
+      }
+      ,
+    
+      "2018-03-03-jis-html": {
+        "title": "합친 LIS",
+        "tags": "알고리즘, DP",
+        "date": "March 3, 2018",
+        "author": "",
+        "category": "",
+        "content": "출처  알고리즘 문제 해결 전랙 1권 8.5문제  두 개의 정수 수열 A와 B에서 각각 길이 0 이상의 증가 부분 수열을 얻은 뒤에 이들을 크기 순서대로 합친 것을 합친 증가 부분 수열이라고 함  A와 B가 주어질때 합친 LIS의 길이를 계산하는 프로그램을 작성하시오  이걸 왜 DP로 풀었는지는 의문이다  그냥 합치면 되는거 아닌가?코드const long long NEGINF = numeric_limit&lt;long long&gt;::min();int jlis(vector&lt;vector&lt;int&gt;&gt;&amp; cache,          const vector&lt;int&gt;&amp; A, int pos_a,          const vector&lt;int&gt;&amp; B, int pos_b) {        // -1부터 시작할 수 있기 때문에 인덱스에 +1을 해준다    int&amp; ret = cache[pos_a+1][pos_b+1];    if(ret!= -1) return ret;        ret = 2; // 무조건 두개 이상의 요소가 있기 때문에...    long long a = (pos_a == -1)?NEGINF:A[pos_a];    long long b = (pos_b == -1)?NEGINF:B[pos_b];    long long max_element = max(a,b);        for(int ap = pos_a+1; ap &lt; A.size(); ap++)        if(max_element &lt; A[ap])            ret = max(ret, jlis(cache, A, ap, B, pos_b)+1);        for(int bp = pos_b + 1; bp &lt; B.size(); bp++){        if(max_element &lt; B[bp]){            ret = max(ret, jlis(cache, A, pos_a, B, bp) +1);        }    }    return ret;}",
+        "url": "//2018/03/03/JIS.html"
+      }
+      ,
+    
+      "2018-03-02-ec-9d-b4-ed-95-ad-ea-b3-84-ec-88-98-ea-b5-ac-ed-95-98-ea-b8-b0-html": {
+        "title": "이항계수 구하기 - binominal coefficient",
+        "tags": "알고리즘, DP, 이항계수",
+        "date": "March 2, 2018",
+        "author": "",
+        "category": "",
+        "content": "이항계수(파스칼의 삼각형) 구하기  파스칼 트리 구하기 문제  파스칼 트리와 이항계수의 관계는 이 블로그를 참조: http://blog.naver.com/PostView.nhn?blogId=vollollov&amp;logNo=220947452823  간략하게 그림만 보면 아래와 같은 관계가 있다 (출처: 위의 블로그)    (n,r)  = (n-1,r-1) + (n-1,r)  이항계수 (n,r)은 n개의 서로 다른 원소 중에서 r개의 원소를 순서없이 골라내는 방법의 수  중복계산되는 항이 많기 때문에 메모이제이션 사용해서 계산량 줄이는 것이 필요코드1int bino(int n, int r) {    if(r==0 || n==r ) return 1;    return bino(n-1,r-1) + bino(n-1,r);}코드2(+memoization)// cache의 초기값은 -1int bino(vector&lt;vector&lt;int&gt;&gt;&amp; cache, int n, int r) {    if(r==0 || n==r) return 1;    if(cache[n][r]!= -1) return cache[n][r];    return cache[n][r] = cache[n-1][r-1] + cache[n][r];}",
+        "url": "//2018/03/02/%EC%9D%B4%ED%95%AD%EA%B3%84%EC%88%98%EA%B5%AC%ED%95%98%EA%B8%B0.html"
+      }
+      ,
+    
+      "2018-03-02-ec-99-b8-eb-b0-9c-eb-9b-b0-ea-b8-b0-html": {
+        "title": "외발뛰기",
+        "tags": "알고리즘, DP",
+        "date": "March 2, 2018",
+        "author": "",
+        "category": "",
+        "content": "외발뛰기  게임판의 왼쪽 칸 위에서 오른쪽 칸에 도착하는 하는 것이 가능하는지 파악하는 것이 목적  각 게임판에 있는 숫자만큼 아래나 오른쪽으로 이동 가능  DP를 사용하며, 메모이제이션을 사용해서 문제를 빨리 해결 가능  미로의 끝까지 가는 것을 확인하는 것이 목적이기 때문에, 아래로 바로 내려가거나 오른쪽으로 가는 두 가지 방법중 한가지라도 걸리면, true가 된다                              점화식: f(x, y) = (f(x, y + map[y][x])                     f(x+ map[y][x], y))                    코드bool jump(vector&lt;vector&lt;int&gt;&gt;&amp; map, vector&lt;vector&lt;int&gt;&gt;&amp; cache, int x, int y) {    int width = map[0].size();    int height = map.size();    if (x &gt;= width || y &gt;= height )        return false;        if(x==width=1 &amp;&amp; y == height-1)        return true;    int&amp; val = cache[y][x];    if(val != -1)        return (val==1);        int jumpSize = map[y][x];    return val = (jump(map, cache, x+jumpSize, y) || jump(map,cache, x, y+jumpSize));}",
+        "url": "//2018/03/02/%EC%99%B8%EB%B0%9C%EB%9B%B0%EA%B8%B0.html"
+      }
+      ,
+    
+      "2018-03-02-ec-99-80-ec-9d-bc-eb-93-9c-ec-b9-b4-eb-93-9c-eb-a7-a4-ec-b9-ad-html": {
+        "title": "와일드카드 스트링 매치",
+        "tags": "알고리즘, DP, 와일드카드",
+        "date": "March 2, 2018",
+        "author": "",
+        "category": "",
+        "content": "와일드카드 스트링 매칭  흔히쓰는 와일드카드 ?, *을 사용해서 문자열이 해당 패턴에 일치하는지 파악한다  예) he?p =&gt; help (O), he?p =&gt; helpp (X), hp =&gt; help (O), hp =&gt; helpp (O)  DP를 사용해서 문제를 풀 수 있다관찰  문자열와 패턴을 각각 W, S라고 하자.  만약 현재 위치 w,s에 대해 W[w] != S[s]이면 해당 없음  W[w] == S[s] 이거나 W[w] == ‘?’이면 매칭이고, 다음 글자 를 계속 조사  매칭하지 않아도 W[w] == ‘*‘이면 이후의 글자들을 전부 조사해서 매칭이 되는지의 여부를 파악한다  W의 w+1과 S의 s+1 이후의 값들을 확인해서 하나라도 참이면 답은 참이 된다  시간복잡도는 O(n2)점화식    bool matchWords(vector&lt;vector&lt;int&gt;&gt;&amp; cache,         const string&amp; W,        int w,         const string&amp; S,        int s) {            int&amp; ret = cache[w][s];            if(ret != -1)                return ret;                        while(s &lt; S.size() &amp;&amp; w &lt; W.size() &amp;&amp;                    (W[w] == '?' || W[w] == S[s]) {                        ++w;                        ++s;                    }                        if(w==W.size()) return ret = (s==S.size());            if(W[w] == '*') {                if(matchWords(cache, W, w+1, S, s) ||                    (s &lt; S.size() &amp;&amp; matchWords(cache, W, w, S, s+1))                    return ret = 1;            }            return ret = 0;        }",
+        "url": "//2018/03/02/%EC%99%80%EC%9D%BC%EB%93%9C%EC%B9%B4%EB%93%9C%EB%A7%A4%EC%B9%AD.html"
+      }
+      ,
+    
+      "2018-03-02-ec-82-bc-ea-b0-81-ed-98-95-ec-97-90-ec-84-9c-ec-9d-98-ec-b5-9c-eb-8c-80-ea-b2-bd-eb-a1-9c-html": {
+        "title": "삼각형에서의 최대 경로",
+        "tags": "알고리즘, DP",
+        "date": "March 2, 2018",
+        "author": "",
+        "category": "",
+        "content": "삼각형에서의 최대 경로61 23 7 49 4 1 72 7 5 9 4  맨 위의 숫자에서 시작해서 한 번에 한 칸씩 아래(바로 아래(y+1), 오른쪽 아래(x+1, y+1)로 내려가서 맨 아래줄에 도달하는 경로중 숫자의 합을 최대화 하는 경로는?  경로가 여러개가 있기 때문에 메모이제이션이 쉽지 않음  f(x,y,sum) = max(f(x+1,y, sum + triangle[y][x]), f(x,y+1, sum + triangle[y][x]))      int maxSum(const vector&lt;vector&lt;int&gt;&gt;&amp; input,              vector&lt;vector&lt;vector&lt;int&gt;&gt;&gt;&amp; cache,              int x,              int y, int sum) {                  if(y == n-1)                      return sum + input[y][x];                                      int&amp; val = cache[y][x][sum];                  if(val != -1)                      return val;                                      sum += input[y][x];                  return max(                      maxSum(input, cache, x+1, y+1, sum),                      maxSum(input, cache, x, y+1, sum)                  );              }        재귀함수에 sum을 더해줄 필요가 없다. sum이 있건 없건 부분 경로의 최대 값이 중요하다  Optimal Substructure  f(x,y) = max(f(x+1,y), f(x,y+1)) + triangle[y][x];      int maxSum(const vector&lt;vector&lt;int&gt;&gt;&amp; input,              vector&lt;vector&lt;int&gt;&gt;&amp; cache,              int x,              int y) {                  int&amp; ret = cache[y][x];                  if(ret != -1)                      return ret;                  if(y==n-1)                      return input[y][x];                                      return ret = max(                                  maxSum(input, cache, x+1, y+1),                                  maxSum(input, cache, x, y+1)                  );              }        시간복잡도 - 부분 문제에서는 O(N2), 전체문제에서는 상수 시간이 추가되기 때문에 결국 O(N2)",
+        "url": "//2018/03/02/%EC%82%BC%EA%B0%81%ED%98%95%EC%97%90%EC%84%9C%EC%9D%98%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C.html"
+      }
+      ,
+    
+      "2018-03-01-longest-common-substring-html": {
+        "title": "최장 공통 부분 문자열 - Longest Common Substring",
+        "tags": "알고리즘, DP, Longest Common Substring, LCS",
+        "date": "March 1, 2018",
+        "author": "",
+        "category": "",
+        "content": "설명  Longest Common Subsequence 문제와 거의 유사하지만 약간 다른 문제  아까의 로직과 비슷하다, 다만 문자열의 경우는 subsequence가 아니기 때문에 중간에 어긋나면 리셋이 가능하다  DP로 풀 수 있는 가장 일반적인 솔루션  두 개의 문자열에 대한 테이블을 만든다  LCSubstr(X, Y, m, n) = LCSubstr(X, Y, m-1, n-1) + 1 if X[m-1] = Y[n-1] 0  Otherwise (if X[m-1] != Y[n-1])  LCSubStr(X, Y, m, n)  = Max(LCSubstr(X, Y, i, j)) where 1 &lt;= i &lt;= m and 1 &lt;= j &lt;= n  시간 복잡도는 문자열 A가 N개의 글자로 이루어진 문자열이고 문자열 B가 M개의 글자로 이루어진 문자열이라면, NM 번의 검사를 통해 테이블을 만들어야 하기 때문에 결국 O(NM)코드    for(int i = 0 ; i &lt; A.size(); i++) {        for(int j = 0; j &lt; B.size(); j++) {            if(A[i] == B[j]) {                table[i][j] = table[i-1][j-1] + 1;                result = max(result, table[i][j]);            }            else {                table[i][j] = 0 ;            }        }    }",
+        "url": "//2018/03/01/longest-common-substring.html"
+      }
+      ,
+    
+      "2018-03-01-longest-common-sequence-html": {
+        "title": "최장 공통 부분 수열 - Longest Common Subsequence",
+        "tags": "알고리즘, DP, Longest Common Subsequence",
+        "date": "March 1, 2018",
+        "author": "",
+        "category": "",
+        "content": "설명  두 문자열이 주어졌을 때, 두 문자열에 모두 포함된 가장 긴 공통 부분 문자열을 찾는 프로그램을 작성하시오.  두 문자열 ABRACADABRA와 ECADADABRBCRDARA의 공통 부분 문자열은 CA, CADA, ADABR, 빈 문자열 등이 있다. 이 중에서 가장 긴 공통 부분 문자열은 ADABR이며, 길이는 5이다. 또, 두 문자열이 UPWJCIRUCAXIIRGL와 SBQNYBSBZDFNEV인 경우에는 가장 긴 공통 부분 문자열은 빈 문자열이다.  두 개의 문자열에 대한 테이블을 만든다  LCS(Xi, Yj) = 0 if xi = 0 or yj = 0  LCS(Xi, Yj) = LCS(Xi-1, Yj-1) +  1 if xi = yj  LCS(Xi, Yj) = longest(LCS(Xi-1, Yj),LCS(Xi, Yj-1))  if xi != yj코드int LCS(const string&amp; input, const string&amp; compare) {        if(input.size() == 0 || compare.size() == 0)        return 0 ;        vector&lt;vector&lt;int&gt;&gt; table;    for(int i = 0 ; i &lt; input.size(); i++){        vector&lt;int&gt; v(compare.size(), 0);        table.push_back(v);    }        if(input[0] == compare[0])        table[0][0] = 1;        for(int x = 1; x &lt; input.size(); x++) {        for(int y = 1; y &lt; compare.size(); y++){            if(input[x] == compare[y]) {                table[x][y] = table[x-1][y-1] + 1;            }            else {                table[x][y] = max(table[x][y-1], table[x-1][y]);            }        }    }    int ret = table[input.size()-1][compare.size()-1];     return ret;}  아래의 설명은 http://hsp1116.tistory.com/37 에서 가져옴  Ai == Bj일 때 LCS(i,j) = LCS(i-1,j-1) + 1 이기 떄문에 LCS(i,j) &gt; LCS(i-1,j-1)  LCX(i,j) = max(LCS(i-1,j),LCS(i,j-1))의 경우:  Ai != Bj일 지라도, LCS(i,j) = max(LCS(i-1,j),LCS(i,j-1))를 통해 LCS(i-1,j-1) + 1가 도출 될 수 있다.  LCS(i-1,j), LCS(i,j-1)이 둘 다 LCS(i,j)보다 작고 LCS(i-1,j-1)이 LCS(i,j)보다 작은 경우가 Ai==Bj일 때이다.  LCS[i][j] &gt; LCS[i-1][j-1] &amp;&amp; LCS[i][j] &gt; LCS[i][j-1] &amp;&amp; LCS[i][j] &gt; LCS[i-1][j])를 조건으로 코드를 구현하면 된다.void backTracking(int m, int n){    if(m==0 || n ==0) return;    if(cache[m][n] &amp;gt; cache[m-1][n-1] &amp;amp;&amp;amp; cache[m][n] &amp;gt; cache[m][n-1] &amp;amp;&amp;amp; cache[m][n] &amp;gt; cache[m-1][n]){        &lt;span style=\"color: rgb(174, 174, 174);\" data-evernote-id=\"407\" class=\"js-evernote-checked\"&gt;//문자열 인덱스는 캐시 인덱스보다 1씩 더 작다. &lt;/span&gt;        output = input[n-1] + output;        backTracking(m-1, n-1);    }else if(cache[m][n] &amp;gt; cache[m-1][n] &amp;amp;&amp;amp; cache[m][n] == cache[m][n-1]){        backTracking(m, n-1);    }else{          backTracking(m-1, n);    }}참고 및 추가 설명  출처: https://www.acmicpc.net/problem/5582  추가 설명: https://ko.wikipedia.org/wiki/%EC%B5%9C%EC%9E%A5%EA%B3%B5%ED%86%B5%EB%B6%80%EB%B6%84_%EC%88%98%EC%97%B4",
+        "url": "//2018/03/01/longest-common-sequence.html"
+      }
+      ,
+    
+      "2018-03-01-find-max-sum-sequence-html": {
+        "title": "정수 배열에서 가장 큰 이어지는 원소들의 합을 구하라 - 시간복잡도는 O(n)",
+        "tags": "알고리즘, 회문, Longest Increasing Subsequence",
+        "date": "March 1, 2018",
+        "author": "",
+        "category": "",
+        "content": "  출처: 매일프로그래밍 #1  Longest increasing subsequence  이 문제는 최대 합을 구하기 위해 원소들을 계속 더해 나갈때 음의 원소가 나왔을 때 그 원소를 계속 더하는게 맞는지 아닌지를 판단하는 것이 중요하다  아래에서 currentMax는 원소들을 계속 더해 가면서 현재 인덱스에서의 최대 값을 의미한다  maxMax 값은 이제까지 나왔던 값들 중에서 최대 값을 의미하다. 즉, 중간에 음수 값이 나왔을때 이 값이 일시적으로 currentMax보다 커질수 있다  쉽지만, 헤맬수 있는 문제..Input: [-1, 3, -1, 5]Output: 7 ( 3 + (-1) + 5 )Input: [-5, -3, -1]Output: -1 ( -1 )Input: [2, 4, -2, -3, 8]Output: 9 ( 2 + 4 + (-2) + (-3) + 8 )int findMaxSum(const vector&lt;int&gt;&amp; input) {    int current_sum = 0;    int max_sum = 0 ;    for(int i = 0 ; i &lt; input.size(); i++) {        current_sum = max(current_sum + input[i], input[i]);        max_sum = max(max_sum, current_sum);    }    return max_sum;}",
+        "url": "//2018/03/01/find-max-sum-sequence.html"
+      }
+      ,
+    
       "2018-02-28-longest-panlindrome-string-html": {
         "title": "정렬된 LinkedList를 BST로 변환하기",
         "tags": "알고리즘, 회문, panlindrome",
@@ -167,12 +325,12 @@
       ,
     
       "2018-02-28-longest-increasing-sequence-html": {
-        "title": "Longest Increasing Sequence",
-        "tags": "",
+        "title": "최장 증가 수열 - Longest increasing subsequence",
+        "tags": "알고리즘, DP, LIS",
         "date": "February 28, 2018",
         "author": "",
         "category": "",
-        "content": "",
+        "content": "  최장 증가 수열 문제 - DP로 풀거나 lower_bound 사용해서 풀 수 있음  DP의 경우는 O(N^2), lower_bound의 경우는 O(NlogN)int getMaxLIS(const vector&lt;int&gt;&amp; input, int pos, int value, int current) {    if(pos &gt;= input.size())        return current;           if(input[pos] &gt; value) {        return getMaxLIS(input, pos+1, input[pos], current+1);    }    else {        return getMaxLIS(input, pos+2, value, current);    }}int findMaxLIS(const vector&lt;int&gt;&amp; input) {    int maxLIS = 0 ;    for(int i = 0; i &lt; input.size(); i++) {        maxLIS = max(maxLIS, getMaxLIS(input,i+1,input[i],1));    }    return maxLIS;}int main() {    vector&lt;int&gt; input = {10,20,40,25,20,50,30,70,85};    cout &lt;&lt; \"maxLIS: \" &lt;&lt; findMaxLIS(input) &lt;&lt; endl;}  Lower Bound 사용 - O(NLogN)  하나씩 숫자를 스트리밍하면서 low bound를 구하면 최장으로 증가할 수 있는 수열의 최대 길이 값을 구할 수 있다  알고리즘 출처: http://jason9319.tistory.com/113void get_lower_bound(vector&lt;int&gt;&amp; input, int val) {    if (input.back() &lt; val) {        input.push_back(val);    }    else {        auto it = lower_bound(input.begin(), input.end(), val);        *it = val;    }} int LIS(const vector&lt;int&gt;&amp; input) {    vector&lt;int&gt; min_bound;    const int MAX = 0x7fffffff;    min_bound.push_back(MAX);        for(int i = 0; i &lt; input.size(); i++ ) {        get_lower_bound(min_bound, input[i]);    }        return min_bound.size();}",
         "url": "//2018/02/28/longest-increasing-sequence.html"
       }
       ,
@@ -190,11 +348,11 @@
     
       "2018-02-28-find-biggest-bst-html": {
         "title": "아주 큰 트리에서 가장 큰 BST 찾기",
-        "tags": "그래프, 알고리즘, BST, Linked List",
+        "tags": "트리, 알고리즘, BST",
         "date": "February 28, 2018",
         "author": "",
         "category": "",
-        "content": "  문제: You are given a very large binary tree, return the root node of the largest BST in the given tree  왼쪽, 오른쪽 순환하면서 BST 조건에 맞는 노드를 찾기 시작한다  왼쪽 노드```int find_biggest_bst(node* ptr, int&amp; min, int &amp;max, int&amp; total_nodes, node*&amp; head) {    if(!ptr)        return 0;int left = find_biggest_bst(ptr, min, max, total_nodes, head);int current_min = (left ==0)?ptr-&gt;value: min;if((left==-1) || (left != 0 &amp;&amp; ptr-&gt;value &gt; max)) {    return -1;}int right = find_biggest_bst(ptr, min, max, total_nodes, head);int current_max = (right == 0)? ptr-&gt;value:max;if(right == -1 || (right != 0 &amp;&amp; ptr-&gt;value &lt; min)) {    return -1;}int total = left + right + 1;current_min = min;current_max = max;if(total_nodes &lt; total) {    total_ndoes = total;}return total; } '''",
+        "content": "문제  You are given a very large binary tree, return the root node of the largest BST in the given tree분석  왼쪽, 오른쪽 순환하면서 BST 조건에 맞는 노드를 찾기 시작한다  현재 노드 값이 알려진 Max 값보다 크게 되면 BST가 아니다  현재 노드의 값이 알려진 Min 값보다 작다면 BST가 아니다  왼쪽 노드가 BST이고, 오른쪽 노드가 BST라면 두 개의 값을 합치고 +1 해서 현재까지 알려진 최대 BST보다 큰 트리인지 비교한다  만약 크다면 현재 노드 값을 헤드값으로 기억한다코드int find_biggest_bst(    node* ptr,     int&amp; min, int &amp;max,     int&amp; total_nodes,     node*&amp; head) {      if(!ptr)        return 0;        int left = find_biggest_bst(ptr, min, max, total_nodes, head);    int current_min = (left ==0)?ptr-&gt;value: min;    if((left==-1) || (left != 0 &amp;&amp; ptr-&gt;value &gt; max)) {        return -1;    }        int right = find_biggest_bst(ptr, min, max, total_nodes, head);    int current_max = (right == 0)? ptr-&gt;value:max;    if(right == -1 || (right != 0 &amp;&amp; ptr-&gt;value &lt; min)) {        return -1;    }        int total = left + right + 1;    current_min = min;    current_max = max;    if(total_nodes &lt; total) {        total_ndoes = total;    }    return total;}",
         "url": "//2018/02/28/find-biggest-bst.html"
       }
       ,
@@ -365,7 +523,7 @@
       ,
     
       "2018-02-24-eb-8b-a4-ec-9d-b5-ec-8a-a4-ed-8a-b8-eb-9d-bc-html": {
-        "title": "다익스트라 소스",
+        "title": "다익스트라 알고리즘",
         "tags": "알고리즘, 다익스트라, 그래프, 최소거리",
         "date": "February 24, 2018",
         "author": "",

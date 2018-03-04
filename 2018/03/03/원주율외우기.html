@@ -2,8 +2,8 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>섬의 개수 세기 | testcode</title>
-	<meta name="description" content="  next 노드를 구하기 위해서는 부모노드의 next를 타고 가서 왼쪽 노드가 있는지 확인한다 없으면 오른쪽 노드  왼쪽 오른쪽 자식 노드가 존재하지 않으면 또 부모 노드의 옆의 노드로 가서 위와 동일하게 반복한다  횡으로 탐색이 끝나면, 다음 자식 노드로 내려가기 위해서 왼쪽 ...">
+	<title>원주율 외우기 | testcode</title>
+	<meta name="description" content="출처  알고리즘 문제 해결 전략 - 문제 8.7">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/2018/02/26/connect-all-the-nodes.html">
+	<link rel="canonical" href="/2018/03/03/%EC%9B%90%EC%A3%BC%EC%9C%A8%EC%99%B8%EC%9A%B0%EA%B8%B0.html">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
@@ -145,56 +145,60 @@
     <div class="content">
       <article >
   <header style="background-image: url('/')">
-    <h1 class="title">섬의 개수 세기</h1>
+    <h1 class="title">원주율 외우기</h1>
     
     <p class="meta">
-      February 26, 2018
+      March 3, 2018
       
     </p>
   </header>
-  <section class="post-content"><ul>
-  <li>next 노드를 구하기 위해서는 부모노드의 next를 타고 가서 왼쪽 노드가 있는지 확인한다 없으면 오른쪽 노드</li>
-  <li>왼쪽 오른쪽 자식 노드가 존재하지 않으면 또 부모 노드의 옆의 노드로 가서 위와 동일하게 반복한다</li>
-  <li>횡으로 탐색이 끝나면, 다음 자식 노드로 내려가기 위해서 왼쪽 자식 노드 혹은 오른쪽 자식 노드의 값을 사용해서 동일하게 옆의 노드를 체크한다</li>
+  <section class="post-content"><h2 id="출처">출처</h2>
+<ul>
+  <li>알고리즘 문제 해결 전략 - 문제 8.7</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct node {
-    int n;
-    node* left, * right, * next;
-};
+<h2 id="관찰">관찰</h2>
+<ul>
+  <li>원주율을 몇 만 자리까지 외우기 위해 일반적으로 쓰는 방법은 3~5글자 정도로 끓어서 외운다</li>
+  <li>주어진 숫자에 대해 최소의 난이도를 구하는 방법을 계산하시오
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>경우                  예                   난이도
+모든 숫자가 같을때               ex)333,55555         1
+숫자가 1씩 증가 혹은 감소         ex)23456,3210        2
+두개의 숫자가 번갈아 가면서 나타날때  ex)323, 54545       4
+...
+</code></pre></div>    </div>
+  </li>
+</ul>
 
-node* findNext(node* ptr) {
-    node* next = ptr-&gt;next;
-    while(next) {
-        if(next-&gt;left)
-            return next-&gt;left;
-        if(next-&gt;right)
-            return next-&gt;right;
-        next  = next-&gt;next;
-    }
-    return next;
-};
+<h2 id="코드">코드</h2>
+<ul>
+  <li>DP를 써서 점화식을 먼저 세운다</li>
+  <li>F(L) = min(F(L,3), F(L,4), F(L,5))</li>
+  <li>F(L,3) -&gt; min(F(L,4), F(L,5), F(L,6)) + classify(L,3)</li>
+  <li>classify하는 부분은 경우에 따라 파싱하면 됨</li>
+  <li>DP의 점화식에 따른 구현을 눈여겨 보도록 하자</li>
+</ul>
 
-void connectNext(node* ptr) {
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int classify(const string&amp; input, int spos, int length) {
+    /// 문자열을 끓어서 classify 해서 돌려준다
+}
+
+int memorize(const string&amp; input, vector&lt;int&gt;&amp; cache, int begin) {
+    if(begin == input.size())
+        return 0;
     
-    node* level_ptr = ptr;    
-    while(level_ptr) {
-        node * current = level_ptr;     
-        while(current) {
-            if(current-&gt;left)
-                current-&gt;left-&gt;next = (!current-&gt;right) ? current-&gt;right: findNext(current);
-            
-            if(current-&gt;right)
-                current-&gt;right = findNext(current);
-            current = current-&gt;next;
+    int&amp; ret = cache[begin];
+    if(ret != -1)
+        return ret;
+    ret = INF;
+    // 3~5글자 사이로 끓어 읽어서 최소값을 구한다
+    for(int L = 3 ; L &lt;= 5; ++L) {
+        if(begin + L &lt;= input.size()) {
+            ret = min(ret,
+                     memorize(input, cache, begin+L) + classify(input, begin, L));
         }
-            
-        if(level_ptr-&gt;left)
-            level_ptr = level_ptr-&gt;left;
-        else
-        if(level_ptr-&gt;right)
-            level_ptr = level_ptr-&gt;right;
     }
+    return ret;
 }
 </code></pre></div></div>
 </section>
@@ -202,9 +206,9 @@ void connectNext(node* ptr) {
 <footer>
   <div class="tags">
     
-    <a class="tag" href="/tags#그래프">#그래프</a>
-    
     <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#DP">#DP</a>
     
   </div>
 </footer>

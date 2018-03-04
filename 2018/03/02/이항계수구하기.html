@@ -2,8 +2,8 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>섬의 개수 세기 | testcode</title>
-	<meta name="description" content="  next 노드를 구하기 위해서는 부모노드의 next를 타고 가서 왼쪽 노드가 있는지 확인한다 없으면 오른쪽 노드  왼쪽 오른쪽 자식 노드가 존재하지 않으면 또 부모 노드의 옆의 노드로 가서 위와 동일하게 반복한다  횡으로 탐색이 끝나면, 다음 자식 노드로 내려가기 위해서 왼쪽 ...">
+	<title>이항계수 구하기 - binominal coefficient | testcode</title>
+	<meta name="description" content="이항계수(파스칼의 삼각형) 구하기  파스칼 트리 구하기 문제  파스칼 트리와 이항계수의 관계는 이 블로그를 참조: http://blog.naver.com/PostView.nhn?blogId=vollollov&amp;logNo=220947452823  간략하게 그림만 보면 아래와 같...">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/2018/02/26/connect-all-the-nodes.html">
+	<link rel="canonical" href="/2018/03/02/%EC%9D%B4%ED%95%AD%EA%B3%84%EC%88%98%EA%B5%AC%ED%95%98%EA%B8%B0.html">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
@@ -145,56 +145,37 @@
     <div class="content">
       <article >
   <header style="background-image: url('/')">
-    <h1 class="title">섬의 개수 세기</h1>
+    <h1 class="title">이항계수 구하기 - binominal coefficient</h1>
     
     <p class="meta">
-      February 26, 2018
+      March 2, 2018
       
     </p>
   </header>
-  <section class="post-content"><ul>
-  <li>next 노드를 구하기 위해서는 부모노드의 next를 타고 가서 왼쪽 노드가 있는지 확인한다 없으면 오른쪽 노드</li>
-  <li>왼쪽 오른쪽 자식 노드가 존재하지 않으면 또 부모 노드의 옆의 노드로 가서 위와 동일하게 반복한다</li>
-  <li>횡으로 탐색이 끝나면, 다음 자식 노드로 내려가기 위해서 왼쪽 자식 노드 혹은 오른쪽 자식 노드의 값을 사용해서 동일하게 옆의 노드를 체크한다</li>
+  <section class="post-content"><h2 id="이항계수파스칼의-삼각형-구하기">이항계수(파스칼의 삼각형) 구하기</h2>
+<p><img src="/assets/img/pascaltree.png" alt="파스칼 트리" /></p>
+<ul>
+  <li>파스칼 트리 구하기 문제</li>
+  <li>파스칼 트리와 이항계수의 관계는 이 블로그를 참조: http://blog.naver.com/PostView.nhn?blogId=vollollov&amp;logNo=220947452823</li>
+  <li>간략하게 그림만 보면 아래와 같은 관계가 있다 (출처: 위의 블로그)</li>
+  <li><img src="/assets/img/0226_02.gif" alt="이항계수와파스칼트리" /></li>
+  <li>(n,r)  = (n-1,r-1) + (n-1,r)</li>
+  <li>이항계수 (n,r)은 n개의 서로 다른 원소 중에서 r개의 원소를 순서없이 골라내는 방법의 수</li>
+  <li>중복계산되는 항이 많기 때문에 메모이제이션 사용해서 계산량 줄이는 것이 필요</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct node {
-    int n;
-    node* left, * right, * next;
-};
-
-node* findNext(node* ptr) {
-    node* next = ptr-&gt;next;
-    while(next) {
-        if(next-&gt;left)
-            return next-&gt;left;
-        if(next-&gt;right)
-            return next-&gt;right;
-        next  = next-&gt;next;
-    }
-    return next;
-};
-
-void connectNext(node* ptr) {
-    
-    node* level_ptr = ptr;    
-    while(level_ptr) {
-        node * current = level_ptr;     
-        while(current) {
-            if(current-&gt;left)
-                current-&gt;left-&gt;next = (!current-&gt;right) ? current-&gt;right: findNext(current);
-            
-            if(current-&gt;right)
-                current-&gt;right = findNext(current);
-            current = current-&gt;next;
-        }
-            
-        if(level_ptr-&gt;left)
-            level_ptr = level_ptr-&gt;left;
-        else
-        if(level_ptr-&gt;right)
-            level_ptr = level_ptr-&gt;right;
-    }
+<h2 id="코드1">코드1</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int bino(int n, int r) {
+    if(r==0 || n==r ) return 1;
+    return bino(n-1,r-1) + bino(n-1,r);
+}
+</code></pre></div></div>
+<h2 id="코드2memoization">코드2(+memoization)</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// cache의 초기값은 -1
+int bino(vector&lt;vector&lt;int&gt;&gt;&amp; cache, int n, int r) {
+    if(r==0 || n==r) return 1;
+    if(cache[n][r]!= -1) return cache[n][r];
+    return cache[n][r] = cache[n-1][r-1] + cache[n][r];
 }
 </code></pre></div></div>
 </section>
@@ -202,9 +183,11 @@ void connectNext(node* ptr) {
 <footer>
   <div class="tags">
     
-    <a class="tag" href="/tags#그래프">#그래프</a>
-    
     <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#DP">#DP</a>
+    
+    <a class="tag" href="/tags#이항계수">#이항계수</a>
     
   </div>
 </footer>

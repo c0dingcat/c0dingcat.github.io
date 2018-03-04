@@ -5,7 +5,841 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
     <link>http://localhost:4000/</link>
     <description>daily log</description>
-    <pubDate>Thu, 01 Mar 2018 20:07:52 -0800</pubDate>
+    <pubDate>Sun, 04 Mar 2018 02:07:48 -0800</pubDate>
+    
+      <item>
+        <title>타일링 방법의 수 세기</title>
+        <link>/2018/03/03/%ED%83%80%EC%9D%BC%EB%A7%81.html</link>
+        <guid isPermaLink="true">/2018/03/03/%ED%83%80%EC%9D%BC%EB%A7%81.html</guid>
+        <description>&lt;h2 id=&quot;출처&quot;&gt;출처&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;알고리즘 문제 해결 전략 - 8.11 경우의 수와 확률&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;문제설명&quot;&gt;문제설명&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/tiling1.png&quot; alt=&quot;타일링&quot; /&gt;
+&lt;img src=&quot;/assets/img/tiling2.png&quot; alt=&quot;타일링&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;2&lt;em&gt;n 크기의 사각형을 2&lt;/em&gt;1 크기의 타일로 채우는 방법의 수를 계산하는 문제&lt;/li&gt;
+  &lt;li&gt;타일을 길게 붙이거나 (2&lt;em&gt;1) 혹은 옆으로 누워서 붙이는 경우 (2&lt;/em&gt;n)로 붙이는 경우를 생각해서 계산&lt;/li&gt;
+  &lt;li&gt;즉, f(n) = f(n-1) + f(n-2)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const int mod_num = 1000000007;
+
+int tiling(const vector&amp;lt;int&amp;gt;&amp;amp; input, int width) {
+    if(width &amp;lt;=1) return 1;
+    int &amp;amp; ret = cache[width];
+    if(ret !=-1) return ret;
+    return ret = (tiling(input, width-2) + tiling(input, width-1))%mod_num;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sat, 03 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>원주율 외우기</title>
+        <link>/2018/03/03/%EC%9B%90%EC%A3%BC%EC%9C%A8%EC%99%B8%EC%9A%B0%EA%B8%B0.html</link>
+        <guid isPermaLink="true">/2018/03/03/%EC%9B%90%EC%A3%BC%EC%9C%A8%EC%99%B8%EC%9A%B0%EA%B8%B0.html</guid>
+        <description>&lt;h2 id=&quot;출처&quot;&gt;출처&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;알고리즘 문제 해결 전략 - 문제 8.7&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;관찰&quot;&gt;관찰&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;원주율을 몇 만 자리까지 외우기 위해 일반적으로 쓰는 방법은 3~5글자 정도로 끓어서 외운다&lt;/li&gt;
+  &lt;li&gt;주어진 숫자에 대해 최소의 난이도를 구하는 방법을 계산하시오
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;경우                  예                   난이도
+모든 숫자가 같을때               ex)333,55555         1
+숫자가 1씩 증가 혹은 감소         ex)23456,3210        2
+두개의 숫자가 번갈아 가면서 나타날때  ex)323, 54545       4
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;DP를 써서 점화식을 먼저 세운다&lt;/li&gt;
+  &lt;li&gt;F(L) = min(F(L,3), F(L,4), F(L,5))&lt;/li&gt;
+  &lt;li&gt;F(L,3) -&amp;gt; min(F(L,4), F(L,5), F(L,6)) + classify(L,3)&lt;/li&gt;
+  &lt;li&gt;classify하는 부분은 경우에 따라 파싱하면 됨&lt;/li&gt;
+  &lt;li&gt;DP의 점화식에 따른 구현을 눈여겨 보도록 하자&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int classify(const string&amp;amp; input, int spos, int length) {
+    /// 문자열을 끓어서 classify 해서 돌려준다
+}
+
+int memorize(const string&amp;amp; input, vector&amp;lt;int&amp;gt;&amp;amp; cache, int begin) {
+    if(begin == input.size())
+        return 0;
+    
+    int&amp;amp; ret = cache[begin];
+    if(ret != -1)
+        return ret;
+    ret = INF;
+    // 3~5글자 사이로 끓어 읽어서 최소값을 구한다
+    for(int L = 3 ; L &amp;lt;= 5; ++L) {
+        if(begin + L &amp;lt;= input.size()) {
+            ret = min(ret,
+                     memorize(input, cache, begin+L) + classify(input, begin, L));
+        }
+    }
+    return ret;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sat, 03 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>삼각형 위의 최대 경로 개수 세기</title>
+        <link>/2018/03/03/%EC%82%BC%EA%B0%81%ED%98%95-%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C-%EA%B0%9C%EC%88%98%EC%84%B8%EA%B8%B0.html</link>
+        <guid isPermaLink="true">/2018/03/03/%EC%82%BC%EA%B0%81%ED%98%95-%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C-%EA%B0%9C%EC%88%98%EC%84%B8%EA%B8%B0.html</guid>
+        <description>&lt;h2 id=&quot;출처&quot;&gt;출처&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;알고리즘 문제 해결 전략 - 8.11 경우의 수와 확률&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;문제설명&quot;&gt;문제설명&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;이전의 문제는 최대 경로의 합을 구했을뿐, 경로 자체는 구하지 않았다&lt;/li&gt;
+  &lt;li&gt;최대 경로는 유일하지 않을 수도 있다&lt;/li&gt;
+  &lt;li&gt;문제를 해결하기 위해 두 개의 다른 동적 계획법 문제를 해결&lt;/li&gt;
+  &lt;li&gt;합을 먼저 구하고, 그 합을 구하는 도중에 만든 캐싱을 통해 패스를 구현&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct triangle {
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; input;
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; cache;
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; countCache;
+    
+    int path(int y, int x) {
+        if(y == input.size() -1)
+            return input[y][x];
+        
+        int&amp;amp; ret = cache[y][x];
+        if(ret != -1)
+            return ret;
+        
+        return ret = max(path(y+1,x), path(y+1,x+1))+input[y][x];
+    }
+    
+    int count(int y, int x) {
+        if(y==input.size()-1)
+            return 1;
+        
+        int &amp;amp; ret = countCache[y][x];
+        if(ret!=-1)
+            return ret;
+        
+        if(path(y+1,x+1)&amp;gt;=path(y+1,x))
+            ret += path(y+1,x+1);
+        if(path(y+1,x+1)&amp;lt;=path(y+1,x))
+            ret += path(y+1,x);
+        return ret;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sat, 03 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>Get Max Even Sum From Tree</title>
+        <link>/2018/03/03/get-max-even-sum-from-tree.html</link>
+        <guid isPermaLink="true">/2018/03/03/get-max-even-sum-from-tree.html</guid>
+        <description>
+&lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;output the maximum EVEN sum along any path&lt;/li&gt;
+  &lt;li&gt;![/assets/img/maxevensum.png]&lt;/li&gt;
+  &lt;li&gt;트리의 각 노드들을 더해서 최대값이자 짝수인 값을 구하기&lt;/li&gt;
+  &lt;li&gt;짝수가 된다는 말에 잘 주목을 해야 할 것 같다&lt;/li&gt;
+  &lt;li&gt;답이 없어서 정확하게 파악은 안되지만…&lt;/li&gt;
+  &lt;li&gt;모든 경로마다의 합을 구해서 정렬을 해서 짝수를 구하는 방법이 있지만, 이건 별로 안좋아할듯&lt;/li&gt;
+  &lt;li&gt;그게 아니면 짝수가 되는 경우를 확인해서 최대 값을 구하는 방법이 있을것 같다&lt;/li&gt;
+  &lt;li&gt;문제가 워낙 간단하게 나와서 정확한 제약조건은 알 길이 없지만, 만약 정할 수 있다면 루트를 거쳐야 한다와 마이너스 값은 허용되지 않음 두가지 경우를 설정하고 싶다&lt;/li&gt;
+  &lt;li&gt;루트를 거쳐야 한다면 루트가 홀수인 경우는 왼쪽이 홀수 아니면 오른쪽이 홀수 값을 리턴해야 한다&lt;/li&gt;
+  &lt;li&gt;루트가 짝수인 경우는 왼쪽, 오른쪽 둘다 홀수 혹은 짝수가 되어야 한다&lt;/li&gt;
+  &lt;li&gt;그리고 post order 방식으로 트리를 순환하고, 노도의 값을 먼저 더해서 노드의 왼쪽 오른쪽 노드의 탐색이 끝난 후에 값을 확인한다&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
+
+struct node {
+    int value;
+    node* left, *right;
+    node(int n):value(n){}
+};
+
+int oddNodeAdd(node* ptr, int total) {
+    if(!ptr)
+        return total;
+    
+    int left = oddNodeAdd(ptr-&amp;gt;left, total + ptr-&amp;gt;value);
+    int right = oddNodeAdd(ptr-&amp;gt;right, total + ptr-&amp;gt;value);
+    
+    int ld = left % 2, rd = right % 2;
+    if(ld == 1 &amp;amp;&amp;amp; rd ==1)
+        return max(left, right);
+    
+    if(ld==1 &amp;amp;&amp;amp; rd==0)
+        return ld;
+    
+    if(rd==1 &amp;amp;&amp;amp; ld==0) 
+        return rd;
+    
+    return total;
+}
+
+int evenNodeAdd(node* ptr, int total) {
+    
+    if(!ptr)
+        return 0 ;
+    
+    int left = evenNodeAdd(ptr-&amp;gt;left, total + ptr-&amp;gt;value);
+    int right = evenNodeAdd(ptr-&amp;gt;right, total + ptr-&amp;gt;value);
+    
+    // 
+    int ld = left %2, rd = right%2;
+    
+    if((ld ==0&amp;amp;&amp;amp;rd ==0)) {
+        return max(left, right);
+    }
+    
+    if(ld==1&amp;amp;&amp;amp;ld==0) {
+        return rd;
+    }
+    
+    if(ld==0&amp;amp;&amp;amp;rd==1) {
+        return ld;
+    }
+
+    return total;
+}
+
+int getMaxEvenNumber(node* ptr) {
+    
+    int maxValue = 0 ;
+    int oddLeft = oddNodeAdd(ptr-&amp;gt;left,0);
+    int oddRight = oddNodeAdd(ptr-&amp;gt;right, 0);
+    int evenLeft = evenNodeAdd(ptr-&amp;gt;right,0);
+    int evenRight = evenNodeAdd(ptr-&amp;gt;right,0);
+    
+    maxValue = max(oddLeft + oddRight, evenLeft + evenRight);
+    maxValue = max(maxValue, max(oddLeft+evenRight, evenLeft+oddRight));
+    maxValue = maxValue + ptr-&amp;gt;value; 
+    
+    return maxValue;
+}
+
+int main() {
+    node* ptr = new node(10);
+    ptr-&amp;gt;left = new node(2);
+    ptr-&amp;gt;left-&amp;gt;left = new node(1);
+    ptr-&amp;gt;left-&amp;gt;right = new node(101);
+    ptr-&amp;gt;right = new node(5);
+    ptr-&amp;gt;right-&amp;gt;right = new node(13);  
+    cout &amp;lt;&amp;lt; getMaxEvenNumber(ptr);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sat, 03 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>KMP 알고리즘</title>
+        <link>/2018/03/03/Shortest-Palindrome.html</link>
+        <guid isPermaLink="true">/2018/03/03/Shortest-Palindrome.html</guid>
+        <description>&lt;h2 id=&quot;shortest-palindrome&quot;&gt;Shortest Palindrome&lt;/h2&gt;
+
+&lt;h3 id=&quot;출처&quot;&gt;출처&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;https://leetcode.com/problems/shortest-palindrome/description/&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;문제&quot;&gt;문제&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;주어진 스티링 S에 대해서 글자들을 앞부분에 더해서 회문으로 만들 수 있다. 이때, 가장 짧은 글자를 더해서 만들 수 있는 회문을 구하라.&lt;/li&gt;
+  &lt;li&gt;Given “aacecaaa”, return “aaacecaaa”.
+Given “abcd”, return “dcbabcd”.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;분석&quot;&gt;분석&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Bruteforce로 할 수 있는 방법:
+    &lt;ul&gt;
+      &lt;li&gt;S를 reverse 해서 reversed 된 스트링의 substring과 S의 서브스트링을 비교한다.&lt;/li&gt;
+      &lt;li&gt;Time complexity: O(N2)&lt;/li&gt;
+      &lt;li&gt;Space complexity: O(N)
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;string shortestPalindrome(string s)
+{
+ int n = s.size();
+ string rev(s);
+ reverse(rev.begin(), rev.end());
+ int j = 0;
+ for (int i = 0; i &amp;lt; n; i++) {
+  if (s.substr(0, n - i) == rev.substr(i))
+      return rev.substr(0, i) + s;
+ }
+ return &quot;&quot;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;KMP 방식을 사용한다
+    &lt;ul&gt;
+      &lt;li&gt;KMP 방식에 따라 Fail function lookup table 을 만들면 얼마만큼의 prefix가 현재까지 매칭되었는지를 알 수 있고 이 값을 사용해서 panlindrome을 만들기 위해 필요한 문자열을 알 수 있게 된다.&lt;/li&gt;
+      &lt;li&gt;입력 S을 reverse한후 ‘#’ 와 함께 원래 입력에 더한다 string input = s + ‘#’ + reverse(s)&lt;/li&gt;
+      &lt;li&gt;’#’은 원래 값과 reverse된 문자열이 섞이지 않도록 필요&lt;/li&gt;
+      &lt;li&gt;KMP fail_function을 만들어서 surfix와 동일한 prefix의 최장 길이를 구할 수 있고 이 길이를 알면 reverse된 문자열에서 필요한 문자열을 뽑아낼 수 있다
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  string shortestPalindrome(string input) {
+        
+  int n = input.length();
+  string rev(input);
+  std::reverse(rev.begin(), rev.end());
+        
+  string source = input + &quot;#&quot; + rev;
+  int len = source.size();   
+         
+  vector&amp;lt;int&amp;gt; fail_table(len, 0);
+        
+  for(int pos = 1; pos &amp;lt; len; pos++){
+      int last_match_pos = fail_table[pos-1];
+      while(last_match_pos &amp;gt; 0 
+            &amp;amp;&amp;amp; source[pos] != source[last_match_pos])
+          last_match_pos = fail_table[last_match_pos-1];
+            
+      if(source[pos] == source[last_match_pos])
+          ++last_match_pos;
+            
+      fail_table[pos] = last_match_pos;
+  } 
+        
+  return rev.substr(0, n - fail_table[len - 1]) + input;         
+  }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 03 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>KMP 알고리즘</title>
+        <link>/2018/03/03/KMP-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html</link>
+        <guid isPermaLink="true">/2018/03/03/KMP-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html</guid>
+        <description>&lt;h2 id=&quot;출처&quot;&gt;출처&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;http://www.crocus.co.kr/559&lt;/li&gt;
+  &lt;li&gt;http://jason9319.tistory.com/130&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;kmp-알고리즘kmp-algorithm&quot;&gt;KMP 알고리즘(KMP Algorithm)&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;www.crocus.co.kr&lt;/li&gt;
+  &lt;li&gt;KMP 방식을 요약하면..
+    &lt;ul&gt;
+      &lt;li&gt;패턴의 substring을 만들어서 prefix 와 suffix가 같을때의 최장 길이를 찾는다
+ex) aba =&amp;gt; 1, aabaa =&amp;gt;2, acdefa =&amp;gt; 1 ..&lt;/li&gt;
+      &lt;li&gt;패턴의 substring 매칭에 대한 테이블을 만든다&lt;/li&gt;
+      &lt;li&gt;&lt;img src=&quot;/assets/img/kmp.png&quot; alt=&quot;KMP fail table&quot; /&gt;
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void fail_function(const string&amp;amp; input, vector&amp;lt;int&amp;gt;&amp;amp; output) {
+  output.resize(input.size(),0);  
+  int last_pos = 0;
+  for(auto pos = 1; pos &amp;lt; input.size(); pos++) {
+  while(last_pos &amp;gt;0 &amp;amp;&amp;amp; input[pos] != input[last_pos])
+      last_pos = output[last_pos-1];
+        
+  if(input[pos] == input[last_pos])
+      output[pos] = ++last_pos;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;source = aabaabaaaabaabaadaabaabac가 있다고 가정하자.&lt;/li&gt;
+  &lt;li&gt;pattern = aabaabac를 찾으려 한다면 표를 다음과 같이 이용하면 된다.
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaaba[a]aabaabaadaabaabac
+aabaaba[c]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;비교결과 :: aabaaba까지 같다. 따라서 arr[i]의 7번째 인덱스에서 a와 c가 틀렸으니,aabaaba의 f[6] = 4 따라서 (7-4) = 3인 arr[3]부터 다시 확인한다.
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaa[a]abaabaadaabaabac
+ aabaa[b]ac
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;비교결과 :: aabaa까지 같다. 따라서 arr[i]의 8번째 인덱스에서 a와 b가 틀렸으니, aabaa의 f[i] = 2 따라서 (8-2) = 6인 arr[6]부터 다시 확인한다.
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaa[a]abaabaadaabaabac
+　　　 aa[b]aabac
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;비교결과 :: aa까지 같다. 따라서 arr[i]의 8번째 인덱스에서 a와 b가 틀렸으니, aa의 f[i] = 1 따라서 (8-1) = 7인 arr[7]부터 다시 확인한다.
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaa[a]abaabaadaabaabac
+　　　 aa[b]aabac
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;비교결과 :: aa까지 같다. 따라서 arr[i]의 9번째 인덱스에서 a와 b가 틀렸으니, aa의 f[i] = 1 따라서 (9-1) = 8인 arr[8]부터 다시 확인한다.
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaaa[a]baabaadaabaabac
+　　　  aa[b]aabac
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;비교결과 :: aabaaba까지 같다. 따라서 arr[i]의 15번째 인덱스에서 a와 c가 틀렸으니, aabaaba의 f[i] = 4 따라서 (15-4) = 11인 arr[11]부터 다시 확인한다.
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaaaabaaba[a]daabaabac
+　　　　　aabaaba[c]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;비교결과 :: aabaa까지 같다. 따라서 arr[i]의 16번째 인덱스에서 d와 b가 틀렸으니, aabaa의 f[i] = 2 따라서 (16-2) = 14인 arr[14]부터 다시 확인한다.
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaaaabaabaa[d]aabaabac
+　　　　　　 aabaa[b]ac
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;비교결과 :: aa까지 같다. 따라서 arr[i]의 16번째 인덱스에서 d와 b가 틀렸으니, aa의 f[i] = 1 따라서 (16-1) = 15인 arr[15]부터 다시 확인한다.
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaaaabaabaa[d]aabaabac
+　　　　　　    aa[b]aabac
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;비교결과 :: a까지 같다. 따라서 arr[i]의 16번째 인덱스에서 d와 a가 틀렸으니, a의 f[i] = 0  따라서 (16-0) = 16인 arr[16]부터 다시 확인한다.
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaaaabaabaa[d]aabaabac
+　　　　　　　   a[a]baabac
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;비교결과 :: 같은 것이 없다. 따라서 arr[17]부터 다시 확인한다.
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaaaabaabaad[aabaabac]
+　　　　　　　      [aabaabac]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;비교결과 :: 모두 일치. 정답을 도출한다.( 일치하는 문자열의 시작 인덱스 :: 17, 일차하는 문자열의 개수 :: 1)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;출처: http://www.crocus.co.kr/559 [Crocus]&lt;/p&gt;
+
+&lt;p&gt;주의점:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;머릿속으로 생각하기는 쉬우나 Fail Function 을 만드는 코드가 생각보다는 코딩하기가 헷갈린다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void kmp(const string&amp;amp; input, const string&amp;amp; pattern, vector&amp;lt;int&amp;gt;&amp;amp; output) {
+    vector&amp;lt;int&amp;gt; fail_table;
+    fail_function(pattern, fail_table);   
+    int last_pos = 0 ;
+    for(auto pos = 0; pos &amp;lt; input.size(); pos++) {
+        while(last_pos &amp;gt; 0 &amp;amp;&amp;amp; input[pos] != pattern[last_pos])
+            last_pos = fail_table[last_pos-1];
+        
+        if(input[pos] == pattern[last_pos]){
+            if(last_pos == pattern.size() -1) {
+                output.push_back(pos);
+                last_pos = fail_table[last_pos-1];
+            }
+            else {
+                last_pos++;
+            }
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sat, 03 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>합친 LIS</title>
+        <link>/2018/03/03/JIS.html</link>
+        <guid isPermaLink="true">/2018/03/03/JIS.html</guid>
+        <description>&lt;h2 id=&quot;출처&quot;&gt;출처&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;알고리즘 문제 해결 전랙 1권 8.5&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;두 개의 정수 수열 A와 B에서 각각 길이 0 이상의 증가 부분 수열을 얻은 뒤에 이들을 크기 순서대로 합친 것을 합친 증가 부분 수열이라고 함&lt;/li&gt;
+  &lt;li&gt;A와 B가 주어질때 합친 LIS의 길이를 계산하는 프로그램을 작성하시오&lt;/li&gt;
+  &lt;li&gt;이걸 왜 DP로 풀었는지는 의문이다&lt;/li&gt;
+  &lt;li&gt;그냥 합치면 되는거 아닌가?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const long long NEGINF = numeric_limit&amp;lt;long long&amp;gt;::min();
+
+int jlis(vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; cache, 
+         const vector&amp;lt;int&amp;gt;&amp;amp; A, int pos_a, 
+         const vector&amp;lt;int&amp;gt;&amp;amp; B, int pos_b) {
+    
+    // -1부터 시작할 수 있기 때문에 인덱스에 +1을 해준다
+    int&amp;amp; ret = cache[pos_a+1][pos_b+1];
+    if(ret!= -1) return ret;
+    
+    ret = 2; // 무조건 두개 이상의 요소가 있기 때문에...
+    long long a = (pos_a == -1)?NEGINF:A[pos_a];
+    long long b = (pos_b == -1)?NEGINF:B[pos_b];
+    long long max_element = max(a,b);
+    
+    for(int ap = pos_a+1; ap &amp;lt; A.size(); ap++)
+        if(max_element &amp;lt; A[ap])
+            ret = max(ret, jlis(cache, A, ap, B, pos_b)+1);
+    
+    for(int bp = pos_b + 1; bp &amp;lt; B.size(); bp++){
+        if(max_element &amp;lt; B[bp]){
+            ret = max(ret, jlis(cache, A, pos_a, B, bp) +1);
+        }
+    }
+    return ret;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sat, 03 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>이항계수 구하기 - binominal coefficient</title>
+        <link>/2018/03/02/%EC%9D%B4%ED%95%AD%EA%B3%84%EC%88%98%EA%B5%AC%ED%95%98%EA%B8%B0.html</link>
+        <guid isPermaLink="true">/2018/03/02/%EC%9D%B4%ED%95%AD%EA%B3%84%EC%88%98%EA%B5%AC%ED%95%98%EA%B8%B0.html</guid>
+        <description>&lt;h2 id=&quot;이항계수파스칼의-삼각형-구하기&quot;&gt;이항계수(파스칼의 삼각형) 구하기&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/pascaltree.png&quot; alt=&quot;파스칼 트리&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;파스칼 트리 구하기 문제&lt;/li&gt;
+  &lt;li&gt;파스칼 트리와 이항계수의 관계는 이 블로그를 참조: http://blog.naver.com/PostView.nhn?blogId=vollollov&amp;amp;logNo=220947452823&lt;/li&gt;
+  &lt;li&gt;간략하게 그림만 보면 아래와 같은 관계가 있다 (출처: 위의 블로그)&lt;/li&gt;
+  &lt;li&gt;&lt;img src=&quot;/assets/img/0226_02.gif&quot; alt=&quot;이항계수와파스칼트리&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;(n,r)  = (n-1,r-1) + (n-1,r)&lt;/li&gt;
+  &lt;li&gt;이항계수 (n,r)은 n개의 서로 다른 원소 중에서 r개의 원소를 순서없이 골라내는 방법의 수&lt;/li&gt;
+  &lt;li&gt;중복계산되는 항이 많기 때문에 메모이제이션 사용해서 계산량 줄이는 것이 필요&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;코드1&quot;&gt;코드1&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int bino(int n, int r) {
+    if(r==0 || n==r ) return 1;
+    return bino(n-1,r-1) + bino(n-1,r);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;코드2memoization&quot;&gt;코드2(+memoization)&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// cache의 초기값은 -1
+int bino(vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; cache, int n, int r) {
+    if(r==0 || n==r) return 1;
+    if(cache[n][r]!= -1) return cache[n][r];
+    return cache[n][r] = cache[n-1][r-1] + cache[n][r];
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Fri, 02 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>외발뛰기</title>
+        <link>/2018/03/02/%EC%99%B8%EB%B0%9C%EB%9B%B0%EA%B8%B0.html</link>
+        <guid isPermaLink="true">/2018/03/02/%EC%99%B8%EB%B0%9C%EB%9B%B0%EA%B8%B0.html</guid>
+        <description>&lt;h2 id=&quot;외발뛰기&quot;&gt;외발뛰기&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/jumpgame.png&quot; alt=&quot;외발뛰기&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;게임판의 왼쪽 칸 위에서 오른쪽 칸에 도착하는 하는 것이 가능하는지 파악하는 것이 목적&lt;/li&gt;
+  &lt;li&gt;각 게임판에 있는 숫자만큼 아래나 오른쪽으로 이동 가능&lt;/li&gt;
+  &lt;li&gt;DP를 사용하며, 메모이제이션을 사용해서 문제를 빨리 해결 가능&lt;/li&gt;
+  &lt;li&gt;미로의 끝까지 가는 것을 확인하는 것이 목적이기 때문에, 아래로 바로 내려가거나 오른쪽으로 가는 두 가지 방법중 한가지라도 걸리면, true가 된다&lt;/li&gt;
+  &lt;li&gt;
+    &lt;table&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;점화식: f(x, y) = (f(x, y + map[y][x])&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt;f(x+ map[y][x], y))&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bool jump(vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; map, vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; cache, int x, int y) {
+    int width = map[0].size();
+    int height = map.size();
+    if (x &amp;gt;= width || y &amp;gt;= height )
+        return false;
+    
+    if(x==width=1 &amp;amp;&amp;amp; y == height-1)
+        return true;
+
+    int&amp;amp; val = cache[y][x];
+    if(val != -1)
+        return (val==1);
+    
+    int jumpSize = map[y][x];
+    return val = (jump(map, cache, x+jumpSize, y) || jump(map,cache, x, y+jumpSize));
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Fri, 02 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>와일드카드 스트링 매치</title>
+        <link>/2018/03/02/%EC%99%80%EC%9D%BC%EB%93%9C%EC%B9%B4%EB%93%9C%EB%A7%A4%EC%B9%AD.html</link>
+        <guid isPermaLink="true">/2018/03/02/%EC%99%80%EC%9D%BC%EB%93%9C%EC%B9%B4%EB%93%9C%EB%A7%A4%EC%B9%AD.html</guid>
+        <description>&lt;h2 id=&quot;와일드카드-스트링-매칭&quot;&gt;와일드카드 스트링 매칭&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;흔히쓰는 와일드카드 ?, *을 사용해서 문자열이 해당 패턴에 일치하는지 파악한다&lt;/li&gt;
+  &lt;li&gt;예) he?p =&amp;gt; help (O), he?p =&amp;gt; helpp (X), h&lt;em&gt;p =&amp;gt; help (O), h&lt;/em&gt;p =&amp;gt; helpp (O)&lt;/li&gt;
+  &lt;li&gt;DP를 사용해서 문제를 풀 수 있다&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;관찰&quot;&gt;관찰&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;문자열와 패턴을 각각 W, S라고 하자.&lt;/li&gt;
+  &lt;li&gt;만약 현재 위치 w,s에 대해 W[w] != S[s]이면 해당 없음&lt;/li&gt;
+  &lt;li&gt;W[w] == S[s] 이거나 W[w] == ‘?’이면 매칭이고, 다음 글자 를 계속 조사&lt;/li&gt;
+  &lt;li&gt;매칭하지 않아도 W[w] == ‘*‘이면 이후의 글자들을 전부 조사해서 매칭이 되는지의 여부를 파악한다&lt;/li&gt;
+  &lt;li&gt;W의 w+1과 S의 s+1 이후의 값들을 확인해서 하나라도 참이면 답은 참이 된다&lt;/li&gt;
+  &lt;li&gt;시간복잡도는 O(n&lt;sup&gt;2&lt;/sup&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;점화식&quot;&gt;점화식&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    bool matchWords(vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; cache, 
+        const string&amp;amp; W,
+        int w, 
+        const string&amp;amp; S,
+        int s) {
+
+            int&amp;amp; ret = cache[w][s];
+            if(ret != -1)
+                return ret;
+            
+            while(s &amp;lt; S.size() &amp;amp;&amp;amp; w &amp;lt; W.size() &amp;amp;&amp;amp;
+                    (W[w] == '?' || W[w] == S[s]) {
+                        ++w;
+                        ++s;
+                    }
+            
+            if(w==W.size()) return ret = (s==S.size());
+            if(W[w] == '*') {
+                if(matchWords(cache, W, w+1, S, s) ||
+                    (s &amp;lt; S.size() &amp;amp;&amp;amp; matchWords(cache, W, w, S, s+1))
+                    return ret = 1;
+            }
+
+            return ret = 0;
+        }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Fri, 02 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>삼각형에서의 최대 경로</title>
+        <link>/2018/03/02/%EC%82%BC%EA%B0%81%ED%98%95%EC%97%90%EC%84%9C%EC%9D%98%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C.html</link>
+        <guid isPermaLink="true">/2018/03/02/%EC%82%BC%EA%B0%81%ED%98%95%EC%97%90%EC%84%9C%EC%9D%98%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C.html</guid>
+        <description>&lt;h2 id=&quot;삼각형에서의-최대-경로&quot;&gt;삼각형에서의 최대 경로&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;6
+1 2
+3 7 4
+9 4 1 7
+2 7 5 9 4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;맨 위의 숫자에서 시작해서 한 번에 한 칸씩 아래(바로 아래(y+1), 오른쪽 아래(x+1, y+1)로 내려가서 맨 아래줄에 도달하는 경로중 숫자의 합을 최대화 하는 경로는?&lt;/li&gt;
+  &lt;li&gt;경로가 여러개가 있기 때문에 메모이제이션이 쉽지 않음&lt;/li&gt;
+  &lt;li&gt;f(x,y,sum) = max(f(x+1,y, sum + triangle[y][x]), f(x,y+1, sum + triangle[y][x]))
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  int maxSum(const vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; input,
+              vector&amp;lt;vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;gt;&amp;amp; cache,
+              int x,
+              int y, int sum) {
+                  if(y == n-1)
+                      return sum + input[y][x];
+                    
+                  int&amp;amp; val = cache[y][x][sum];
+                  if(val != -1)
+                      return val;
+                    
+                  sum += input[y][x];
+                  return max(
+                      maxSum(input, cache, x+1, y+1, sum),
+                      maxSum(input, cache, x, y+1, sum)
+                  );
+              }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;재귀함수에 sum을 더해줄 필요가 없다. sum이 있건 없건 부분 경로의 최대 값이 중요하다&lt;/li&gt;
+  &lt;li&gt;Optimal Substructure&lt;/li&gt;
+  &lt;li&gt;f(x,y) = max(f(x+1,y), f(x,y+1)) + triangle[y][x];
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  int maxSum(const vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; input,
+              vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; cache,
+              int x,
+              int y) {
+
+                  int&amp;amp; ret = cache[y][x];
+
+                  if(ret != -1)
+                      return ret;
+
+                  if(y==n-1)
+                      return input[y][x];
+                    
+                  return ret = max(
+                                  maxSum(input, cache, x+1, y+1),
+                                  maxSum(input, cache, x, y+1)
+
+                  );
+              }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;시간복잡도 - 부분 문제에서는 O(N&lt;sup&gt;2&lt;/sup&gt;), 전체문제에서는 상수 시간이 추가되기 때문에 결국 O(N&lt;sup&gt;2&lt;/sup&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 02 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>최장 공통 부분 문자열 - Longest Common Substring</title>
+        <link>/2018/03/01/longest-common-substring.html</link>
+        <guid isPermaLink="true">/2018/03/01/longest-common-substring.html</guid>
+        <description>&lt;h2 id=&quot;설명&quot;&gt;설명&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Longest Common Subsequence 문제와 거의 유사하지만 약간 다른 문제&lt;/li&gt;
+  &lt;li&gt;아까의 로직과 비슷하다, 다만 문자열의 경우는 subsequence가 아니기 때문에 중간에 어긋나면 리셋이 가능하다&lt;/li&gt;
+  &lt;li&gt;DP로 풀 수 있는 가장 일반적인 솔루션&lt;/li&gt;
+  &lt;li&gt;두 개의 문자열에 대한 테이블을 만든다&lt;/li&gt;
+  &lt;li&gt;LCSubstr(X, Y, m, n) = LCSubstr(X, Y, m-1, n-1) + 1 if X[m-1] = Y[n-1] 0  Otherwise (if X[m-1] != Y[n-1])&lt;/li&gt;
+  &lt;li&gt;LCSubStr(X, Y, m, n)  = Max(LCSubstr(X, Y, i, j)) where 1 &amp;lt;= i &amp;lt;= m and 1 &amp;lt;= j &amp;lt;= n&lt;/li&gt;
+  &lt;li&gt;시간 복잡도는 문자열 A가 N개의 글자로 이루어진 문자열이고 문자열 B가 M개의 글자로 이루어진 문자열이라면, N&lt;em&gt;M 번의 검사를 통해 테이블을 만들어야 하기 때문에 결국 O(N&lt;/em&gt;M)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    for(int i = 0 ; i &amp;lt; A.size(); i++) {
+        for(int j = 0; j &amp;lt; B.size(); j++) {
+            if(A[i] == B[j]) {
+                table[i][j] = table[i-1][j-1] + 1;
+                result = max(result, table[i][j]);
+            }
+            else {
+                table[i][j] = 0 ;
+            }
+        }
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Thu, 01 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>최장 공통 부분 수열 - Longest Common Subsequence</title>
+        <link>/2018/03/01/longest-common-sequence.html</link>
+        <guid isPermaLink="true">/2018/03/01/longest-common-sequence.html</guid>
+        <description>&lt;h2 id=&quot;설명&quot;&gt;설명&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;두 문자열이 주어졌을 때, 두 문자열에 모두 포함된 가장 긴 공통 부분 문자열을 찾는 프로그램을 작성하시오.&lt;/li&gt;
+  &lt;li&gt;두 문자열 ABRACADABRA와 ECADADABRBCRDARA의 공통 부분 문자열은 CA, CADA, ADABR, 빈 문자열 등이 있다. 이 중에서 가장 긴 공통 부분 문자열은 ADABR이며, 길이는 5이다. 또, 두 문자열이 UPWJCIRUCAXIIRGL와 SBQNYBSBZDFNEV인 경우에는 가장 긴 공통 부분 문자열은 빈 문자열이다.&lt;/li&gt;
+  &lt;li&gt;두 개의 문자열에 대한 테이블을 만든다&lt;/li&gt;
+  &lt;li&gt;LCS(X&lt;sub&gt;i&lt;/sub&gt;, Y&lt;sub&gt;j&lt;/sub&gt;) = 0 if x&lt;sub&gt;i&lt;/sub&gt; = 0 or y&lt;sub&gt;j&lt;/sub&gt; = 0&lt;/li&gt;
+  &lt;li&gt;LCS(X&lt;sub&gt;i&lt;/sub&gt;, Y&lt;sub&gt;j&lt;/sub&gt;) = LCS(X&lt;sub&gt;i-1&lt;/sub&gt;, Y&lt;sub&gt;j-1&lt;/sub&gt;) +  1 if x&lt;sub&gt;i&lt;/sub&gt; = y&lt;sub&gt;j&lt;/sub&gt;&lt;/li&gt;
+  &lt;li&gt;LCS(X&lt;sub&gt;i&lt;/sub&gt;, Y&lt;sub&gt;j&lt;/sub&gt;) = longest(LCS(X&lt;sub&gt;i-1&lt;/sub&gt;, Y&lt;sub&gt;j&lt;/sub&gt;),LCS(X&lt;sub&gt;i&lt;/sub&gt;, Y&lt;sub&gt;j-1&lt;/sub&gt;))  if x&lt;sub&gt;i&lt;/sub&gt; != y&lt;sub&gt;j&lt;/sub&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int LCS(const string&amp;amp; input, const string&amp;amp; compare) {
+    
+    if(input.size() == 0 || compare.size() == 0)
+        return 0 ;
+    
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; table;
+    for(int i = 0 ; i &amp;lt; input.size(); i++){
+        vector&amp;lt;int&amp;gt; v(compare.size(), 0);
+        table.push_back(v);
+    }
+    
+    if(input[0] == compare[0])
+        table[0][0] = 1;
+    
+    for(int x = 1; x &amp;lt; input.size(); x++) {
+        for(int y = 1; y &amp;lt; compare.size(); y++){
+            if(input[x] == compare[y]) {
+                table[x][y] = table[x-1][y-1] + 1;
+            }
+            else {
+                table[x][y] = max(table[x][y-1], table[x-1][y]);
+            }
+        }
+    }
+    int ret = table[input.size()-1][compare.size()-1]; 
+    return ret;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;아래의 설명은 http://hsp1116.tistory.com/37 에서 가져옴&lt;/li&gt;
+  &lt;li&gt;A&lt;sub&gt;i&lt;/sub&gt; == B&lt;sub&gt;j&lt;/sub&gt;일 때 LCS(i,j) = LCS(i-1,j-1) + 1 이기 떄문에 LCS(i,j) &amp;gt; LCS(i-1,j-1)&lt;/li&gt;
+  &lt;li&gt;LCX(i,j) = max(LCS(i-1,j),LCS(i,j-1))의 경우:&lt;/li&gt;
+  &lt;li&gt;A&lt;sub&gt;i&lt;/sub&gt; != B&lt;sub&gt;j&lt;/sub&gt;일 지라도, LCS(i,j) = max(LCS(i-1,j),LCS(i,j-1))를 통해 LCS(i-1,j-1) + 1가 도출 될 수 있다.&lt;/li&gt;
+  &lt;li&gt;LCS(i-1,j), LCS(i,j-1)이 둘 다 LCS(i,j)보다 작고 LCS(i-1,j-1)이 LCS(i,j)보다 작은 경우가 Ai==Bj일 때이다.&lt;/li&gt;
+  &lt;li&gt;LCS[i][j] &amp;gt; LCS[i-1][j-1] &amp;amp;&amp;amp; LCS[i][j] &amp;gt; LCS[i][j-1] &amp;amp;&amp;amp; LCS[i][j] &amp;gt; LCS[i-1][j])를 조건으로 코드를 구현하면 된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void backTracking(int m, int n){
+    if(m==0 || n ==0) return;
+    if(cache[m][n] &amp;amp;gt; cache[m-1][n-1] &amp;amp;amp;&amp;amp;amp; cache[m][n] &amp;amp;gt; cache[m][n-1] &amp;amp;amp;&amp;amp;amp; cache[m][n] &amp;amp;gt; cache[m-1][n]){
+        &amp;lt;span style=&quot;color: rgb(174, 174, 174);&quot; data-evernote-id=&quot;407&quot; class=&quot;js-evernote-checked&quot;&amp;gt;//문자열 인덱스는 캐시 인덱스보다 1씩 더 작다. &amp;lt;/span&amp;gt;
+        output = input[n-1] + output;
+        backTracking(m-1, n-1);
+    }else if(cache[m][n] &amp;amp;gt; cache[m-1][n] &amp;amp;amp;&amp;amp;amp; cache[m][n] == cache[m][n-1]){
+        backTracking(m, n-1);
+    }else{
+          backTracking(m-1, n);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;참고-및-추가-설명&quot;&gt;참고 및 추가 설명&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;출처: https://www.acmicpc.net/problem/5582&lt;/li&gt;
+  &lt;li&gt;추가 설명: https://ko.wikipedia.org/wiki/%EC%B5%9C%EC%9E%A5&lt;em&gt;%EA%B3%B5%ED%86%B5&lt;/em&gt;%EB%B6%80%EB%B6%84_%EC%88%98%EC%97%B4&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 01 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>정수 배열에서 가장 큰 이어지는 원소들의 합을 구하라 - 시간복잡도는 O(n)</title>
+        <link>/2018/03/01/find-max-sum-sequence.html</link>
+        <guid isPermaLink="true">/2018/03/01/find-max-sum-sequence.html</guid>
+        <description>&lt;ul&gt;
+  &lt;li&gt;출처: 매일프로그래밍 #1&lt;/li&gt;
+  &lt;li&gt;Longest increasing subsequence&lt;/li&gt;
+  &lt;li&gt;이 문제는 최대 합을 구하기 위해 원소들을 계속 더해 나갈때 음의 원소가 나왔을 때 그 원소를 계속 더하는게 맞는지 아닌지를 판단하는 것이 중요하다&lt;/li&gt;
+  &lt;li&gt;아래에서 currentMax는 원소들을 계속 더해 가면서 현재 인덱스에서의 최대 값을 의미한다&lt;/li&gt;
+  &lt;li&gt;maxMax 값은 이제까지 나왔던 값들 중에서 최대 값을 의미하다. 즉, 중간에 음수 값이 나왔을때 이 값이 일시적으로 currentMax보다 커질수 있다&lt;/li&gt;
+  &lt;li&gt;쉽지만, 헤맬수 있는 문제..&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Input: [-1, 3, -1, 5]
+Output: 7 ( 3 + (-1) + 5 )
+
+Input: [-5, -3, -1]
+Output: -1 ( -1 )
+
+Input: [2, 4, -2, -3, 8]
+Output: 9 ( 2 + 4 + (-2) + (-3) + 8 )
+
+int findMaxSum(const vector&amp;lt;int&amp;gt;&amp;amp; input) {
+
+    int current_sum = 0;
+    int max_sum = 0 ;
+    for(int i = 0 ; i &amp;lt; input.size(); i++) {
+        current_sum = max(current_sum + input[i], input[i]);
+        max_sum = max(max_sum, current_sum);
+    }
+    return max_sum;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Thu, 01 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
     
       <item>
         <title>정렬된 LinkedList를 BST로 변환하기</title>
@@ -61,695 +895,6 @@ return maxLength;     } '''
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Wed, 28 Feb 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>Longest Increasing Sequence</title>
-        <link>/2018/02/28/longest-increasing-sequence.html</link>
-        <guid isPermaLink="true">/2018/02/28/longest-increasing-sequence.html</guid>
-        <description>
-</description>
-        <pubDate>Wed, 28 Feb 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>정렬된 LinkedList를 BST로 변환하기</title>
-        <link>/2018/02/28/linkedlist-to-bst.html</link>
-        <guid isPermaLink="true">/2018/02/28/linkedlist-to-bst.html</guid>
-        <description>&lt;ul&gt;
-  &lt;li&gt;정렬된 linkedlist를 binary search 방식으로 BST로 변환한다&lt;/li&gt;
-  &lt;li&gt;0~n개의 노드가 있을떄 중간 노드(n/2)의 값을 구하고 왼쪽 노드는 왼쪽 중간 노드를 구해서 (0~n/2의 중간값 n/4) 값을 설정한다&lt;/li&gt;
-  &lt;li&gt;오른쪽 노드의 값은 n/2에서 n까지의 중간값을 구해서 설정하는 방식으로 재귀적으로 호출해서 BST를 완성한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;’’’
-tnode* llist_to_bst(lnode* head, lnode* tail) {&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if(head == nullptr)
-    return nullptr;
-
-lnode* fast_ptr = head;
-lnode* slow_ptr = slow;
-while(fast_ptr != nullptr &amp;amp;&amp;amp; fast_ptr != tail) {
-    fast_ptr = fast_ptr-&amp;gt;next;
-    slow_ptr = slow_ptr-&amp;gt;next;
-    if(fast_ptr!= nullptr &amp;amp;&amp;amp; fast_ptr != tail)
-        fast_ptr = fast_ptr-&amp;gt;next;
-}
-
-tnode * ptr = new tnode(slow_ptr-&amp;gt;value);
-ptr-&amp;gt;left = llist_to_bst(head, slow_ptr);
-ptr-&amp;gt;right = llist_to_bst(slow_ptr-&amp;gt;next, tail);
-return ptr; } '''
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Wed, 28 Feb 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>아주 큰 트리에서 가장 큰 BST 찾기</title>
-        <link>/2018/02/28/find-biggest-bst.html</link>
-        <guid isPermaLink="true">/2018/02/28/find-biggest-bst.html</guid>
-        <description>&lt;ul&gt;
-  &lt;li&gt;문제: You are given a very large binary tree, return the root node of the largest BST in the given tree&lt;/li&gt;
-  &lt;li&gt;왼쪽, 오른쪽 순환하면서 BST 조건에 맞는 노드를 찾기 시작한다&lt;/li&gt;
-  &lt;li&gt;왼쪽 노드&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;```
-int find_biggest_bst(node* ptr, int&amp;amp; min, int &amp;amp;max, int&amp;amp; total_nodes, node*&amp;amp; head) {&lt;br /&gt;
-    if(!ptr)
-        return 0;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int left = find_biggest_bst(ptr, min, max, total_nodes, head);
-int current_min = (left ==0)?ptr-&amp;gt;value: min;
-if((left==-1) || (left != 0 &amp;amp;&amp;amp; ptr-&amp;gt;value &amp;gt; max)) {
-    return -1;
-}
-
-int right = find_biggest_bst(ptr, min, max, total_nodes, head);
-int current_max = (right == 0)? ptr-&amp;gt;value:max;
-if(right == -1 || (right != 0 &amp;amp;&amp;amp; ptr-&amp;gt;value &amp;lt; min)) {
-    return -1;
-}
-
-int total = left + right + 1;
-current_min = min;
-current_max = max;
-
-if(total_nodes &amp;lt; total) {
-    total_ndoes = total;
-}
-return total; } '''
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Wed, 28 Feb 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>Convert Bst To Double Linked List</title>
-        <link>/2018/02/28/convert-bst-to-double-linked-list.html</link>
-        <guid isPermaLink="true">/2018/02/28/convert-bst-to-double-linked-list.html</guid>
-        <description>
-&lt;hr /&gt;
-&lt;p&gt;layout: post
-title: BST를 Double Linked List로 변환하기
-tags: [그래프,알고리즘, BST, Linked List]
-—&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;왼쪽 노드를 계속 순환해서 최소값이 될때까지 순환한다&lt;/li&gt;
-  &lt;li&gt;최소값이 되면, 그 노드의 값을 헤드값으로 저장하고 부모노드 및 오른쪽 노드를 계속 추가해서 리스트를 만든다&lt;/li&gt;
-  &lt;li&gt;노드를 추가할때 현재 노드의 이전 노드 값이 prev값과 동일한지 확인할 필요가 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;’’’&lt;/p&gt;
-
-&lt;p&gt;struct node {
-    node(int n): value(n){}
-    int value;
-    node* left, * right;
-};&lt;/p&gt;
-
-&lt;p&gt;void insert_before(node* prev, node* current) {
-    node* temp = current-&amp;gt;left;
-    if(prev) {
-        cout « “prev - n: “ « prev-&amp;gt;value « endl;
-        prev-&amp;gt;right = current;
-        prev-&amp;gt;left = temp;
-    }&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if(temp &amp;amp;&amp;amp; temp != prev) {
-    cout &amp;lt;&amp;lt; &quot;temp-n: &quot; &amp;lt;&amp;lt; temp-&amp;gt;value &amp;lt;&amp;lt; endl;
-    temp-&amp;gt;right = prev;    
-}
-cout &amp;lt;&amp;lt; &quot;after prev, temp&quot; &amp;lt;&amp;lt; endl;
-current-&amp;gt;left = prev; }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;void bst_to_ddl(node* ptr, node&lt;em&gt;&amp;amp; prev, node&lt;/em&gt;&amp;amp; head, int&amp;amp; min) {
-    if(!ptr)
-        return;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bst_to_ddl(ptr-&amp;gt;left, prev, head, min);
-insert_before(prev, ptr);
-prev = ptr;
-
-if(ptr-&amp;gt;value &amp;lt; min) {
-    cout &amp;lt;&amp;lt; &quot;min: &quot; &amp;lt;&amp;lt; ptr-&amp;gt;value &amp;lt;&amp;lt; endl;
-    min = ptr-&amp;gt;value;
-    head = ptr;
-}
-
-bst_to_ddl(ptr-&amp;gt;right, prev, head, min); }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;int main() {
-    node* root_ptr = new node(4);
-    root_ptr-&amp;gt;left = new node(2);
-    root_ptr-&amp;gt;right = new node(5);
-    root_ptr-&amp;gt;left-&amp;gt;right = new node(3);
-    root_ptr-&amp;gt;left-&amp;gt;left = new node(1);&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int min = 100;
-node* prev_ptr = nullptr;
-node* head_ptr;
-bst_to_ddl(root_ptr, prev_ptr, head_ptr, min);
-
-node* current_ptr = head_ptr;
-while(current_ptr) {
-    cout &amp;lt;&amp;lt; current_ptr-&amp;gt;value &amp;lt;&amp;lt; endl;
-    current_ptr = current_ptr-&amp;gt;right;
-} } '''
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Wed, 28 Feb 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>크루스칼 알고리즘</title>
-        <link>/2018/02/26/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html</link>
-        <guid isPermaLink="true">/2018/02/26/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html</guid>
-        <description>&lt;ul&gt;
-  &lt;li&gt;크루스칼 알고리즘&lt;/li&gt;
-  &lt;li&gt;edge의 cost별로 정렬한다&lt;/li&gt;
-  &lt;li&gt;하나씩 빼서 cycle을 만드는지 확인한다&lt;/li&gt;
-  &lt;li&gt;사이클을 만들지 않는 edge들만 뽑아서 리턴한다&lt;/li&gt;
-  &lt;li&gt;상당히 간단하다&lt;/li&gt;
-  &lt;li&gt;사이클을 만드는데 사용하는 disjoined_set 알고리즘은 간단하지만 효과적이다&lt;/li&gt;
-  &lt;li&gt;시간 복잡도는 모든 edge에 대해 정렬하기 때문에 O(ElogE)&lt;/li&gt;
-  &lt;li&gt;disjoined set의 경우는 시간복잡도가 ELogE보다 작기 때문에, 정렬하는데 드는 시간이 driving force&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-using namespace std;
-
-struct edge {
-    int u,v,cost;
-    edge(int u1, int v1, int c):u(u1), v(v1), cost(c) {}
-    bool operator &amp;lt; (const edge&amp;amp; e) {
-        return cost &amp;lt; e.cost;
-    }
-};
-
-struct disjoined_set {
-    map&amp;lt;int,int&amp;gt; parent;
-    void init(vector&amp;lt;edge&amp;gt;&amp;amp; edges) {
-        for(auto e : edges) {
-            if(!parent.count(e.u))
-                parent.insert(make_pair(e.u, e.u));
-            
-            if(!parent.count(e.v))
-                parent.insert(make_pair(e.v, e.v));
-        }
-    }
-    
-    int find_parent(int u) {
-        if(parent[u] == u)
-            return u;
-        cout &amp;lt;&amp;lt; &quot;u: &quot; &amp;lt;&amp;lt; u &amp;lt;&amp;lt; &quot;, u_parent: &quot; &amp;lt;&amp;lt; parent[u] &amp;lt;&amp;lt; endl;
-        
-        return parent[u] = find_parent(parent[u]);
-    }
-    
-    bool same_set(int u, int v) {
-        cout &amp;lt;&amp;lt; &quot;before same_set&quot; &amp;lt;&amp;lt; endl;
-        if(find_parent(u) == find_parent(v))
-            return true;
-        
-        cout &amp;lt;&amp;lt; &quot;false&quot; &amp;lt;&amp;lt;endl;
-        return false;
-    }
-    
-    void merge(int u, int v){
-        int u_parent = find_parent(u);
-        int v_parent = find_parent(v);
-        cout &amp;lt;&amp;lt; &quot;u_parent: &quot; &amp;lt;&amp;lt; u_parent &amp;lt;&amp;lt; &quot;, v_parent: &quot; &amp;lt;&amp;lt; v_parent &amp;lt;&amp;lt; endl;
-        if(u_parent == v_parent)
-            return;
-        
-        parent[v_parent] = u_parent;            
-    }
-};
-
-vector&amp;lt;edge&amp;gt; kruskal(vector&amp;lt;edge&amp;gt;&amp;amp; input) {
-    sort(input.begin(), input.end());
-    vector&amp;lt;edge&amp;gt; output;
-    disjoined_set ds;
-    ds.init(input);
-    
-    for(auto e : input) {
-        cout &amp;lt;&amp;lt; &quot;edge u: &quot; &amp;lt;&amp;lt; e.u &amp;lt;&amp;lt; &quot;, v: &quot; &amp;lt;&amp;lt; e.v &amp;lt;&amp;lt; &quot;, cost: &quot; &amp;lt;&amp;lt; e.cost &amp;lt;&amp;lt;endl;
-        if(!ds.same_set(e.u, e.v)) {
-            cout &amp;lt;&amp;lt; &quot;ds.same_set &quot; &amp;lt;&amp;lt; endl;
-            output.push_back(e);
-            ds.merge(e.u, e.v);
-        }
-    }
-    cout &amp;lt;&amp;lt; &quot;output&quot; &amp;lt;&amp;lt; endl;
-    return output;
-}
-
-int main() {
-    edge e1(1,3,4);
-    edge e2(1,2,5);
-    edge e3(2,3,2);
-    edge e4(2,4,7);
-    edge e5(3,4,6);
-    edge e6(3,5,11);
-    edge e7(4,5,3);
-    edge e8(4,6,8);
-    edge e9(5,6,8);
-
-    vector&amp;lt;edge&amp;gt; edges = {e1,e2,e3,e4,e5,e6,e7,e8,e9};
-    vector&amp;lt;edge&amp;gt; output = kruskal(edges);
-    
-    for(edge e : output)
-        cout &amp;lt;&amp;lt; &quot;edge u: &quot; &amp;lt;&amp;lt; e.u &amp;lt;&amp;lt; &quot;, v: &quot; &amp;lt;&amp;lt; e.v &amp;lt;&amp;lt; &quot;, cost: &quot; &amp;lt;&amp;lt; e.cost &amp;lt;&amp;lt;endl;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Mon, 26 Feb 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>사이클 체크</title>
-        <link>/2018/02/26/%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%B2%B4%ED%81%AC.html</link>
-        <guid isPermaLink="true">/2018/02/26/%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%B2%B4%ED%81%AC.html</guid>
-        <description>&lt;ul&gt;
-  &lt;li&gt;사이클 확인 알고지름&lt;/li&gt;
-  &lt;li&gt;DFS 방식을 활용해서 사이클이 있는지 확인한다&lt;/li&gt;
-  &lt;li&gt;현재 순환중이면 상태를 VISTING으로 변경해서 순환이 끝나지 않았음에도 불구하고 다시 체크하러 오는지 확인하다&lt;/li&gt;
-  &lt;li&gt;현재 노드들을 순환중인데도 불구하고 다시 확인하러 오면 사이클이 있음&lt;/li&gt;
-  &lt;li&gt;시간 복잡도는 O(E+V)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;using namespace std;
-
-enum STATUS {
-  NOT_VISITED,
-    VISITING,
-    VISITED
-};
-
-bool hasCycle(map&amp;lt;int,vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; input,
-             map&amp;lt;int, int&amp;gt;&amp;amp; visited,
-             int here) {
-    if(visited[here] == VISITING){
-        cout &amp;lt;&amp;lt; here &amp;lt;&amp;lt; &quot; confirmed visiting&quot; &amp;lt;&amp;lt; endl;
-        return true;
-    }
-    else if(visited[here] == VISITED)
-        return false;
-    
-    visited[here] = VISITING;
-    cout &amp;lt;&amp;lt; here &amp;lt;&amp;lt; &quot; visiting &quot; &amp;lt;&amp;lt; endl;
-    
-    for(int there : input[here]) {
-        cout &amp;lt;&amp;lt; there &amp;lt;&amp;lt; &quot; checking &quot; &amp;lt;&amp;lt; endl;
-        if(hasCycle(input, visited, there))
-            return true;
-    }
-    visited[here] = VISITED;
-    return false;
-}
-
-void process(const vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; input, map&amp;lt;int, vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; output)
-{
-    for(auto entry : input) {
-        int u = entry[0];
-        int v = entry[1];
-            
-        if(!output.count(u)) {
-            vector&amp;lt;int&amp;gt; vec = { v };
-            output.insert(make_pair(u, vec));
-        }
-        else {
-            output[u].push_back(v);
-        }
-    }
-}
-
-int main() {
-    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; input = {
-        {1,2},
-        {1,3},
-        {2,3},
-        {3,4},
-        {2,4},
-        {3,5},
-        {4,5},
-        {4,6},
-        {5,6},
-    };
-    
-    map&amp;lt;int, vector&amp;lt;int&amp;gt;&amp;gt; source;
-    process(input, source);
-    map&amp;lt;int,int&amp;gt; visited;
-    for(auto kvp : source)
-        visited.insert(make_pair(kvp.first,0));
-
-    bool cycle = hasCycle(source, visited, 1);
-    cout &amp;lt;&amp;lt; &quot;cycle: &quot; &amp;lt;&amp;lt; cycle &amp;lt;&amp;lt; endl;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Mon, 26 Feb 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>Permutation</title>
-        <link>/2018/02/26/permutation.html</link>
-        <guid isPermaLink="true">/2018/02/26/permutation.html</guid>
-        <description>
-</description>
-        <pubDate>Mon, 26 Feb 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>트리의 최장 직경 구하기</title>
-        <link>/2018/02/26/max-diameter-of-tree.html</link>
-        <guid isPermaLink="true">/2018/02/26/max-diameter-of-tree.html</guid>
-        <description>&lt;ul&gt;
-  &lt;li&gt;어느 한 노드가 있을 경우 최장 직경은..&lt;/li&gt;
-  &lt;li&gt;왼쪽에서 가장 큰 height와 오른쪽에서 가장 큰 height에 1을 더한 값과&lt;/li&gt;
-  &lt;li&gt;왼쪽에서의 가능 큰 직경, 오른쪽에서의 가장 큰 직경&lt;/li&gt;
-  &lt;li&gt;이 세 값 중에서 가장 큰 값을 고르면 된다&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct node {
-    node* left, *right
-};
-
-int height(node* ptr) {
-    if(!ptr)
-        return 0;
-    
-    int lh = height(ptr-&amp;gt;left);
-    int rh = height(ptr-&amp;gt;right);
-    return 1 + max(lh, rh);
-}
-
-int diameter(node* ptr) {
-    if(!ptr)
-        return 0;
-    
-    int lh = height(ptr-&amp;gt;left);
-    int rh = height(ptr-&amp;gt;right);
-    int ld = diameter(ptr-&amp;gt;left);
-    int rd = diameter(ptr-&amp;gt;right);
-    return max(1+lh+rh, max(ld,rd));
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Mon, 26 Feb 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>Find Largest Bst</title>
-        <link>/2018/02/26/find-largest-bst.html</link>
-        <guid isPermaLink="true">/2018/02/26/find-largest-bst.html</guid>
-        <description>
-</description>
-        <pubDate>Mon, 26 Feb 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>섬의 개수 세기</title>
-        <link>/2018/02/26/connect-all-the-nodes.html</link>
-        <guid isPermaLink="true">/2018/02/26/connect-all-the-nodes.html</guid>
-        <description>&lt;ul&gt;
-  &lt;li&gt;next 노드를 구하기 위해서는 부모노드의 next를 타고 가서 왼쪽 노드가 있는지 확인한다 없으면 오른쪽 노드&lt;/li&gt;
-  &lt;li&gt;왼쪽 오른쪽 자식 노드가 존재하지 않으면 또 부모 노드의 옆의 노드로 가서 위와 동일하게 반복한다&lt;/li&gt;
-  &lt;li&gt;횡으로 탐색이 끝나면, 다음 자식 노드로 내려가기 위해서 왼쪽 자식 노드 혹은 오른쪽 자식 노드의 값을 사용해서 동일하게 옆의 노드를 체크한다&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct node {
-    int n;
-    node* left, * right, * next;
-};
-
-node* findNext(node* ptr) {
-    node* next = ptr-&amp;gt;next;
-    while(next) {
-        if(next-&amp;gt;left)
-            return next-&amp;gt;left;
-        if(next-&amp;gt;right)
-            return next-&amp;gt;right;
-        next  = next-&amp;gt;next;
-    }
-    return next;
-};
-
-void connectNext(node* ptr) {
-    
-    node* level_ptr = ptr;    
-    while(level_ptr) {
-        node * current = level_ptr;     
-        while(current) {
-            if(current-&amp;gt;left)
-                current-&amp;gt;left-&amp;gt;next = (!current-&amp;gt;right) ? current-&amp;gt;right: findNext(current);
-            
-            if(current-&amp;gt;right)
-                current-&amp;gt;right = findNext(current);
-            current = current-&amp;gt;next;
-        }
-            
-        if(level_ptr-&amp;gt;left)
-            level_ptr = level_ptr-&amp;gt;left;
-        else
-        if(level_ptr-&amp;gt;right)
-            level_ptr = level_ptr-&amp;gt;right;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Mon, 26 Feb 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>Number Of Islands</title>
-        <link>/2018/02/25/number-of-islands.html</link>
-        <guid isPermaLink="true">/2018/02/25/number-of-islands.html</guid>
-        <description>
-</description>
-        <pubDate>Sun, 25 Feb 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>Longest substring without repeating characters</title>
-        <link>/2018/02/25/longest-substring-without-repeating-characters.html</link>
-        <guid isPermaLink="true">/2018/02/25/longest-substring-without-repeating-characters.html</guid>
-        <description>&lt;p&gt;##출처:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;https://leetcode.com/problems/longest-substring-without-repeating-characters/description/&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Given a string, find the length of the longest substring without repeating characters.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Examples:
-Given &quot;abcabcbb&quot;, the answer is &quot;abc&quot;, which the length is 3.
-Given &quot;bbbbb&quot;, the answer is &quot;b&quot;, with the length of 1.
-Given &quot;pwwkew&quot;, the answer is &quot;wke&quot;, with the length of 3. Note that the answer must be a substring, &quot;pwke&quot; is a subsequence and not a substring.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;분석&quot;&gt;분석&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Sliding Window 방식을 사용한다&lt;/li&gt;
-  &lt;li&gt;큐에 캐릭터를 집어 넣는다&lt;/li&gt;
-  &lt;li&gt;반복된 문자가 나오면, 지금까지 쌓아놓았던 문자의 수를 기억한다&lt;/li&gt;
-  &lt;li&gt;큐에서 문자를 계속 poping한다. 새로 집어 넣으려고 하는 문자와 동일한 문자가 나올때까지&lt;/li&gt;
-  &lt;li&gt;반복되는 문자가 발견되면, 다시 카운트를 시작한다&lt;/li&gt;
-  &lt;li&gt;O(N)으로 해결 가능&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class Solution {
-public:
-    int popAndCount(char c, vector&amp;amp; bvec, queue&amp;amp; cqueue) {
-        auto size = cqueue.size();
-        while(!cqueue.empty() &amp;amp;&amp;amp; cqueue.front() != c) {
-            bvec[cqueue.front()] = false;
-            cqueue.pop();
-        }
-
-        if(cqueue.front() == c) {
-            bvec[c] = false;
-            cqueue.pop();
-        }  
-        
-        return size;        
-    }
-    
-    int lengthOfLongestSubstring(string input) {
-        queue cqueue;
-        vector bvec(128);
-        auto maxValue = 0 ; 
-        
-        for(auto i = 0; i &amp;lt; input.length(); i++) {   
-            char c = input[i];    
-            if(bvec[c]) {
-                auto count = popAndCount(c, bvec, cqueue);
-                maxValue = std::max(maxValue, count);
-            }
-
-            cqueue.push(c);
-            bvec[c] = true;
-        }
-        
-        if(!cqueue.empty()) {
-            auto count = 0;
-            while(!cqueue.empty()) {
-                count++;
-                cqueue.pop();
-            }
-            maxValue = std::max(maxValue, count);
-        }
-        return maxValue;    
-    }
-};
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Sun, 25 Feb 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>빛은 트리의 왼쪽에 떨어진다</title>
-        <link>/2018/02/25/light-is-failing-to-the-left-side-of-tree.html</link>
-        <guid isPermaLink="true">/2018/02/25/light-is-failing-to-the-left-side-of-tree.html</guid>
-        <description>&lt;p&gt;Light is falling on a tree from left side you have to find all the nodes on which this light will fall.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;일반적인 트리 문제&lt;/li&gt;
-  &lt;li&gt;왼쪽에서만 보이는 트리들을 필터링해서 보여주면 된다&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct node {
-    int value;
-    node* left, *right;
-};
-
-void filter_nodes_from_leftside(node* ptr, const int level, int&amp;amp; max_level) {
-    if(!ptr)
-        return;
-    
-    if(level &amp;gt; max_level) {
-        max_level = level;
-        cout &amp;lt;&amp;lt; ptr-&amp;gt;value &amp;lt;&amp;lt; endl;
-    }
-    filter_nodes_from_leftside(ptr-&amp;gt;left, level+1, max_level);
-    filter_nodes_from_leftside(ptr-&amp;gt;right, level+1, max_level);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Sun, 25 Feb 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>디스조인트 셋</title>
-        <link>/2018/02/25/disjoined-set.html</link>
-        <guid isPermaLink="true">/2018/02/25/disjoined-set.html</guid>
-        <description>&lt;h2 id=&quot;출처&quot;&gt;출처&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;https://ko.wikipedia.org/wiki/%EC%84%9C%EB%A1%9C%EC%86%8C_%EC%A7%91%ED%95%A9&lt;em&gt;%EC%9E%90%EB%A3%8C&lt;/em&gt;%EA%B5%AC%EC%A1%B0&lt;/li&gt;
-  &lt;li&gt;https://ratsgo.github.io/data%20structure&amp;amp;algorithm/2017/11/12/disjointset/&lt;/li&gt;
-  &lt;li&gt;http://js1jj2sk3.tistory.com/m/category/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/Disjoint-set%20%EB%94%94%EC%8A%A4%EC%A1%B0%EC%9D%B8%ED%8A%B8-%EC%85%8B&lt;/li&gt;
-  &lt;li&gt;http://bowbowbow.tistory.com/26&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;설명&quot;&gt;설명&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;서로 중복되지 않은 부분집합들로 나누워진 정보들을 저장&lt;/li&gt;
-  &lt;li&gt;set A, set B: B가 A의 모든 요소를 포함하는 경우: A = subset of B, B = superset of A&lt;/li&gt;
-  &lt;li&gt;set A, set B: A와 B가 공유하는 원소가 없다면: A와 B는 mutually disjoint&lt;/li&gt;
-  &lt;li&gt;임의의 셋을 분할(partition): 서로 중복되는 원소가 없도록 셋을 나눔&lt;/li&gt;
-  &lt;li&gt;분할된 셋들을 합치면 원래의 셋으로 복원&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;연산&quot;&gt;연산&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;make-set(x): 초기화 연산, x를 유일한 요소로 하는 셋을 만듬&lt;/li&gt;
-  &lt;li&gt;union(x,y): x가 속한 셋과 y가 속한 셋을 합침&lt;/li&gt;
-  &lt;li&gt;셋들을 합칠때에는 대표값들을 서로 연결해 줌&lt;/li&gt;
-  &lt;li&gt;set A (3) (3&amp;lt;-4), set B (1) (1&amp;lt;-2)&lt;/li&gt;
-  &lt;li&gt;untion(A,B)(3) (2-&amp;gt;1-&amp;gt;3&amp;lt;-4)&lt;/li&gt;
-  &lt;li&gt;find(x): x가 속한 셋의 대표값(루트노드 값)을 반환&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;find-연산&quot;&gt;find 연산&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;구조에 따라서 여러가지 방법으로 find가 가능하지만..&lt;/li&gt;
-  &lt;li&gt;재귀적인 방식으로 find 연산을 구현한 방식을 표현하면..&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;선형시간으로 탐색이 가능&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function find(x)
-  if x.parent != x:
-      x.parent = Find(x.parent)
-  return x.parent
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;union-연산&quot;&gt;union 연산&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;두 셋의 대표들을 찾아 연결해 주면 된다.&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function union(x,y):
-  xRoot = find(x)
-  yRoot = find(y)
-  yRoot.parent = xRoot
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;일반적인-set-collection과의-비교&quot;&gt;일반적인 set collection과의 비교&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;일반적인 stl에서 구현된 set의 경우 BST 구조를 가져서, 일반적인 연산의 경우 log의 시간을 가진다&lt;/li&gt;
-  &lt;li&gt;disjoint set은 노드에 parent 하나만 추가해서 선형적인 시간에 값을 가져올 수 있음&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct disjoined_set {
-    map&amp;lt;char, char&amp;gt; parent;
-    void init_set(vector&amp;lt;char&amp;gt; vertext) {
-        for(auto ch : vertext)
-            parent.insert(make_pair(ch,ch));
-    }
-    
-    char find_parent(char ch) {
-        if(find_parent(ch) == ch)
-            return ch;
-        
-        return parent[ch] = find_parent(parent[ch]);
-    }
-    
-    bool same_set(char c1, char c2) {
-        char c1_parent = find_parent(c1);
-        char c2_parent = find_parent(c2);
-        
-        if(c1_parent == c2_parent)
-            return true;
-        return false;
-    }
-    
-    void merge(char c1, char c2) {
-        if(same_set(c1, c2))
-            return;
-        
-        parent[c2_parent] = c1_parent;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Sun, 25 Feb 2018 00:00:00 -0800</pubDate>
       </item>
     
   </channel>

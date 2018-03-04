@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>KMP 알고리즘 | testcode</title>
+	<meta name="description" content="출처  http://www.crocus.co.kr/559  http://jason9319.tistory.com/130">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/03/03/KMP-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/ohhocat.jpg" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">testcode</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">KMP 알고리즘</h1>
+    
+    <p class="meta">
+      March 3, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><h2 id="출처">출처</h2>
+<ul>
+  <li>http://www.crocus.co.kr/559</li>
+  <li>http://jason9319.tistory.com/130</li>
+</ul>
+
+<h2 id="kmp-알고리즘kmp-algorithm">KMP 알고리즘(KMP Algorithm)</h2>
+<ul>
+  <li>www.crocus.co.kr</li>
+  <li>KMP 방식을 요약하면..
+    <ul>
+      <li>패턴의 substring을 만들어서 prefix 와 suffix가 같을때의 최장 길이를 찾는다
+ex) aba =&gt; 1, aabaa =&gt;2, acdefa =&gt; 1 ..</li>
+      <li>패턴의 substring 매칭에 대한 테이블을 만든다</li>
+      <li><img src="/assets/img/kmp.png" alt="KMP fail table" />
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void fail_function(const string&amp; input, vector&lt;int&gt;&amp; output) {
+  output.resize(input.size(),0);  
+  int last_pos = 0;
+  for(auto pos = 1; pos &lt; input.size(); pos++) {
+  while(last_pos &gt;0 &amp;&amp; input[pos] != input[last_pos])
+      last_pos = output[last_pos-1];
+        
+  if(input[pos] == input[last_pos])
+      output[pos] = ++last_pos;
+  }
+}
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>source = aabaabaaaabaabaadaabaabac가 있다고 가정하자.</li>
+  <li>pattern = aabaabac를 찾으려 한다면 표를 다음과 같이 이용하면 된다.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aabaaba[a]aabaabaadaabaabac
+aabaaba[c]
+</code></pre></div>    </div>
+  </li>
+  <li>비교결과 :: aabaaba까지 같다. 따라서 arr[i]의 7번째 인덱스에서 a와 c가 틀렸으니,aabaaba의 f[6] = 4 따라서 (7-4) = 3인 arr[3]부터 다시 확인한다.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aabaabaa[a]abaabaadaabaabac
+ aabaa[b]ac
+</code></pre></div>    </div>
+  </li>
+  <li>비교결과 :: aabaa까지 같다. 따라서 arr[i]의 8번째 인덱스에서 a와 b가 틀렸으니, aabaa의 f[i] = 2 따라서 (8-2) = 6인 arr[6]부터 다시 확인한다.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aabaabaa[a]abaabaadaabaabac
+　　　 aa[b]aabac
+</code></pre></div>    </div>
+  </li>
+  <li>비교결과 :: aa까지 같다. 따라서 arr[i]의 8번째 인덱스에서 a와 b가 틀렸으니, aa의 f[i] = 1 따라서 (8-1) = 7인 arr[7]부터 다시 확인한다.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aabaabaa[a]abaabaadaabaabac
+　　　 aa[b]aabac
+</code></pre></div>    </div>
+  </li>
+  <li>비교결과 :: aa까지 같다. 따라서 arr[i]의 9번째 인덱스에서 a와 b가 틀렸으니, aa의 f[i] = 1 따라서 (9-1) = 8인 arr[8]부터 다시 확인한다.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aabaabaaa[a]baabaadaabaabac
+　　　  aa[b]aabac
+</code></pre></div>    </div>
+  </li>
+  <li>비교결과 :: aabaaba까지 같다. 따라서 arr[i]의 15번째 인덱스에서 a와 c가 틀렸으니, aabaaba의 f[i] = 4 따라서 (15-4) = 11인 arr[11]부터 다시 확인한다.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aabaabaaaabaaba[a]daabaabac
+　　　　　aabaaba[c]
+</code></pre></div>    </div>
+  </li>
+  <li>비교결과 :: aabaa까지 같다. 따라서 arr[i]의 16번째 인덱스에서 d와 b가 틀렸으니, aabaa의 f[i] = 2 따라서 (16-2) = 14인 arr[14]부터 다시 확인한다.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aabaabaaaabaabaa[d]aabaabac
+　　　　　　 aabaa[b]ac
+</code></pre></div>    </div>
+  </li>
+  <li>비교결과 :: aa까지 같다. 따라서 arr[i]의 16번째 인덱스에서 d와 b가 틀렸으니, aa의 f[i] = 1 따라서 (16-1) = 15인 arr[15]부터 다시 확인한다.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aabaabaaaabaabaa[d]aabaabac
+　　　　　　    aa[b]aabac
+</code></pre></div>    </div>
+  </li>
+  <li>비교결과 :: a까지 같다. 따라서 arr[i]의 16번째 인덱스에서 d와 a가 틀렸으니, a의 f[i] = 0  따라서 (16-0) = 16인 arr[16]부터 다시 확인한다.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aabaabaaaabaabaa[d]aabaabac
+　　　　　　　   a[a]baabac
+</code></pre></div>    </div>
+  </li>
+  <li>비교결과 :: 같은 것이 없다. 따라서 arr[17]부터 다시 확인한다.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aabaabaaaabaabaad[aabaabac]
+　　　　　　　      [aabaabac]
+</code></pre></div>    </div>
+  </li>
+  <li>비교결과 :: 모두 일치. 정답을 도출한다.( 일치하는 문자열의 시작 인덱스 :: 17, 일차하는 문자열의 개수 :: 1)</li>
+</ul>
+
+<p>출처: http://www.crocus.co.kr/559 [Crocus]</p>
+
+<p>주의점:</p>
+<ul>
+  <li>머릿속으로 생각하기는 쉬우나 Fail Function 을 만드는 코드가 생각보다는 코딩하기가 헷갈린다.</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void kmp(const string&amp; input, const string&amp; pattern, vector&lt;int&gt;&amp; output) {
+    vector&lt;int&gt; fail_table;
+    fail_function(pattern, fail_table);   
+    int last_pos = 0 ;
+    for(auto pos = 0; pos &lt; input.size(); pos++) {
+        while(last_pos &gt; 0 &amp;&amp; input[pos] != pattern[last_pos])
+            last_pos = fail_table[last_pos-1];
+        
+        if(input[pos] == pattern[last_pos]){
+            if(last_pos == pattern.size() -1) {
+                output.push_back(pos);
+                last_pos = fail_table[last_pos-1];
+            }
+            else {
+                last_pos++;
+            }
+        }
+    }
+}
+</code></pre></div></div>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#문자열">#문자열</a>
+    
+    <a class="tag" href="/tags#KMP">#KMP</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

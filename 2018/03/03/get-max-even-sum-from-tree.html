@@ -1,0 +1,95 @@
+
+<h2 id="문제">문제</h2>
+<ul>
+  <li>output the maximum EVEN sum along any path</li>
+  <li>![/assets/img/maxevensum.png]</li>
+  <li>트리의 각 노드들을 더해서 최대값이자 짝수인 값을 구하기</li>
+  <li>짝수가 된다는 말에 잘 주목을 해야 할 것 같다</li>
+  <li>답이 없어서 정확하게 파악은 안되지만…</li>
+  <li>모든 경로마다의 합을 구해서 정렬을 해서 짝수를 구하는 방법이 있지만, 이건 별로 안좋아할듯</li>
+  <li>그게 아니면 짝수가 되는 경우를 확인해서 최대 값을 구하는 방법이 있을것 같다</li>
+  <li>문제가 워낙 간단하게 나와서 정확한 제약조건은 알 길이 없지만, 만약 정할 수 있다면 루트를 거쳐야 한다와 마이너스 값은 허용되지 않음 두가지 경우를 설정하고 싶다</li>
+  <li>루트를 거쳐야 한다면 루트가 홀수인 경우는 왼쪽이 홀수 아니면 오른쪽이 홀수 값을 리턴해야 한다</li>
+  <li>루트가 짝수인 경우는 왼쪽, 오른쪽 둘다 홀수 혹은 짝수가 되어야 한다</li>
+  <li>그리고 post order 방식으로 트리를 순환하고, 노도의 값을 먼저 더해서 노드의 왼쪽 오른쪽 노드의 탐색이 끝난 후에 값을 확인한다</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#include &lt;iostream&gt;
+
+struct node {
+    int value;
+    node* left, *right;
+    node(int n):value(n){}
+};
+
+int oddNodeAdd(node* ptr, int total) {
+    if(!ptr)
+        return total;
+    
+    int left = oddNodeAdd(ptr-&gt;left, total + ptr-&gt;value);
+    int right = oddNodeAdd(ptr-&gt;right, total + ptr-&gt;value);
+    
+    int ld = left % 2, rd = right % 2;
+    if(ld == 1 &amp;&amp; rd ==1)
+        return max(left, right);
+    
+    if(ld==1 &amp;&amp; rd==0)
+        return ld;
+    
+    if(rd==1 &amp;&amp; ld==0) 
+        return rd;
+    
+    return total;
+}
+
+int evenNodeAdd(node* ptr, int total) {
+    
+    if(!ptr)
+        return 0 ;
+    
+    int left = evenNodeAdd(ptr-&gt;left, total + ptr-&gt;value);
+    int right = evenNodeAdd(ptr-&gt;right, total + ptr-&gt;value);
+    
+    // 
+    int ld = left %2, rd = right%2;
+    
+    if((ld ==0&amp;&amp;rd ==0)) {
+        return max(left, right);
+    }
+    
+    if(ld==1&amp;&amp;ld==0) {
+        return rd;
+    }
+    
+    if(ld==0&amp;&amp;rd==1) {
+        return ld;
+    }
+
+    return total;
+}
+
+int getMaxEvenNumber(node* ptr) {
+    
+    int maxValue = 0 ;
+    int oddLeft = oddNodeAdd(ptr-&gt;left,0);
+    int oddRight = oddNodeAdd(ptr-&gt;right, 0);
+    int evenLeft = evenNodeAdd(ptr-&gt;right,0);
+    int evenRight = evenNodeAdd(ptr-&gt;right,0);
+    
+    maxValue = max(oddLeft + oddRight, evenLeft + evenRight);
+    maxValue = max(maxValue, max(oddLeft+evenRight, evenLeft+oddRight));
+    maxValue = maxValue + ptr-&gt;value; 
+    
+    return maxValue;
+}
+
+int main() {
+    node* ptr = new node(10);
+    ptr-&gt;left = new node(2);
+    ptr-&gt;left-&gt;left = new node(1);
+    ptr-&gt;left-&gt;right = new node(101);
+    ptr-&gt;right = new node(5);
+    ptr-&gt;right-&gt;right = new node(13);  
+    cout &lt;&lt; getMaxEvenNumber(ptr);
+}
+</code></pre></div></div>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>삼각형에서의 최대 경로 | testcode</title>
+	<meta name="description" content="삼각형에서의 최대 경로61 23 7 49 4 1 72 7 5 9 4  맨 위의 숫자에서 시작해서 한 번에 한 칸씩 아래(바로 아래(y+1), 오른쪽 아래(x+1, y+1)로 내려가서 맨 아래줄에 도달하는 경로중 숫자의 합을 최대화 하는 경로는?  경로가 여러개가 있기 때문에 메모이...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/03/02/%EC%82%BC%EA%B0%81%ED%98%95%EC%97%90%EC%84%9C%EC%9D%98%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="testcode" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/ohhocat.jpg" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">testcode</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">삼각형에서의 최대 경로</h1>
+    
+    <p class="meta">
+      March 2, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><h2 id="삼각형에서의-최대-경로">삼각형에서의 최대 경로</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>6
+1 2
+3 7 4
+9 4 1 7
+2 7 5 9 4
+</code></pre></div></div>
+<ul>
+  <li>맨 위의 숫자에서 시작해서 한 번에 한 칸씩 아래(바로 아래(y+1), 오른쪽 아래(x+1, y+1)로 내려가서 맨 아래줄에 도달하는 경로중 숫자의 합을 최대화 하는 경로는?</li>
+  <li>경로가 여러개가 있기 때문에 메모이제이션이 쉽지 않음</li>
+  <li>f(x,y,sum) = max(f(x+1,y, sum + triangle[y][x]), f(x,y+1, sum + triangle[y][x]))
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  int maxSum(const vector&lt;vector&lt;int&gt;&gt;&amp; input,
+              vector&lt;vector&lt;vector&lt;int&gt;&gt;&gt;&amp; cache,
+              int x,
+              int y, int sum) {
+                  if(y == n-1)
+                      return sum + input[y][x];
+                    
+                  int&amp; val = cache[y][x][sum];
+                  if(val != -1)
+                      return val;
+                    
+                  sum += input[y][x];
+                  return max(
+                      maxSum(input, cache, x+1, y+1, sum),
+                      maxSum(input, cache, x, y+1, sum)
+                  );
+              }
+</code></pre></div>    </div>
+  </li>
+  <li>재귀함수에 sum을 더해줄 필요가 없다. sum이 있건 없건 부분 경로의 최대 값이 중요하다</li>
+  <li>Optimal Substructure</li>
+  <li>f(x,y) = max(f(x+1,y), f(x,y+1)) + triangle[y][x];
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  int maxSum(const vector&lt;vector&lt;int&gt;&gt;&amp; input,
+              vector&lt;vector&lt;int&gt;&gt;&amp; cache,
+              int x,
+              int y) {
+
+                  int&amp; ret = cache[y][x];
+
+                  if(ret != -1)
+                      return ret;
+
+                  if(y==n-1)
+                      return input[y][x];
+                    
+                  return ret = max(
+                                  maxSum(input, cache, x+1, y+1),
+                                  maxSum(input, cache, x, y+1)
+
+                  );
+              }
+</code></pre></div>    </div>
+  </li>
+  <li>시간복잡도 - 부분 문제에서는 O(N<sup>2</sup>), 전체문제에서는 상수 시간이 추가되기 때문에 결국 O(N<sup>2</sup>)</li>
+</ul>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#DP">#DP</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>
