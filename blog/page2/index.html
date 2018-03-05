@@ -93,6 +93,10 @@
 			
 			
 			
+			
+			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -153,22 +157,25 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/03/%EC%9B%90%EC%A3%BC%EC%9C%A8%EC%99%B8%EC%9A%B0%EA%B8%B0.html">
-            원주율 외우기
+          <a class="post-link" href="/2018/03/04/%EB%8B%AC%ED%8C%BD%EC%9D%B4-%EC%9A%B0%EB%AC%BC.html">
+            우물을 기어 오르는 달팽이
           </a>
         </h1>
         <p class="meta">
-          March 3, 2018
+          March 4, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="출처">출처</h2>
+        <h2 id="문제">문제</h2>
 <ul>
-  <li>알고리즘 문제 해결 전략 - 문제 8.7</li>
+  <li>깊이가 n인 우물이 있고, 우물의 맨 밑바닥에는 달팽이가 있다</li>
+  <li>맑은 날에는 2미터를 기어 올라갈 수 있지만, 비가 내리면 1미터를 올라갈 수 있음</li>
+  <li>비올 확률이 50%일때, m일 안에 달팽이가 우물 끝까지 올라갈 수 있는 확률</li>
+  <li>점화식 climb(n) = f(n+1,2) + f(n+1,1)</li>
 </ul>
 
 
-        <a class="button" href="/2018/03/03/%EC%9B%90%EC%A3%BC%EC%9C%A8%EC%99%B8%EC%9A%B0%EA%B8%B0.html">
+        <a class="button" href="/2018/03/04/%EB%8B%AC%ED%8C%BD%EC%9D%B4-%EC%9A%B0%EB%AC%BC.html">
           Continue reading
         </a>
       </div>
@@ -177,22 +184,29 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/03/%EC%82%BC%EA%B0%81%ED%98%95-%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C-%EA%B0%9C%EC%88%98%EC%84%B8%EA%B8%B0.html">
-            삼각형 위의 최대 경로 개수 세기
+          <a class="post-link" href="/2018/03/04/%EB%82%98%EB%AC%B4%EC%9E%90%EB%A5%B4%EA%B8%B0.html">
+            나무 자르기
           </a>
         </h1>
         <p class="meta">
-          March 3, 2018
+          March 4, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="출처">출처</h2>
+        <h2 id="문제">문제</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n. Determine the maximum value obtainable by cutting up the rod and selling the pieces. For example, if length of the rod is 8 and the values of different pieces are given as following, then the maximum obtainable value is 22 (by cutting in two pieces of lengths 2 and 6)
+</code></pre></div></div>
 <ul>
-  <li>알고리즘 문제 해결 전략 - 8.11 경우의 수와 확률</li>
+  <li>주어진 제약조건에 따라 나무를 자를때 얻을 수 있는 최대 값
+<img src="/assets/img/cut-a-rod.png" alt="나무 길이 및 가격" /></li>
+  <li>이전의 max 가치와 현재 가격을 빼고 계산했을의 가치를 서로 비교해서 최대 값을 반환한다 - knapsack문제와 동일함
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cutRod(n) = max(price[i] + cutRod(n-i-1)) for all i in {0, 1 .. n-1}
+</code></pre></div>    </div>
+  </li>
 </ul>
 
 
-        <a class="button" href="/2018/03/03/%EC%82%BC%EA%B0%81%ED%98%95-%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C-%EA%B0%9C%EC%88%98%EC%84%B8%EA%B8%B0.html">
+        <a class="button" href="/2018/03/04/%EB%82%98%EB%AC%B4%EC%9E%90%EB%A5%B4%EA%B8%B0.html">
           Continue reading
         </a>
       </div>
@@ -201,64 +215,89 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/03/get-max-even-sum-from-tree.html">
-            Get Max Even Sum From Tree
+          <a class="post-link" href="/2018/03/04/%EA%B7%B8%EB%9E%98%ED%94%84.html">
+            그래프
           </a>
         </h1>
         <p class="meta">
-          March 3, 2018
+          March 4, 2018
         </p>
       </header>
       <div class="excerpt">
-        
-
-        <a class="button" href="/2018/03/03/get-max-even-sum-from-tree.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/03/03/Shortest-Palindrome.html">
-            KMP 알고리즘
-          </a>
-        </h1>
-        <p class="meta">
-          March 3, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        <h2 id="shortest-palindrome">Shortest Palindrome</h2>
-
-
-        <a class="button" href="/2018/03/03/Shortest-Palindrome.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/03/03/KMP-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
-            KMP 알고리즘
-          </a>
-        </h1>
-        <p class="meta">
-          March 3, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        <h2 id="출처">출처</h2>
+        <h2 id="그래프">그래프</h2>
 <ul>
-  <li>http://www.crocus.co.kr/559</li>
-  <li>http://jason9319.tistory.com/130</li>
+  <li>무향 그래프</li>
+  <li>방향 그래프 혹은 유향 그래프</li>
+  <li>가중치 그래프</li>
+  <li>단순 그래프</li>
+  <li>DAG (directed acyclic graph)</li>
+  <li>철도망</li>
+  <li>소셜 네트워크 분석</li>
+  <li>인터넷 전송 속도 계산</li>
+  <li>한 붓 그리기</li>
+  <li>외환 거래</li>
+  <li>할일 목록 정리 - 위상 정렬</li>
+  <li>퍼즐 - 최소한으로 타일을 움직여 15-퍼즐을 푸는 문제</li>
+  <li>게임판 덮기</li>
+  <li>회의실 배정 등등 - 만족성 문제</li>
 </ul>
 
 
-        <a class="button" href="/2018/03/03/KMP-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
+        <a class="button" href="/2018/03/04/%EA%B7%B8%EB%9E%98%ED%94%84.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/03/04/%EA%B5%AC%EA%B0%84%ED%8A%B8%EB%A6%AC.html">
+            구간트리 - Segment Tree
+          </a>
+        </h1>
+        <p class="meta">
+          March 4, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <h2 id="구간트리">구간트리</h2>
+<ul>
+  <li>저장된 자료들을 적절치 전처리해 질의들을 빠르게 대답할 수 있게 해줌</li>
+  <li>그림에서 맨 위가 루트에서 표현하는 구간이고, 양쪽 아래는 루트의 두 자식노드들이 표현하는 구간
+<img src="/assets/img/segment-tree.png" alt="구간트리" /></li>
+  <li>구간트리는 일반적으로 꽉찬 이진 트리</li>
+  <li>배열로 표현을 많이 함 - 원소의 4배 정도로 사이즈를 잡으면 메모리는 낭비되도 전체 요소들을 저장하는데 문제 없음</li>
+  <li>어떤 구간이 주어지건 답을 찾기 위해 드는 시간은 O(lgn)</li>
+</ul>
+
+
+        <a class="button" href="/2018/03/04/%EA%B5%AC%EA%B0%84%ED%8A%B8%EB%A6%AC.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/03/04/knapsack-problem.html">
+            Knapsack problem
+          </a>
+        </h1>
+        <p class="meta">
+          March 4, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <h2 id="문제">문제</h2>
+<ul>
+  <li>배낭에 절박도를 최대화할 수 있는 물건들의 목록들을 계산하는 방법
+ <img src="/assets/img/knapsack.png" alt="부피 및 절박도" /></li>
+</ul>
+
+
+        <a class="button" href="/2018/03/04/knapsack-problem.html">
           Continue reading
         </a>
       </div>

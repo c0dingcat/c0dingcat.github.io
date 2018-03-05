@@ -2,8 +2,8 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>비대칭 타일링 | c0dingcat</title>
-	<meta name="description" content="문제  타일링 문제 + 대칭 타일링을 제외하 경우의 수 탐색  대칭 타일링 방법을 전체 경우에서 제외 혹은 비대칭 타일링 방법을 직접 카운트  책 참조">
+	<title>나무 자르기 | c0dingcat</title>
+	<meta name="description" content="문제Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n. Determine the maximum value obtainable by ...">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/2018/03/04/%EB%B9%84%EB%8C%80%EC%B9%AD-%ED%83%80%EC%9D%BC%EB%A7%81.html">
+	<link rel="canonical" href="/2018/03/04/%EB%82%98%EB%AC%B4%EC%9E%90%EB%A5%B4%EA%B8%B0.html">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="c0dingcat" href="/feed.xml" />
@@ -151,7 +151,7 @@
     <div class="content">
       <article >
   <header style="background-image: url('/')">
-    <h1 class="title">비대칭 타일링</h1>
+    <h1 class="title">나무 자르기</h1>
     
     <p class="meta">
       March 4, 2018
@@ -159,17 +159,34 @@
     </p>
   </header>
   <section class="post-content"><h2 id="문제">문제</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n. Determine the maximum value obtainable by cutting up the rod and selling the pieces. For example, if length of the rod is 8 and the values of different pieces are given as following, then the maximum obtainable value is 22 (by cutting in two pieces of lengths 2 and 6)
+</code></pre></div></div>
 <ul>
-  <li>타일링 문제 + 대칭 타일링을 제외하 경우의 수 탐색</li>
-  <li>대칭 타일링 방법을 전체 경우에서 제외 혹은 비대칭 타일링 방법을 직접 카운트</li>
-  <li>책 참조</li>
+  <li>주어진 제약조건에 따라 나무를 자를때 얻을 수 있는 최대 값
+<img src="/assets/img/cut-a-rod.png" alt="나무 길이 및 가격" /></li>
+  <li>이전의 max 가치와 현재 가격을 빼고 계산했을의 가치를 서로 비교해서 최대 값을 반환한다 - knapsack문제와 동일함
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cutRod(n) = max(price[i] + cutRod(n-i-1)) for all i in {0, 1 .. n-1}
+</code></pre></div>    </div>
+  </li>
 </ul>
 
 <h2 id="코드">코드</h2>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int asymmetric(int width) {
-    if(width%2 ==1)
-        return (tiling(width) - tiling(width/2) + MOD) %MOD;
-    int ret = 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int cutRod(vector&lt;int&gt;&amp; cache, int price[], int n)
+{
+   if (n &lt;= 0)
+     return 0;
+
+   int max_val = INT_MIN;
+   int&amp; ret = cache[n];
+   if(ret != -1)
+    return ret;
+ 
+   // Recursively cut the rod in different pieces and compare different 
+   // configurations
+   for (int i = 0; i&lt;n; i++)
+         ret = max(ret, price[i] + cutRod(price, n-i-1));
+ 
+   return ret;
 }
 </code></pre></div></div>
 </section>
@@ -180,12 +197,6 @@
     <a class="tag" href="/tags#알고리즘">#알고리즘</a>
     
     <a class="tag" href="/tags#DP">#DP</a>
-    
-    <a class="tag" href="/tags#확률과 경우의 수">#확률과 경우의 수</a>
-    
-    <a class="tag" href="/tags#비대칭">#비대칭</a>
-    
-    <a class="tag" href="/tags#타일링">#타일링</a>
     
   </div>
 </footer>

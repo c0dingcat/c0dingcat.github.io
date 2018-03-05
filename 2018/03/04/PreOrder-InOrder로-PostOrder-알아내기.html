@@ -2,8 +2,8 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>비대칭 타일링 | c0dingcat</title>
-	<meta name="description" content="문제  타일링 문제 + 대칭 타일링을 제외하 경우의 수 탐색  대칭 타일링 방법을 전체 경우에서 제외 혹은 비대칭 타일링 방법을 직접 카운트  책 참조">
+	<title>트리의 PreOrder, InOrder 순회로 PotOrder 알아내기 | c0dingcat</title>
+	<meta name="description" content="문제  주어진 PreOrder, InOrder 순환 값으로 PostOrder 순환 값을 에측하라  트리를 주어진 순환 값으로 부터 구성하면서 PostOrder 순환을 한다">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/2018/03/04/%EB%B9%84%EB%8C%80%EC%B9%AD-%ED%83%80%EC%9D%BC%EB%A7%81.html">
+	<link rel="canonical" href="/2018/03/04/PreOrder-InOrder%EB%A1%9C-PostOrder-%EC%95%8C%EC%95%84%EB%82%B4%EA%B8%B0.html">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="c0dingcat" href="/feed.xml" />
@@ -151,7 +151,7 @@
     <div class="content">
       <article >
   <header style="background-image: url('/')">
-    <h1 class="title">비대칭 타일링</h1>
+    <h1 class="title">트리의 PreOrder, InOrder 순회로 PotOrder 알아내기</h1>
     
     <p class="meta">
       March 4, 2018
@@ -160,16 +160,26 @@
   </header>
   <section class="post-content"><h2 id="문제">문제</h2>
 <ul>
-  <li>타일링 문제 + 대칭 타일링을 제외하 경우의 수 탐색</li>
-  <li>대칭 타일링 방법을 전체 경우에서 제외 혹은 비대칭 타일링 방법을 직접 카운트</li>
-  <li>책 참조</li>
+  <li>주어진 PreOrder, InOrder 순환 값으로 PostOrder 순환 값을 에측하라</li>
+  <li>트리를 주어진 순환 값으로 부터 구성하면서 PostOrder 순환을 한다</li>
 </ul>
 
 <h2 id="코드">코드</h2>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int asymmetric(int width) {
-    if(width%2 ==1)
-        return (tiling(width) - tiling(width/2) + MOD) %MOD;
-    int ret = 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector&lt;int&gt; slice(vector&lt;int&gt;&amp; src, int a, int b) {
+    return vector&lt;int&gt;(src.begin()+a, src.end()+b);
+}
+
+void postOrder(vector&lt;int&gt;&amp; preOrder, vector&lt;int&gt;&amp; inOrder) {
+    int length = preOrder.size();
+    int root = preOrder[0]; // preOrder의 제일 처음에 나오는 값이 루트이다.
+    
+    int left = find(inOrder.begin(), inOrder.end(), root) - inOrder.begin();
+    int right = length - left - 1; // 루트 값 제외
+
+    postOrder(slice(preOrder, 1, left+1), slice(inOrder, 0, left));
+    postOrer(slice(preOrder, left+1, length), slice(inOrder, left+1, length));
+
+    cout &lt;&lt; root &lt;&lt; ' ';    
 }
 </code></pre></div></div>
 </section>
@@ -179,13 +189,9 @@
     
     <a class="tag" href="/tags#알고리즘">#알고리즘</a>
     
-    <a class="tag" href="/tags#DP">#DP</a>
+    <a class="tag" href="/tags#트리">#트리</a>
     
-    <a class="tag" href="/tags#확률과 경우의 수">#확률과 경우의 수</a>
-    
-    <a class="tag" href="/tags#비대칭">#비대칭</a>
-    
-    <a class="tag" href="/tags#타일링">#타일링</a>
+    <a class="tag" href="/tags#순환">#순환</a>
     
   </div>
 </footer>

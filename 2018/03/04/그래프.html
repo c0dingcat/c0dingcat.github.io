@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>그래프 | c0dingcat</title>
+	<meta name="description" content="그래프  무향 그래프  방향 그래프 혹은 유향 그래프  가중치 그래프  단순 그래프  DAG (directed acyclic graph)  철도망  소셜 네트워크 분석  인터넷 전송 속도 계산  한 붓 그리기  외환 거래  할일 목록 정리 - 위상 정렬  퍼즐 - 최소한으로 타일을...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/03/04/%EA%B7%B8%EB%9E%98%ED%94%84.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="c0dingcat" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/ohhocat.jpg" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">c0dingcat</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">그래프</h1>
+    
+    <p class="meta">
+      March 4, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><h2 id="그래프">그래프</h2>
+<ul>
+  <li>무향 그래프</li>
+  <li>방향 그래프 혹은 유향 그래프</li>
+  <li>가중치 그래프</li>
+  <li>단순 그래프</li>
+  <li>DAG (directed acyclic graph)</li>
+  <li>철도망</li>
+  <li>소셜 네트워크 분석</li>
+  <li>인터넷 전송 속도 계산</li>
+  <li>한 붓 그리기</li>
+  <li>외환 거래</li>
+  <li>할일 목록 정리 - 위상 정렬</li>
+  <li>퍼즐 - 최소한으로 타일을 움직여 15-퍼즐을 푸는 문제</li>
+  <li>게임판 덮기</li>
+  <li>회의실 배정 등등 - 만족성 문제</li>
+</ul>
+
+<h2 id="그래프-표현">그래프 표현</h2>
+<ul>
+  <li>인접 리스트
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector&lt;list&lt;int&gt;&gt; adjacent
+struct edge {
+  int vertex;
+  int weight;
+};
+vector&lt;edge&gt; adjacent
+</code></pre></div>    </div>
+  </li>
+  <li>인접 행렬
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector&lt;vector&lt;bool&gt;&gt; adjacent;
+</code></pre></div>    </div>
+  </li>
+  <li>인접 리스트 장단점
+    <ul>
+      <li>메모리를 적게 먹음 O(V+E)</li>
+      <li>간선 (u,v)가 존재하는지 일일히 확인이 필요</li>
+      <li></li>
+    </ul>
+  </li>
+  <li>인접 행렬
+    <ul>
+      <li>메모리를 엄청 먹음 O(V<sup>2</sup>)</li>
+      <li>간선 확인이 간단함</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="dfs">DFS</h2>
+<ul>
+  <li>인접 리스트의 경우 시간 복잡도는 O(V+E)</li>
+  <li>인접 행렬의 경우 O(V<sup>2</sup>)</li>
+</ul>
+
+<h2 id="위상정렬">위상정렬</h2>
+<ul>
+  <li>의존성 있는 작업들이 주어질때, 어떤 순서대로 수행해야 하는지 계산해 준다</li>
+  <li>dependency graph</li>
+</ul>
+
+<h2 id="오일러-서킷">오일러 서킷</h2>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#자료구조">#자료구조</a>
+    
+    <a class="tag" href="/tags#그래프">#그래프</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

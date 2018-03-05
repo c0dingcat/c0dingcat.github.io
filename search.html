@@ -93,6 +93,10 @@
 			
 			
 			
+			
+			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -161,6 +165,28 @@
 <script>
   window.store = {
     
+      "2018-03-04-ed-8e-9c-ec-9c-85-ed-8a-b8-eb-a6-ac-html": {
+        "title": "펜윅트리 - 빠르고 간단한 구간 합",
+        "tags": "자료구조, 펜윅트리, Segment Tree, 구간합",
+        "date": "March 4, 2018",
+        "author": "",
+        "category": "",
+        "content": "펜윅트리 (Fenwick)  구간합을 구하는데 특화된 간략화된 segement tree  segment tree가 미리 계사해 저장하는 정보의 상당수가 필요 없게됨  http://www.crocus.co.kr/666 설명 참조using namespace std;int sum(vector&lt;int&gt; &amp;tree, int i) {    int ans = 0;    while (i &gt; 0) {        ans += tree[i];        i -= (i &amp; -i);    }    return ans;}void update(vector&lt;int&gt; &amp;tree, int i, int diff) {    while (i &lt; tree.size()) {        tree[i] += diff;        i += (i &amp; -i);    }}int main() {    int n, m, k;    scanf(\"%d %d %d\",&amp;n,&amp;m,&amp;k);    vector&lt;int&gt; a(n+1);    vector&lt;int&gt; tree(n+1);    for (int i=1; i&lt;=n; i++) {        scanf(\"%lld\",&amp;a[i]);        update(tree, i, a[i]);    }    m += k;    while (m--) {        int t1;        scanf(\"%d\",&amp;t1);        if (t1 == 1) {            int t2;            int t3;            scanf(\"%d %d\",&amp;t2,&amp;t3);            int diff = t3-a[t2];            a[t2] = t3;            update(tree, t2, diff);        } else {            int t2,t3;            scanf(\"%d %d\",&amp;t2,&amp;t3);            printf(\"%d\\n\",sum(tree, t3) - sum(tree, t2-1));        }    }    return 0;}",
+        "url": "//2018/03/04/%ED%8E%9C%EC%9C%85%ED%8A%B8%EB%A6%AC.html"
+      }
+      ,
+    
+      "2018-03-04-ec-a0-91-eb-af-b8-ec-82-ac-eb-b0-b0-ec-97-b4-eb-a7-a8-eb-b2-84-eb-a7-88-ec-9d-b4-ec-96-b4-ec-8a-a4-html": {
+        "title": "접미사 배열 - 맨버-마이너스 알고리즘",
+        "tags": "알고리즘, 접미사 배열, 맨버-마이너스",
+        "date": "March 4, 2018",
+        "author": "",
+        "category": "",
+        "content": "접미사 배열  접미사 배열의 길이는 항상 H이므로 문자열 탐색 시에 접미사 배열 내부의 아이템을 찾는 시간은 logH, 문자열 검색에 N  그래서 시간 복잡도는 O(NlogH)접미사 배열 생성 - 단순한 알고리즘    struct comparator {        const string&amp; source;        comparator(const string&amp; s):source(s){}        bool operator()(int i, int j) {            return strcmp(source.c_str()+1, source.c_str() + j) &lt; 0 ;        }    }    vector&lt;int&gt; getSuffixArray(const string &amp; source){        vector&lt;int&gt; output;        for(int i = 0 ; i &lt; source.size(); i++) {            output.push_back(i);        }        sort(output.begin(), output.end(), comparator(source));        return output;    }  시간복잡도: 문자열 비교에 N, 정렬에 NlogN, 시간복잡도: O(N2logN)맨버-마이어스 알고리즘  접미사 목록을 여러번에 걸쳐서 정렬  처음에는 한글자 기준, 다음에는 두 글자 기준, .. 등등으로 여러번에 걸쳐서 정렬함",
+        "url": "//2018/03/04/%EC%A0%91%EB%AF%B8%EC%82%AC-%EB%B0%B0%EC%97%B4-%EB%A7%A8%EB%B2%84-%EB%A7%88%EC%9D%B4%EC%96%B4%EC%8A%A4.html"
+      }
+      ,
+    
       "2018-03-04-ec-98-a8-eb-9d-bc-ec-9d-b8-ec-95-8c-ea-b3-a0-eb-a6-ac-ec-a6-98-html": {
         "title": "외계 신호 분석 - 온라인 알고리즘",
         "tags": "알고리즘, 온라인 알고리즘",
@@ -183,6 +209,17 @@
       }
       ,
     
+      "2018-03-04-eb-8f-99-ec-a0-84-eb-b0-94-ea-be-b8-ea-b8-b0-html": {
+        "title": "Knapsack problem",
+        "tags": "알고리즘, DP, 확률과 경우의 수, knapsack",
+        "date": "March 4, 2018",
+        "author": "",
+        "category": "",
+        "content": "문제  배낭에 절박도를 최대화할 수 있는 물건들의 목록들을 계산하는 방법 코드int asymmetric(int width) {    if(width%2 ==1)        return (tiling(width) - tiling(width/2) + MOD) %MOD;    int ret = }",
+        "url": "//2018/03/04/%EB%8F%99%EC%A0%84%EB%B0%94%EA%BE%B8%EA%B8%B0.html"
+      }
+      ,
+    
       "2018-03-04-eb-8b-ac-ed-8c-bd-ec-9d-b4-ec-9a-b0-eb-ac-bc-html": {
         "title": "우물을 기어 오르는 달팽이",
         "tags": "알고리즘, DP, 확률과 경우의 수, 달팽이",
@@ -194,6 +231,39 @@
       }
       ,
     
+      "2018-03-04-eb-82-98-eb-ac-b4-ec-9e-90-eb-a5-b4-ea-b8-b0-html": {
+        "title": "나무 자르기",
+        "tags": "알고리즘, DP",
+        "date": "March 4, 2018",
+        "author": "",
+        "category": "",
+        "content": "문제Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n. Determine the maximum value obtainable by cutting up the rod and selling the pieces. For example, if length of the rod is 8 and the values of different pieces are given as following, then the maximum obtainable value is 22 (by cutting in two pieces of lengths 2 and 6)  주어진 제약조건에 따라 나무를 자를때 얻을 수 있는 최대 값  이전의 max 가치와 현재 가격을 빼고 계산했을의 가치를 서로 비교해서 최대 값을 반환한다 - knapsack문제와 동일함    cutRod(n) = max(price[i] + cutRod(n-i-1)) for all i in {0, 1 .. n-1}      코드int cutRod(vector&lt;int&gt;&amp; cache, int price[], int n){   if (n &lt;= 0)     return 0;   int max_val = INT_MIN;   int&amp; ret = cache[n];   if(ret != -1)    return ret;    // Recursively cut the rod in different pieces and compare different    // configurations   for (int i = 0; i&lt;n; i++)         ret = max(ret, price[i] + cutRod(price, n-i-1));    return ret;}",
+        "url": "//2018/03/04/%EB%82%98%EB%AC%B4%EC%9E%90%EB%A5%B4%EA%B8%B0.html"
+      }
+      ,
+    
+      "2018-03-04-ea-b7-b8-eb-9e-98-ed-94-84-html": {
+        "title": "그래프",
+        "tags": "자료구조, 그래프",
+        "date": "March 4, 2018",
+        "author": "",
+        "category": "",
+        "content": "그래프  무향 그래프  방향 그래프 혹은 유향 그래프  가중치 그래프  단순 그래프  DAG (directed acyclic graph)  철도망  소셜 네트워크 분석  인터넷 전송 속도 계산  한 붓 그리기  외환 거래  할일 목록 정리 - 위상 정렬  퍼즐 - 최소한으로 타일을 움직여 15-퍼즐을 푸는 문제  게임판 덮기  회의실 배정 등등 - 만족성 문제그래프 표현  인접 리스트    vector&lt;list&lt;int&gt;&gt; adjacentstruct edge {  int vertex;  int weight;};vector&lt;edge&gt; adjacent        인접 행렬    vector&lt;vector&lt;bool&gt;&gt; adjacent;        인접 리스트 장단점          메모리를 적게 먹음 O(V+E)      간선 (u,v)가 존재하는지 일일히 확인이 필요              인접 행렬          메모리를 엄청 먹음 O(V2)      간선 확인이 간단함      DFS  인접 리스트의 경우 시간 복잡도는 O(V+E)  인접 행렬의 경우 O(V2)위상정렬  의존성 있는 작업들이 주어질때, 어떤 순서대로 수행해야 하는지 계산해 준다  dependency graph오일러 서킷",
+        "url": "//2018/03/04/%EA%B7%B8%EB%9E%98%ED%94%84.html"
+      }
+      ,
+    
+      "2018-03-04-ea-b5-ac-ea-b0-84-ed-8a-b8-eb-a6-ac-html": {
+        "title": "구간트리 - Segment Tree",
+        "tags": "자료구조, 구간트리, Segment Tree, 최대 출현 빈도",
+        "date": "March 4, 2018",
+        "author": "",
+        "category": "",
+        "content": "구간트리  저장된 자료들을 적절치 전처리해 질의들을 빠르게 대답할 수 있게 해줌  그림에서 맨 위가 루트에서 표현하는 구간이고, 양쪽 아래는 루트의 두 자식노드들이 표현하는 구간  구간트리는 일반적으로 꽉찬 이진 트리  배열로 표현을 많이 함 - 원소의 4배 정도로 사이즈를 잡으면 메모리는 낭비되도 전체 요소들을 저장하는데 문제 없음  어떤 구간이 주어지건 답을 찾기 위해 드는 시간은 O(lgn)구간트리의 초기화  현재 구간을 두 개로 나눠 재귀 호출한 뒤, 두 구간의 최소치중 더 작은 값을 선택해 해당 구간의 최소치를 계산한다    struct RMQ {  int n;  vector&lt;int&gt; rangeMin;  RMQ(const vector&lt;int&gt;&amp; array) {      n = array.size();      rangeMin.resize(n*4);      init(array, 0, n-1, 1);  }  int init(const vector&lt;int&gt;&amp; array, int left, int right, int node) {      if(left == right)          return rangeMin[node] = array[left];      int mid = (left+right)/2;      int leftMin = init(array,left, mid, node*2);      int rightMin = init(array,mid+1, right, node*2);      return rangeMin[node] = min(leftMin, rightMin);  }}        모든 노드에 대해 초기화가 필요하기 떄문에 초기화시의 시간복잡도는 O(N)구간트리의 질의 처리  query(left, right, nodeLeft, nodeRight) = node  쿼리 함수 [nodeLeft, nodeRight]와 우리가 최소치를 찾기 원하는 구간 [left, right]의 교집합의 최소 원소를 반환한다  node가 표현하는 구간 [nodeLeft, nodeRight]와 최소치를 찾을 구간 [left, right]의 교집합을 구한 뒤, 그에 따라 서로 다른 값을 반환한다  교집합이 공집합인 경우: 두 구간은 겹치지 않음. 반환값 없음  교집합이 [nodeLeft,nodeRight]인 경우: [left, right]가 표현하는 집합을 완전히 포함한 경우    struct RMQ {  int query(int left, int right, int nodeLeft, int nodeRight, int node) {      if(right &lt; nodeLeft || nodeRight &lt; left)          return INT_MAX;      if(left &lt;= nodeLeft &amp;&amp; nodeRight &lt;= right)          return rangeMin[node];      int mid = (nodeLeft + nodeRight)/2;      return min(          query(left, right, nodeLeft, mid, node*2),           query(left, right, mid+1, nodeRight, node*2));  }}        전체 시간 복잡도는 O(lg n)구간 트리의 갱신  배열의 index 위치의 값이 newValue로 바뀌었다고 할떄의 시간 복잡도 - 위치를 포함하는 구간은 트리에 O(lgn)개 있음. 따라서, O(lgN) 시간에 구간 트리를 갱신할 수 있음  갱신 과정은 query() + init()      int update(int index, int value, int nodeLeft, int nodeRight, int node) {      if(index &lt; nodeLeft || index &lt; left)          return INT_MAX;      if(nodeLeft == nodeRight)          return rangeMin[node] = value;      if(index &lt;= nodeLeft &amp;&amp; nodeRight &lt; index)          return rangeMin[node];      int mid = (nodeLeft + nodeRight)/2;      return min(          query(index, value, nodeLeft, mid, node*2),           query(index, value, mid+1, nodeRight, node*2));  }        정렬된 수열의 특정 구간에서 최대 출현 빈도 계산    정렬된 정수 수열이 주어질때, 주어진 구간의 최대 출현 빈도를 계산하는 문제를 풀어라  A= {0,0,1,1,1,1,2,3,3,3,4} 라면 A{1}부터 A{5} 까지 가장 많이 등장하는 수는 1로 모두 네 번 등장, A[5-A[7] 범위에는 1,2,3이 모두 한번씩 출현 가장 맣이 등장하는 횟수는 1",
+        "url": "//2018/03/04/%EA%B5%AC%EA%B0%84%ED%8A%B8%EB%A6%AC.html"
+      }
+      ,
+    
       "2018-03-04-knapsack-problem-html": {
         "title": "Knapsack problem",
         "tags": "알고리즘, DP, 확률과 경우의 수, knapsack",
@@ -202,6 +272,28 @@
         "category": "",
         "content": "문제  배낭에 절박도를 최대화할 수 있는 물건들의 목록들을 계산하는 방법 코드int asymmetric(int width) {    if(width%2 ==1)        return (tiling(width) - tiling(width/2) + MOD) %MOD;    int ret = }",
         "url": "//2018/03/04/knapsack-problem.html"
+      }
+      ,
+    
+      "2018-03-04-running-median-html": {
+        "title": "변화하는 중간 값 - Running Median",
+        "tags": "알고리즘, Media, Online, Priority Queue",
+        "date": "March 4, 2018",
+        "author": "",
+        "category": "",
+        "content": "문제  텅빈 수열에서 시작해서 각 수가 추가될 때마다 중간 값을 계산하는 프로그램을 작성하시오  유사문제: https://www.geeksforgeeks.org/median-of-stream-of-integers-running-integers/관찰  최대, 최소 prority queue를 사용해서 해결 가능  최대 힙의 크기는 최소 힙의 크기와 같거나 하나 더 크다  최대 힙의 최대 원소는 초소 힙의 최소 원소보다 작거나 크다  수열의 중간 값은 항상 최대 힙의 루트에 있다코드struct runningMedian {    priority_queue&lt;int, vector&lt;int&gt;, less&lt;int&gt;&gt; maxHeap;    priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minHeap;    void addNum(int num) {        if(maxHeap.size() == minHead.size())            maxHeap.push(num);        else            minHeap.push(num);                if(!minHeap.empty() &amp;&amp; !maxHeap.empty() &amp;&amp; minHeap.top() &lt; maxHeap.top()) {            int a = maxHeap.top(), b = minHeap.top();            maxHeap.pop(); minHeap.pop();            maxHeap.push(b);            minHeap.push(a);        }    }    int getMedian() {        return maxHeap.top();    }}",
+        "url": "//2018/03/04/Running-median.html"
+      }
+      ,
+    
+      "2018-03-04-preorder-inorder-eb-a1-9c-postorder-ec-95-8c-ec-95-84-eb-82-b4-ea-b8-b0-html": {
+        "title": "트리의 PreOrder, InOrder 순회로 PotOrder 알아내기",
+        "tags": "알고리즘, 트리, 순환",
+        "date": "March 4, 2018",
+        "author": "",
+        "category": "",
+        "content": "문제  주어진 PreOrder, InOrder 순환 값으로 PostOrder 순환 값을 에측하라  트리를 주어진 순환 값으로 부터 구성하면서 PostOrder 순환을 한다코드vector&lt;int&gt; slice(vector&lt;int&gt;&amp; src, int a, int b) {    return vector&lt;int&gt;(src.begin()+a, src.end()+b);}void postOrder(vector&lt;int&gt;&amp; preOrder, vector&lt;int&gt;&amp; inOrder) {    int length = preOrder.size();    int root = preOrder[0]; // preOrder의 제일 처음에 나오는 값이 루트이다.        int left = find(inOrder.begin(), inOrder.end(), root) - inOrder.begin();    int right = length - left - 1; // 루트 값 제외    postOrder(slice(preOrder, 1, left+1), slice(inOrder, 0, left));    postOrer(slice(preOrder, left+1, length), slice(inOrder, left+1, length));    cout &lt;&lt; root &lt;&lt; ' ';    }",
+        "url": "//2018/03/04/PreOrder-InOrder%EB%A1%9C-PostOrder-%EC%95%8C%EC%95%84%EB%82%B4%EA%B8%B0.html"
       }
       ,
     

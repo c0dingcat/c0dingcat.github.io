@@ -93,6 +93,10 @@
 			
 			
 			
+			
+			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -153,22 +157,24 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/02/25/longest-substring-without-repeating-characters.html">
-            Longest substring without repeating characters
+          <a class="post-link" href="/2018/02/28/convert-bst-to-double-linked-list.html">
+            Convert Bst To Double Linked List
           </a>
         </h1>
         <p class="meta">
-          February 25, 2018
+          February 28, 2018
         </p>
       </header>
       <div class="excerpt">
-        <p>##출처:</p>
-<ul>
-  <li>https://leetcode.com/problems/longest-substring-without-repeating-characters/description/</li>
-</ul>
+        
+<hr />
+<p>layout: post
+title: BST를 Double Linked List로 변환하기
+tags: [그래프,알고리즘, BST, Linked List]
+—</p>
 
 
-        <a class="button" href="/2018/02/25/longest-substring-without-repeating-characters.html">
+        <a class="button" href="/2018/02/28/convert-bst-to-double-linked-list.html">
           Continue reading
         </a>
       </div>
@@ -177,70 +183,28 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/02/25/light-is-failing-to-the-left-side-of-tree.html">
-            빛은 트리의 왼쪽에 떨어진다
+          <a class="post-link" href="/2018/02/26/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
+            크루스칼 알고리즘
           </a>
         </h1>
         <p class="meta">
-          February 25, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        <p>Light is falling on a tree from left side you have to find all the nodes on which this light will fall.</p>
-
-
-        <a class="button" href="/2018/02/25/light-is-failing-to-the-left-side-of-tree.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/02/25/disjoined-set.html">
-            디스조인트 셋
-          </a>
-        </h1>
-        <p class="meta">
-          February 25, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        <h2 id="출처">출처</h2>
-<ul>
-  <li>https://ko.wikipedia.org/wiki/%EC%84%9C%EB%A1%9C%EC%86%8C_%EC%A7%91%ED%95%A9<em>%EC%9E%90%EB%A3%8C</em>%EA%B5%AC%EC%A1%B0</li>
-  <li>https://ratsgo.github.io/data%20structure&amp;algorithm/2017/11/12/disjointset/</li>
-  <li>http://js1jj2sk3.tistory.com/m/category/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/Disjoint-set%20%EB%94%94%EC%8A%A4%EC%A1%B0%EC%9D%B8%ED%8A%B8-%EC%85%8B</li>
-  <li>http://bowbowbow.tistory.com/26</li>
-</ul>
-
-
-        <a class="button" href="/2018/02/25/disjoined-set.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/02/25/diameter-of-tree.html">
-            Diameter of tree - 트리의 직경
-          </a>
-        </h1>
-        <p class="meta">
-          February 25, 2018
+          February 26, 2018
         </p>
       </header>
       <div class="excerpt">
         <ul>
-  <li>트리의 직경은 가장 크게 떨어진 두 개의 노드 사이에 있는 노드들의 개수를 의미한다</li>
-  <li>트리의 직경을 구할때 트리의 height와의 비교도 필요하다</li>
+  <li>크루스칼 알고리즘</li>
+  <li>edge의 cost별로 정렬한다</li>
+  <li>하나씩 빼서 cycle을 만드는지 확인한다</li>
+  <li>사이클을 만들지 않는 edge들만 뽑아서 리턴한다</li>
+  <li>상당히 간단하다</li>
+  <li>사이클을 만드는데 사용하는 disjoined_set 알고리즘은 간단하지만 효과적이다</li>
+  <li>시간 복잡도는 모든 edge에 대해 정렬하기 때문에 O(ElogE)</li>
+  <li>disjoined set의 경우는 시간복잡도가 ELogE보다 작기 때문에, 정렬하는데 드는 시간이 driving force</li>
 </ul>
 
 
-        <a class="button" href="/2018/02/25/diameter-of-tree.html">
+        <a class="button" href="/2018/02/26/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
           Continue reading
         </a>
       </div>
@@ -249,22 +213,71 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/02/25/LCA.html">
-            Lowest Common Ancestor
+          <a class="post-link" href="/2018/02/26/%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%B2%B4%ED%81%AC.html">
+            사이클 체크
           </a>
         </h1>
         <p class="meta">
-          February 25, 2018
+          February 26, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="출처">출처</h2>
-<ul>
-  <li>http://www.geeksforgeeks.org/lowest-common-ancestor-binary-tree-set-1/</li>
+        <ul>
+  <li>사이클 확인 알고지름</li>
+  <li>DFS 방식을 활용해서 사이클이 있는지 확인한다</li>
+  <li>현재 순환중이면 상태를 VISTING으로 변경해서 순환이 끝나지 않았음에도 불구하고 다시 체크하러 오는지 확인하다</li>
+  <li>현재 노드들을 순환중인데도 불구하고 다시 확인하러 오면 사이클이 있음</li>
+  <li>시간 복잡도는 O(E+V)</li>
 </ul>
 
 
-        <a class="button" href="/2018/02/25/LCA.html">
+        <a class="button" href="/2018/02/26/%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%B2%B4%ED%81%AC.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/02/26/permutation.html">
+            Permutation
+          </a>
+        </h1>
+        <p class="meta">
+          February 26, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        
+
+        <a class="button" href="/2018/02/26/permutation.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/02/26/max-diameter-of-tree.html">
+            트리의 최장 직경 구하기
+          </a>
+        </h1>
+        <p class="meta">
+          February 26, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <ul>
+  <li>어느 한 노드가 있을 경우 최장 직경은..</li>
+  <li>왼쪽에서 가장 큰 height와 오른쪽에서 가장 큰 height에 1을 더한 값과</li>
+  <li>왼쪽에서의 가능 큰 직경, 오른쪽에서의 가장 큰 직경</li>
+  <li>이 세 값 중에서 가장 큰 값을 고르면 된다</li>
+</ul>
+
+
+        <a class="button" href="/2018/02/26/max-diameter-of-tree.html">
           Continue reading
         </a>
       </div>

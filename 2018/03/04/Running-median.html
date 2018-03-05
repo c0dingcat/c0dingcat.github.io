@@ -2,8 +2,8 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>비대칭 타일링 | c0dingcat</title>
-	<meta name="description" content="문제  타일링 문제 + 대칭 타일링을 제외하 경우의 수 탐색  대칭 타일링 방법을 전체 경우에서 제외 혹은 비대칭 타일링 방법을 직접 카운트  책 참조">
+	<title>변화하는 중간 값 - Running Median | c0dingcat</title>
+	<meta name="description" content="문제  텅빈 수열에서 시작해서 각 수가 추가될 때마다 중간 값을 계산하는 프로그램을 작성하시오  유사문제: https://www.geeksforgeeks.org/median-of-stream-of-integers-running-integers/">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/2018/03/04/%EB%B9%84%EB%8C%80%EC%B9%AD-%ED%83%80%EC%9D%BC%EB%A7%81.html">
+	<link rel="canonical" href="/2018/03/04/Running-median.html">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="c0dingcat" href="/feed.xml" />
@@ -151,7 +151,7 @@
     <div class="content">
       <article >
   <header style="background-image: url('/')">
-    <h1 class="title">비대칭 타일링</h1>
+    <h1 class="title">변화하는 중간 값 - Running Median</h1>
     
     <p class="meta">
       March 4, 2018
@@ -160,16 +160,40 @@
   </header>
   <section class="post-content"><h2 id="문제">문제</h2>
 <ul>
-  <li>타일링 문제 + 대칭 타일링을 제외하 경우의 수 탐색</li>
-  <li>대칭 타일링 방법을 전체 경우에서 제외 혹은 비대칭 타일링 방법을 직접 카운트</li>
-  <li>책 참조</li>
+  <li>텅빈 수열에서 시작해서 각 수가 추가될 때마다 중간 값을 계산하는 프로그램을 작성하시오</li>
+  <li>유사문제: https://www.geeksforgeeks.org/median-of-stream-of-integers-running-integers/</li>
+</ul>
+
+<h2 id="관찰">관찰</h2>
+<ul>
+  <li>최대, 최소 prority queue를 사용해서 해결 가능</li>
+  <li>최대 힙의 크기는 최소 힙의 크기와 같거나 하나 더 크다</li>
+  <li>최대 힙의 최대 원소는 초소 힙의 최소 원소보다 작거나 크다</li>
+  <li>수열의 중간 값은 항상 최대 힙의 루트에 있다</li>
 </ul>
 
 <h2 id="코드">코드</h2>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int asymmetric(int width) {
-    if(width%2 ==1)
-        return (tiling(width) - tiling(width/2) + MOD) %MOD;
-    int ret = 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct runningMedian {
+    priority_queue&lt;int, vector&lt;int&gt;, less&lt;int&gt;&gt; maxHeap;
+    priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minHeap;
+
+    void addNum(int num) {
+        if(maxHeap.size() == minHead.size())
+            maxHeap.push(num);
+        else
+            minHeap.push(num);
+        
+        if(!minHeap.empty() &amp;&amp; !maxHeap.empty() &amp;&amp; minHeap.top() &lt; maxHeap.top()) {
+            int a = maxHeap.top(), b = minHeap.top();
+            maxHeap.pop(); minHeap.pop();
+            maxHeap.push(b);
+            minHeap.push(a);
+        }
+    }
+
+    int getMedian() {
+        return maxHeap.top();
+    }
 }
 </code></pre></div></div>
 </section>
@@ -179,13 +203,11 @@
     
     <a class="tag" href="/tags#알고리즘">#알고리즘</a>
     
-    <a class="tag" href="/tags#DP">#DP</a>
+    <a class="tag" href="/tags#Media">#Media</a>
     
-    <a class="tag" href="/tags#확률과 경우의 수">#확률과 경우의 수</a>
+    <a class="tag" href="/tags#Online">#Online</a>
     
-    <a class="tag" href="/tags#비대칭">#비대칭</a>
-    
-    <a class="tag" href="/tags#타일링">#타일링</a>
+    <a class="tag" href="/tags#Priority Queue">#Priority Queue</a>
     
   </div>
 </footer>

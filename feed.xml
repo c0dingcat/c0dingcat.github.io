@@ -5,7 +5,108 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
     <link>http://localhost:4000/</link>
     <description>daily log</description>
-    <pubDate>Sun, 04 Mar 2018 04:29:00 -0800</pubDate>
+    <pubDate>Mon, 05 Mar 2018 02:08:46 -0800</pubDate>
+    
+      <item>
+        <title>펜윅트리 - 빠르고 간단한 구간 합</title>
+        <link>/2018/03/04/%ED%8E%9C%EC%9C%85%ED%8A%B8%EB%A6%AC.html</link>
+        <guid isPermaLink="true">/2018/03/04/%ED%8E%9C%EC%9C%85%ED%8A%B8%EB%A6%AC.html</guid>
+        <description>&lt;h2 id=&quot;펜윅트리-fenwick&quot;&gt;펜윅트리 (Fenwick)&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/fenwick.png&quot; alt=&quot;풴윅트리&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;구간합을 구하는데 특화된 간략화된 segement tree&lt;/li&gt;
+  &lt;li&gt;segment tree가 미리 계사해 저장하는 정보의 상당수가 필요 없게됨&lt;/li&gt;
+  &lt;li&gt;http://www.crocus.co.kr/666 설명 참조&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;using namespace std;
+int sum(vector&amp;lt;int&amp;gt; &amp;amp;tree, int i) {
+    int ans = 0;
+    while (i &amp;gt; 0) {
+        ans += tree[i];
+        i -= (i &amp;amp; -i);
+    }
+    return ans;
+}
+void update(vector&amp;lt;int&amp;gt; &amp;amp;tree, int i, int diff) {
+    while (i &amp;lt; tree.size()) {
+        tree[i] += diff;
+        i += (i &amp;amp; -i);
+    }
+}
+int main() {
+    int n, m, k;
+    scanf(&quot;%d %d %d&quot;,&amp;amp;n,&amp;amp;m,&amp;amp;k);
+    vector&amp;lt;int&amp;gt; a(n+1);
+    vector&amp;lt;int&amp;gt; tree(n+1);
+    for (int i=1; i&amp;lt;=n; i++) {
+        scanf(&quot;%lld&quot;,&amp;amp;a[i]);
+        update(tree, i, a[i]);
+    }
+    m += k;
+    while (m--) {
+        int t1;
+        scanf(&quot;%d&quot;,&amp;amp;t1);
+        if (t1 == 1) {
+            int t2;
+            int t3;
+            scanf(&quot;%d %d&quot;,&amp;amp;t2,&amp;amp;t3);
+            int diff = t3-a[t2];
+            a[t2] = t3;
+            update(tree, t2, diff);
+        } else {
+            int t2,t3;
+            scanf(&quot;%d %d&quot;,&amp;amp;t2,&amp;amp;t3);
+            printf(&quot;%d\n&quot;,sum(tree, t3) - sum(tree, t2-1));
+        }
+    }
+    return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sun, 04 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>접미사 배열 - 맨버-마이너스 알고리즘</title>
+        <link>/2018/03/04/%EC%A0%91%EB%AF%B8%EC%82%AC-%EB%B0%B0%EC%97%B4-%EB%A7%A8%EB%B2%84-%EB%A7%88%EC%9D%B4%EC%96%B4%EC%8A%A4.html</link>
+        <guid isPermaLink="true">/2018/03/04/%EC%A0%91%EB%AF%B8%EC%82%AC-%EB%B0%B0%EC%97%B4-%EB%A7%A8%EB%B2%84-%EB%A7%88%EC%9D%B4%EC%96%B4%EC%8A%A4.html</guid>
+        <description>&lt;h2 id=&quot;접미사-배열&quot;&gt;접미사 배열&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;접미사 배열의 길이는 항상 H이므로 문자열 탐색 시에 접미사 배열 내부의 아이템을 찾는 시간은 logH, 문자열 검색에 N&lt;/li&gt;
+  &lt;li&gt;그래서 시간 복잡도는 O(NlogH)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;접미사-배열-생성---단순한-알고리즘&quot;&gt;접미사 배열 생성 - 단순한 알고리즘&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    struct comparator {
+        const string&amp;amp; source;
+        comparator(const string&amp;amp; s):source(s){}
+        bool operator()(int i, int j) {
+            return strcmp(source.c_str()+1, source.c_str() + j) &amp;lt; 0 ;
+        }
+    }
+
+    vector&amp;lt;int&amp;gt; getSuffixArray(const string &amp;amp; source){
+        vector&amp;lt;int&amp;gt; output;
+        for(int i = 0 ; i &amp;lt; source.size(); i++) {
+            output.push_back(i);
+        }
+        sort(output.begin(), output.end(), comparator(source));
+        return output;
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;시간복잡도: 문자열 비교에 N, 정렬에 NlogN, 시간복잡도: O(N&lt;sup&gt;2&lt;/sup&gt;logN)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;맨버-마이어스-알고리즘&quot;&gt;맨버-마이어스 알고리즘&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;접미사 목록을 여러번에 걸쳐서 정렬&lt;/li&gt;
+  &lt;li&gt;처음에는 한글자 기준, 다음에는 두 글자 기준, .. 등등으로 여러번에 걸쳐서 정렬함&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 04 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
     
       <item>
         <title>외계 신호 분석 - 온라인 알고리즘</title>
@@ -73,6 +174,27 @@ int countRanges(int k, int n) {
       </item>
     
       <item>
+        <title>Knapsack problem</title>
+        <link>/2018/03/04/%EB%8F%99%EC%A0%84%EB%B0%94%EA%BE%B8%EA%B8%B0.html</link>
+        <guid isPermaLink="true">/2018/03/04/%EB%8F%99%EC%A0%84%EB%B0%94%EA%BE%B8%EA%B8%B0.html</guid>
+        <description>&lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;배낭에 절박도를 최대화할 수 있는 물건들의 목록들을 계산하는 방법
+ &lt;img src=&quot;/assets/img/knapsack.png&quot; alt=&quot;부피 및 절박도&quot; /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int asymmetric(int width) {
+    if(width%2 ==1)
+        return (tiling(width) - tiling(width/2) + MOD) %MOD;
+    int ret = 
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sun, 04 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
         <title>우물을 기어 오르는 달팽이</title>
         <link>/2018/03/04/%EB%8B%AC%ED%8C%BD%EC%9D%B4-%EC%9A%B0%EB%AC%BC.html</link>
         <guid isPermaLink="true">/2018/03/04/%EB%8B%AC%ED%8C%BD%EC%9D%B4-%EC%9A%B0%EB%AC%BC.html</guid>
@@ -101,6 +223,206 @@ int countRanges(int k, int n) {
       </item>
     
       <item>
+        <title>나무 자르기</title>
+        <link>/2018/03/04/%EB%82%98%EB%AC%B4%EC%9E%90%EB%A5%B4%EA%B8%B0.html</link>
+        <guid isPermaLink="true">/2018/03/04/%EB%82%98%EB%AC%B4%EC%9E%90%EB%A5%B4%EA%B8%B0.html</guid>
+        <description>&lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n. Determine the maximum value obtainable by cutting up the rod and selling the pieces. For example, if length of the rod is 8 and the values of different pieces are given as following, then the maximum obtainable value is 22 (by cutting in two pieces of lengths 2 and 6)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;주어진 제약조건에 따라 나무를 자를때 얻을 수 있는 최대 값
+&lt;img src=&quot;/assets/img/cut-a-rod.png&quot; alt=&quot;나무 길이 및 가격&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;이전의 max 가치와 현재 가격을 빼고 계산했을의 가치를 서로 비교해서 최대 값을 반환한다 - knapsack문제와 동일함
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cutRod(n) = max(price[i] + cutRod(n-i-1)) for all i in {0, 1 .. n-1}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int cutRod(vector&amp;lt;int&amp;gt;&amp;amp; cache, int price[], int n)
+{
+   if (n &amp;lt;= 0)
+     return 0;
+
+   int max_val = INT_MIN;
+   int&amp;amp; ret = cache[n];
+   if(ret != -1)
+    return ret;
+ 
+   // Recursively cut the rod in different pieces and compare different 
+   // configurations
+   for (int i = 0; i&amp;lt;n; i++)
+         ret = max(ret, price[i] + cutRod(price, n-i-1));
+ 
+   return ret;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sun, 04 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>그래프</title>
+        <link>/2018/03/04/%EA%B7%B8%EB%9E%98%ED%94%84.html</link>
+        <guid isPermaLink="true">/2018/03/04/%EA%B7%B8%EB%9E%98%ED%94%84.html</guid>
+        <description>&lt;h2 id=&quot;그래프&quot;&gt;그래프&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;무향 그래프&lt;/li&gt;
+  &lt;li&gt;방향 그래프 혹은 유향 그래프&lt;/li&gt;
+  &lt;li&gt;가중치 그래프&lt;/li&gt;
+  &lt;li&gt;단순 그래프&lt;/li&gt;
+  &lt;li&gt;DAG (directed acyclic graph)&lt;/li&gt;
+  &lt;li&gt;철도망&lt;/li&gt;
+  &lt;li&gt;소셜 네트워크 분석&lt;/li&gt;
+  &lt;li&gt;인터넷 전송 속도 계산&lt;/li&gt;
+  &lt;li&gt;한 붓 그리기&lt;/li&gt;
+  &lt;li&gt;외환 거래&lt;/li&gt;
+  &lt;li&gt;할일 목록 정리 - 위상 정렬&lt;/li&gt;
+  &lt;li&gt;퍼즐 - 최소한으로 타일을 움직여 15-퍼즐을 푸는 문제&lt;/li&gt;
+  &lt;li&gt;게임판 덮기&lt;/li&gt;
+  &lt;li&gt;회의실 배정 등등 - 만족성 문제&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;그래프-표현&quot;&gt;그래프 표현&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;인접 리스트
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vector&amp;lt;list&amp;lt;int&amp;gt;&amp;gt; adjacent
+struct edge {
+  int vertex;
+  int weight;
+};
+vector&amp;lt;edge&amp;gt; adjacent
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;인접 행렬
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vector&amp;lt;vector&amp;lt;bool&amp;gt;&amp;gt; adjacent;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;인접 리스트 장단점
+    &lt;ul&gt;
+      &lt;li&gt;메모리를 적게 먹음 O(V+E)&lt;/li&gt;
+      &lt;li&gt;간선 (u,v)가 존재하는지 일일히 확인이 필요&lt;/li&gt;
+      &lt;li&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;인접 행렬
+    &lt;ul&gt;
+      &lt;li&gt;메모리를 엄청 먹음 O(V&lt;sup&gt;2&lt;/sup&gt;)&lt;/li&gt;
+      &lt;li&gt;간선 확인이 간단함&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;dfs&quot;&gt;DFS&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;인접 리스트의 경우 시간 복잡도는 O(V+E)&lt;/li&gt;
+  &lt;li&gt;인접 행렬의 경우 O(V&lt;sup&gt;2&lt;/sup&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;위상정렬&quot;&gt;위상정렬&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;의존성 있는 작업들이 주어질때, 어떤 순서대로 수행해야 하는지 계산해 준다&lt;/li&gt;
+  &lt;li&gt;dependency graph&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;오일러-서킷&quot;&gt;오일러 서킷&lt;/h2&gt;
+</description>
+        <pubDate>Sun, 04 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>구간트리 - Segment Tree</title>
+        <link>/2018/03/04/%EA%B5%AC%EA%B0%84%ED%8A%B8%EB%A6%AC.html</link>
+        <guid isPermaLink="true">/2018/03/04/%EA%B5%AC%EA%B0%84%ED%8A%B8%EB%A6%AC.html</guid>
+        <description>&lt;h2 id=&quot;구간트리&quot;&gt;구간트리&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;저장된 자료들을 적절치 전처리해 질의들을 빠르게 대답할 수 있게 해줌&lt;/li&gt;
+  &lt;li&gt;그림에서 맨 위가 루트에서 표현하는 구간이고, 양쪽 아래는 루트의 두 자식노드들이 표현하는 구간
+&lt;img src=&quot;/assets/img/segment-tree.png&quot; alt=&quot;구간트리&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;구간트리는 일반적으로 꽉찬 이진 트리&lt;/li&gt;
+  &lt;li&gt;배열로 표현을 많이 함 - 원소의 4배 정도로 사이즈를 잡으면 메모리는 낭비되도 전체 요소들을 저장하는데 문제 없음&lt;/li&gt;
+  &lt;li&gt;어떤 구간이 주어지건 답을 찾기 위해 드는 시간은 O(lgn)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;구간트리의-초기화&quot;&gt;구간트리의 초기화&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;현재 구간을 두 개로 나눠 재귀 호출한 뒤, 두 구간의 최소치중 더 작은 값을 선택해 해당 구간의 최소치를 계산한다
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct RMQ {
+  int n;
+  vector&amp;lt;int&amp;gt; rangeMin;
+  RMQ(const vector&amp;lt;int&amp;gt;&amp;amp; array) {
+      n = array.size();
+      rangeMin.resize(n*4);
+      init(array, 0, n-1, 1);
+  }
+
+  int init(const vector&amp;lt;int&amp;gt;&amp;amp; array, int left, int right, int node) {
+      if(left == right)
+          return rangeMin[node] = array[left];
+      int mid = (left+right)/2;
+      int leftMin = init(array,left, mid, node*2);
+      int rightMin = init(array,mid+1, right, node*2);
+      return rangeMin[node] = min(leftMin, rightMin);
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;모든 노드에 대해 초기화가 필요하기 떄문에 초기화시의 시간복잡도는 O(N)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;구간트리의-질의-처리&quot;&gt;구간트리의 질의 처리&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;query(left, right, nodeLeft, nodeRight) = node&lt;/li&gt;
+  &lt;li&gt;쿼리 함수 [nodeLeft, nodeRight]와 우리가 최소치를 찾기 원하는 구간 [left, right]의 교집합의 최소 원소를 반환한다&lt;/li&gt;
+  &lt;li&gt;node가 표현하는 구간 [nodeLeft, nodeRight]와 최소치를 찾을 구간 [left, right]의 교집합을 구한 뒤, 그에 따라 서로 다른 값을 반환한다&lt;/li&gt;
+  &lt;li&gt;교집합이 공집합인 경우: 두 구간은 겹치지 않음. 반환값 없음&lt;/li&gt;
+  &lt;li&gt;교집합이 [nodeLeft,nodeRight]인 경우: [left, right]가 표현하는 집합을 완전히 포함한 경우
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct RMQ {
+  int query(int left, int right, int nodeLeft, int nodeRight, int node) {
+      if(right &amp;lt; nodeLeft || nodeRight &amp;lt; left)
+          return INT_MAX;
+      if(left &amp;lt;= nodeLeft &amp;amp;&amp;amp; nodeRight &amp;lt;= right)
+          return rangeMin[node];
+      int mid = (nodeLeft + nodeRight)/2;
+      return min(
+          query(left, right, nodeLeft, mid, node*2), 
+          query(left, right, mid+1, nodeRight, node*2));
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;전체 시간 복잡도는 O(lg n)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;구간-트리의-갱신&quot;&gt;구간 트리의 갱신&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;배열의 index 위치의 값이 newValue로 바뀌었다고 할떄의 시간 복잡도 - 위치를 포함하는 구간은 트리에 O(lgn)개 있음. 따라서, O(lgN) 시간에 구간 트리를 갱신할 수 있음&lt;/li&gt;
+  &lt;li&gt;갱신 과정은 query() + init()
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  int update(int index, int value, int nodeLeft, int nodeRight, int node) {
+      if(index &amp;lt; nodeLeft || index &amp;lt; left)
+          return INT_MAX;
+      if(nodeLeft == nodeRight)
+          return rangeMin[node] = value;
+
+      if(index &amp;lt;= nodeLeft &amp;amp;&amp;amp; nodeRight &amp;lt; index)
+          return rangeMin[node];
+
+      int mid = (nodeLeft + nodeRight)/2;
+      return min(
+          query(index, value, nodeLeft, mid, node*2), 
+          query(index, value, mid+1, nodeRight, node*2));
+  }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;h2 id=&quot;정렬된-수열의-특정-구간에서-최대-출현-빈도-계산&quot;&gt;정렬된 수열의 특정 구간에서 최대 출현 빈도 계산&lt;/h2&gt;
+  &lt;/li&gt;
+  &lt;li&gt;정렬된 정수 수열이 주어질때, 주어진 구간의 최대 출현 빈도를 계산하는 문제를 풀어라&lt;/li&gt;
+  &lt;li&gt;A= {0,0,1,1,1,1,2,3,3,3,4} 라면 A{1}부터 A{5} 까지 가장 많이 등장하는 수는 1로 모두 네 번 등장, A[5-A[7] 범위에는 1,2,3이 모두 한번씩 출현 가장 맣이 등장하는 횟수는 1&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 04 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
         <title>Knapsack problem</title>
         <link>/2018/03/04/knapsack-problem.html</link>
         <guid isPermaLink="true">/2018/03/04/knapsack-problem.html</guid>
@@ -115,6 +437,84 @@ int countRanges(int k, int n) {
     if(width%2 ==1)
         return (tiling(width) - tiling(width/2) + MOD) %MOD;
     int ret = 
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sun, 04 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>변화하는 중간 값 - Running Median</title>
+        <link>/2018/03/04/Running-median.html</link>
+        <guid isPermaLink="true">/2018/03/04/Running-median.html</guid>
+        <description>&lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;텅빈 수열에서 시작해서 각 수가 추가될 때마다 중간 값을 계산하는 프로그램을 작성하시오&lt;/li&gt;
+  &lt;li&gt;유사문제: https://www.geeksforgeeks.org/median-of-stream-of-integers-running-integers/&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;관찰&quot;&gt;관찰&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;최대, 최소 prority queue를 사용해서 해결 가능&lt;/li&gt;
+  &lt;li&gt;최대 힙의 크기는 최소 힙의 크기와 같거나 하나 더 크다&lt;/li&gt;
+  &lt;li&gt;최대 힙의 최대 원소는 초소 힙의 최소 원소보다 작거나 크다&lt;/li&gt;
+  &lt;li&gt;수열의 중간 값은 항상 최대 힙의 루트에 있다&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct runningMedian {
+    priority_queue&amp;lt;int, vector&amp;lt;int&amp;gt;, less&amp;lt;int&amp;gt;&amp;gt; maxHeap;
+    priority_queue&amp;lt;int, vector&amp;lt;int&amp;gt;, greater&amp;lt;int&amp;gt;&amp;gt; minHeap;
+
+    void addNum(int num) {
+        if(maxHeap.size() == minHead.size())
+            maxHeap.push(num);
+        else
+            minHeap.push(num);
+        
+        if(!minHeap.empty() &amp;amp;&amp;amp; !maxHeap.empty() &amp;amp;&amp;amp; minHeap.top() &amp;lt; maxHeap.top()) {
+            int a = maxHeap.top(), b = minHeap.top();
+            maxHeap.pop(); minHeap.pop();
+            maxHeap.push(b);
+            minHeap.push(a);
+        }
+    }
+
+    int getMedian() {
+        return maxHeap.top();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sun, 04 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>트리의 PreOrder, InOrder 순회로 PotOrder 알아내기</title>
+        <link>/2018/03/04/PreOrder-InOrder%EB%A1%9C-PostOrder-%EC%95%8C%EC%95%84%EB%82%B4%EA%B8%B0.html</link>
+        <guid isPermaLink="true">/2018/03/04/PreOrder-InOrder%EB%A1%9C-PostOrder-%EC%95%8C%EC%95%84%EB%82%B4%EA%B8%B0.html</guid>
+        <description>&lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;주어진 PreOrder, InOrder 순환 값으로 PostOrder 순환 값을 에측하라&lt;/li&gt;
+  &lt;li&gt;트리를 주어진 순환 값으로 부터 구성하면서 PostOrder 순환을 한다&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vector&amp;lt;int&amp;gt; slice(vector&amp;lt;int&amp;gt;&amp;amp; src, int a, int b) {
+    return vector&amp;lt;int&amp;gt;(src.begin()+a, src.end()+b);
+}
+
+void postOrder(vector&amp;lt;int&amp;gt;&amp;amp; preOrder, vector&amp;lt;int&amp;gt;&amp;amp; inOrder) {
+    int length = preOrder.size();
+    int root = preOrder[0]; // preOrder의 제일 처음에 나오는 값이 루트이다.
+    
+    int left = find(inOrder.begin(), inOrder.end(), root) - inOrder.begin();
+    int right = length - left - 1; // 루트 값 제외
+
+    postOrder(slice(preOrder, 1, left+1), slice(inOrder, 0, left));
+    postOrer(slice(preOrder, left+1, length), slice(inOrder, left+1, length));
+
+    cout &amp;lt;&amp;lt; root &amp;lt;&amp;lt; ' ';    
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
@@ -260,554 +660,6 @@ int memorize(const string&amp;amp; input, vector&amp;lt;int&amp;gt;&amp;amp; cac
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Sat, 03 Mar 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>Get Max Even Sum From Tree</title>
-        <link>/2018/03/03/get-max-even-sum-from-tree.html</link>
-        <guid isPermaLink="true">/2018/03/03/get-max-even-sum-from-tree.html</guid>
-        <description>
-&lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;output the maximum EVEN sum along any path&lt;/li&gt;
-  &lt;li&gt;![/assets/img/maxevensum.png]&lt;/li&gt;
-  &lt;li&gt;트리의 각 노드들을 더해서 최대값이자 짝수인 값을 구하기&lt;/li&gt;
-  &lt;li&gt;짝수가 된다는 말에 잘 주목을 해야 할 것 같다&lt;/li&gt;
-  &lt;li&gt;답이 없어서 정확하게 파악은 안되지만…&lt;/li&gt;
-  &lt;li&gt;모든 경로마다의 합을 구해서 정렬을 해서 짝수를 구하는 방법이 있지만, 이건 별로 안좋아할듯&lt;/li&gt;
-  &lt;li&gt;그게 아니면 짝수가 되는 경우를 확인해서 최대 값을 구하는 방법이 있을것 같다&lt;/li&gt;
-  &lt;li&gt;문제가 워낙 간단하게 나와서 정확한 제약조건은 알 길이 없지만, 만약 정할 수 있다면 루트를 거쳐야 한다와 마이너스 값은 허용되지 않음 두가지 경우를 설정하고 싶다&lt;/li&gt;
-  &lt;li&gt;루트를 거쳐야 한다면 루트가 홀수인 경우는 왼쪽이 홀수 아니면 오른쪽이 홀수 값을 리턴해야 한다&lt;/li&gt;
-  &lt;li&gt;루트가 짝수인 경우는 왼쪽, 오른쪽 둘다 홀수 혹은 짝수가 되어야 한다&lt;/li&gt;
-  &lt;li&gt;그리고 post order 방식으로 트리를 순환하고, 노도의 값을 먼저 더해서 노드의 왼쪽 오른쪽 노드의 탐색이 끝난 후에 값을 확인한다&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
-
-struct node {
-    int value;
-    node* left, *right;
-    node(int n):value(n){}
-};
-
-int oddNodeAdd(node* ptr, int total) {
-    if(!ptr)
-        return total;
-    
-    int left = oddNodeAdd(ptr-&amp;gt;left, total + ptr-&amp;gt;value);
-    int right = oddNodeAdd(ptr-&amp;gt;right, total + ptr-&amp;gt;value);
-    
-    int ld = left % 2, rd = right % 2;
-    if(ld == 1 &amp;amp;&amp;amp; rd ==1)
-        return max(left, right);
-    
-    if(ld==1 &amp;amp;&amp;amp; rd==0)
-        return ld;
-    
-    if(rd==1 &amp;amp;&amp;amp; ld==0) 
-        return rd;
-    
-    return total;
-}
-
-int evenNodeAdd(node* ptr, int total) {
-    
-    if(!ptr)
-        return 0 ;
-    
-    int left = evenNodeAdd(ptr-&amp;gt;left, total + ptr-&amp;gt;value);
-    int right = evenNodeAdd(ptr-&amp;gt;right, total + ptr-&amp;gt;value);
-    
-    // 
-    int ld = left %2, rd = right%2;
-    
-    if((ld ==0&amp;amp;&amp;amp;rd ==0)) {
-        return max(left, right);
-    }
-    
-    if(ld==1&amp;amp;&amp;amp;ld==0) {
-        return rd;
-    }
-    
-    if(ld==0&amp;amp;&amp;amp;rd==1) {
-        return ld;
-    }
-
-    return total;
-}
-
-int getMaxEvenNumber(node* ptr) {
-    
-    int maxValue = 0 ;
-    int oddLeft = oddNodeAdd(ptr-&amp;gt;left,0);
-    int oddRight = oddNodeAdd(ptr-&amp;gt;right, 0);
-    int evenLeft = evenNodeAdd(ptr-&amp;gt;right,0);
-    int evenRight = evenNodeAdd(ptr-&amp;gt;right,0);
-    
-    maxValue = max(oddLeft + oddRight, evenLeft + evenRight);
-    maxValue = max(maxValue, max(oddLeft+evenRight, evenLeft+oddRight));
-    maxValue = maxValue + ptr-&amp;gt;value; 
-    
-    return maxValue;
-}
-
-int main() {
-    node* ptr = new node(10);
-    ptr-&amp;gt;left = new node(2);
-    ptr-&amp;gt;left-&amp;gt;left = new node(1);
-    ptr-&amp;gt;left-&amp;gt;right = new node(101);
-    ptr-&amp;gt;right = new node(5);
-    ptr-&amp;gt;right-&amp;gt;right = new node(13);  
-    cout &amp;lt;&amp;lt; getMaxEvenNumber(ptr);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Sat, 03 Mar 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>KMP 알고리즘</title>
-        <link>/2018/03/03/Shortest-Palindrome.html</link>
-        <guid isPermaLink="true">/2018/03/03/Shortest-Palindrome.html</guid>
-        <description>&lt;h2 id=&quot;shortest-palindrome&quot;&gt;Shortest Palindrome&lt;/h2&gt;
-
-&lt;h3 id=&quot;출처&quot;&gt;출처&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;https://leetcode.com/problems/shortest-palindrome/description/&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;문제&quot;&gt;문제&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;주어진 스티링 S에 대해서 글자들을 앞부분에 더해서 회문으로 만들 수 있다. 이때, 가장 짧은 글자를 더해서 만들 수 있는 회문을 구하라.&lt;/li&gt;
-  &lt;li&gt;Given “aacecaaa”, return “aaacecaaa”.
-Given “abcd”, return “dcbabcd”.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;분석&quot;&gt;분석&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Bruteforce로 할 수 있는 방법:
-    &lt;ul&gt;
-      &lt;li&gt;S를 reverse 해서 reversed 된 스트링의 substring과 S의 서브스트링을 비교한다.&lt;/li&gt;
-      &lt;li&gt;Time complexity: O(N2)&lt;/li&gt;
-      &lt;li&gt;Space complexity: O(N)
-        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;string shortestPalindrome(string s)
-{
- int n = s.size();
- string rev(s);
- reverse(rev.begin(), rev.end());
- int j = 0;
- for (int i = 0; i &amp;lt; n; i++) {
-  if (s.substr(0, n - i) == rev.substr(i))
-      return rev.substr(0, i) + s;
- }
- return &quot;&quot;;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;KMP 방식을 사용한다
-    &lt;ul&gt;
-      &lt;li&gt;KMP 방식에 따라 Fail function lookup table 을 만들면 얼마만큼의 prefix가 현재까지 매칭되었는지를 알 수 있고 이 값을 사용해서 panlindrome을 만들기 위해 필요한 문자열을 알 수 있게 된다.&lt;/li&gt;
-      &lt;li&gt;입력 S을 reverse한후 ‘#’ 와 함께 원래 입력에 더한다 string input = s + ‘#’ + reverse(s)&lt;/li&gt;
-      &lt;li&gt;’#’은 원래 값과 reverse된 문자열이 섞이지 않도록 필요&lt;/li&gt;
-      &lt;li&gt;KMP fail_function을 만들어서 surfix와 동일한 prefix의 최장 길이를 구할 수 있고 이 길이를 알면 reverse된 문자열에서 필요한 문자열을 뽑아낼 수 있다
-        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  string shortestPalindrome(string input) {
-        
-  int n = input.length();
-  string rev(input);
-  std::reverse(rev.begin(), rev.end());
-        
-  string source = input + &quot;#&quot; + rev;
-  int len = source.size();   
-         
-  vector&amp;lt;int&amp;gt; fail_table(len, 0);
-        
-  for(int pos = 1; pos &amp;lt; len; pos++){
-      int last_match_pos = fail_table[pos-1];
-      while(last_match_pos &amp;gt; 0 
-            &amp;amp;&amp;amp; source[pos] != source[last_match_pos])
-          last_match_pos = fail_table[last_match_pos-1];
-            
-      if(source[pos] == source[last_match_pos])
-          ++last_match_pos;
-            
-      fail_table[pos] = last_match_pos;
-  } 
-        
-  return rev.substr(0, n - fail_table[len - 1]) + input;         
-  }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Sat, 03 Mar 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>KMP 알고리즘</title>
-        <link>/2018/03/03/KMP-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html</link>
-        <guid isPermaLink="true">/2018/03/03/KMP-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html</guid>
-        <description>&lt;h2 id=&quot;출처&quot;&gt;출처&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;http://www.crocus.co.kr/559&lt;/li&gt;
-  &lt;li&gt;http://jason9319.tistory.com/130&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;kmp-알고리즘kmp-algorithm&quot;&gt;KMP 알고리즘(KMP Algorithm)&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;www.crocus.co.kr&lt;/li&gt;
-  &lt;li&gt;KMP 방식을 요약하면..
-    &lt;ul&gt;
-      &lt;li&gt;패턴의 substring을 만들어서 prefix 와 suffix가 같을때의 최장 길이를 찾는다
-ex) aba =&amp;gt; 1, aabaa =&amp;gt;2, acdefa =&amp;gt; 1 ..&lt;/li&gt;
-      &lt;li&gt;패턴의 substring 매칭에 대한 테이블을 만든다&lt;/li&gt;
-      &lt;li&gt;&lt;img src=&quot;/assets/img/kmp.png&quot; alt=&quot;KMP fail table&quot; /&gt;
-        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void fail_function(const string&amp;amp; input, vector&amp;lt;int&amp;gt;&amp;amp; output) {
-  output.resize(input.size(),0);  
-  int last_pos = 0;
-  for(auto pos = 1; pos &amp;lt; input.size(); pos++) {
-  while(last_pos &amp;gt;0 &amp;amp;&amp;amp; input[pos] != input[last_pos])
-      last_pos = output[last_pos-1];
-        
-  if(input[pos] == input[last_pos])
-      output[pos] = ++last_pos;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;source = aabaabaaaabaabaadaabaabac가 있다고 가정하자.&lt;/li&gt;
-  &lt;li&gt;pattern = aabaabac를 찾으려 한다면 표를 다음과 같이 이용하면 된다.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaaba[a]aabaabaadaabaabac
-aabaaba[c]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;비교결과 :: aabaaba까지 같다. 따라서 arr[i]의 7번째 인덱스에서 a와 c가 틀렸으니,aabaaba의 f[6] = 4 따라서 (7-4) = 3인 arr[3]부터 다시 확인한다.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaa[a]abaabaadaabaabac
- aabaa[b]ac
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;비교결과 :: aabaa까지 같다. 따라서 arr[i]의 8번째 인덱스에서 a와 b가 틀렸으니, aabaa의 f[i] = 2 따라서 (8-2) = 6인 arr[6]부터 다시 확인한다.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaa[a]abaabaadaabaabac
-　　　 aa[b]aabac
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;비교결과 :: aa까지 같다. 따라서 arr[i]의 8번째 인덱스에서 a와 b가 틀렸으니, aa의 f[i] = 1 따라서 (8-1) = 7인 arr[7]부터 다시 확인한다.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaa[a]abaabaadaabaabac
-　　　 aa[b]aabac
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;비교결과 :: aa까지 같다. 따라서 arr[i]의 9번째 인덱스에서 a와 b가 틀렸으니, aa의 f[i] = 1 따라서 (9-1) = 8인 arr[8]부터 다시 확인한다.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaaa[a]baabaadaabaabac
-　　　  aa[b]aabac
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;비교결과 :: aabaaba까지 같다. 따라서 arr[i]의 15번째 인덱스에서 a와 c가 틀렸으니, aabaaba의 f[i] = 4 따라서 (15-4) = 11인 arr[11]부터 다시 확인한다.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaaaabaaba[a]daabaabac
-　　　　　aabaaba[c]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;비교결과 :: aabaa까지 같다. 따라서 arr[i]의 16번째 인덱스에서 d와 b가 틀렸으니, aabaa의 f[i] = 2 따라서 (16-2) = 14인 arr[14]부터 다시 확인한다.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaaaabaabaa[d]aabaabac
-　　　　　　 aabaa[b]ac
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;비교결과 :: aa까지 같다. 따라서 arr[i]의 16번째 인덱스에서 d와 b가 틀렸으니, aa의 f[i] = 1 따라서 (16-1) = 15인 arr[15]부터 다시 확인한다.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaaaabaabaa[d]aabaabac
-　　　　　　    aa[b]aabac
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;비교결과 :: a까지 같다. 따라서 arr[i]의 16번째 인덱스에서 d와 a가 틀렸으니, a의 f[i] = 0  따라서 (16-0) = 16인 arr[16]부터 다시 확인한다.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaaaabaabaa[d]aabaabac
-　　　　　　　   a[a]baabac
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;비교결과 :: 같은 것이 없다. 따라서 arr[17]부터 다시 확인한다.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aabaabaaaabaabaad[aabaabac]
-　　　　　　　      [aabaabac]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;비교결과 :: 모두 일치. 정답을 도출한다.( 일치하는 문자열의 시작 인덱스 :: 17, 일차하는 문자열의 개수 :: 1)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;출처: http://www.crocus.co.kr/559 [Crocus]&lt;/p&gt;
-
-&lt;p&gt;주의점:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;머릿속으로 생각하기는 쉬우나 Fail Function 을 만드는 코드가 생각보다는 코딩하기가 헷갈린다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void kmp(const string&amp;amp; input, const string&amp;amp; pattern, vector&amp;lt;int&amp;gt;&amp;amp; output) {
-    vector&amp;lt;int&amp;gt; fail_table;
-    fail_function(pattern, fail_table);   
-    int last_pos = 0 ;
-    for(auto pos = 0; pos &amp;lt; input.size(); pos++) {
-        while(last_pos &amp;gt; 0 &amp;amp;&amp;amp; input[pos] != pattern[last_pos])
-            last_pos = fail_table[last_pos-1];
-        
-        if(input[pos] == pattern[last_pos]){
-            if(last_pos == pattern.size() -1) {
-                output.push_back(pos);
-                last_pos = fail_table[last_pos-1];
-            }
-            else {
-                last_pos++;
-            }
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Sat, 03 Mar 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>합친 LIS</title>
-        <link>/2018/03/03/JIS.html</link>
-        <guid isPermaLink="true">/2018/03/03/JIS.html</guid>
-        <description>&lt;h2 id=&quot;출처&quot;&gt;출처&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;알고리즘 문제 해결 전랙 1권 8.5&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;두 개의 정수 수열 A와 B에서 각각 길이 0 이상의 증가 부분 수열을 얻은 뒤에 이들을 크기 순서대로 합친 것을 합친 증가 부분 수열이라고 함&lt;/li&gt;
-  &lt;li&gt;A와 B가 주어질때 합친 LIS의 길이를 계산하는 프로그램을 작성하시오&lt;/li&gt;
-  &lt;li&gt;이걸 왜 DP로 풀었는지는 의문이다&lt;/li&gt;
-  &lt;li&gt;그냥 합치면 되는거 아닌가?&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const long long NEGINF = numeric_limit&amp;lt;long long&amp;gt;::min();
-
-int jlis(vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; cache, 
-         const vector&amp;lt;int&amp;gt;&amp;amp; A, int pos_a, 
-         const vector&amp;lt;int&amp;gt;&amp;amp; B, int pos_b) {
-    
-    // -1부터 시작할 수 있기 때문에 인덱스에 +1을 해준다
-    int&amp;amp; ret = cache[pos_a+1][pos_b+1];
-    if(ret!= -1) return ret;
-    
-    ret = 2; // 무조건 두개 이상의 요소가 있기 때문에...
-    long long a = (pos_a == -1)?NEGINF:A[pos_a];
-    long long b = (pos_b == -1)?NEGINF:B[pos_b];
-    long long max_element = max(a,b);
-    
-    for(int ap = pos_a+1; ap &amp;lt; A.size(); ap++)
-        if(max_element &amp;lt; A[ap])
-            ret = max(ret, jlis(cache, A, ap, B, pos_b)+1);
-    
-    for(int bp = pos_b + 1; bp &amp;lt; B.size(); bp++){
-        if(max_element &amp;lt; B[bp]){
-            ret = max(ret, jlis(cache, A, pos_a, B, bp) +1);
-        }
-    }
-    return ret;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Sat, 03 Mar 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>이항계수 구하기 - binominal coefficient</title>
-        <link>/2018/03/02/%EC%9D%B4%ED%95%AD%EA%B3%84%EC%88%98%EA%B5%AC%ED%95%98%EA%B8%B0.html</link>
-        <guid isPermaLink="true">/2018/03/02/%EC%9D%B4%ED%95%AD%EA%B3%84%EC%88%98%EA%B5%AC%ED%95%98%EA%B8%B0.html</guid>
-        <description>&lt;h2 id=&quot;이항계수파스칼의-삼각형-구하기&quot;&gt;이항계수(파스칼의 삼각형) 구하기&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/img/pascaltree.png&quot; alt=&quot;파스칼 트리&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;파스칼 트리 구하기 문제&lt;/li&gt;
-  &lt;li&gt;파스칼 트리와 이항계수의 관계는 이 블로그를 참조: http://blog.naver.com/PostView.nhn?blogId=vollollov&amp;amp;logNo=220947452823&lt;/li&gt;
-  &lt;li&gt;간략하게 그림만 보면 아래와 같은 관계가 있다 (출처: 위의 블로그)&lt;/li&gt;
-  &lt;li&gt;&lt;img src=&quot;/assets/img/0226_02.gif&quot; alt=&quot;이항계수와파스칼트리&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;(n,r)  = (n-1,r-1) + (n-1,r)&lt;/li&gt;
-  &lt;li&gt;이항계수 (n,r)은 n개의 서로 다른 원소 중에서 r개의 원소를 순서없이 골라내는 방법의 수&lt;/li&gt;
-  &lt;li&gt;중복계산되는 항이 많기 때문에 메모이제이션 사용해서 계산량 줄이는 것이 필요&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;코드1&quot;&gt;코드1&lt;/h2&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int bino(int n, int r) {
-    if(r==0 || n==r ) return 1;
-    return bino(n-1,r-1) + bino(n-1,r);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h2 id=&quot;코드2memoization&quot;&gt;코드2(+memoization)&lt;/h2&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// cache의 초기값은 -1
-int bino(vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; cache, int n, int r) {
-    if(r==0 || n==r) return 1;
-    if(cache[n][r]!= -1) return cache[n][r];
-    return cache[n][r] = cache[n-1][r-1] + cache[n][r];
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Fri, 02 Mar 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>외발뛰기</title>
-        <link>/2018/03/02/%EC%99%B8%EB%B0%9C%EB%9B%B0%EA%B8%B0.html</link>
-        <guid isPermaLink="true">/2018/03/02/%EC%99%B8%EB%B0%9C%EB%9B%B0%EA%B8%B0.html</guid>
-        <description>&lt;h2 id=&quot;외발뛰기&quot;&gt;외발뛰기&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/img/jumpgame.png&quot; alt=&quot;외발뛰기&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;게임판의 왼쪽 칸 위에서 오른쪽 칸에 도착하는 하는 것이 가능하는지 파악하는 것이 목적&lt;/li&gt;
-  &lt;li&gt;각 게임판에 있는 숫자만큼 아래나 오른쪽으로 이동 가능&lt;/li&gt;
-  &lt;li&gt;DP를 사용하며, 메모이제이션을 사용해서 문제를 빨리 해결 가능&lt;/li&gt;
-  &lt;li&gt;미로의 끝까지 가는 것을 확인하는 것이 목적이기 때문에, 아래로 바로 내려가거나 오른쪽으로 가는 두 가지 방법중 한가지라도 걸리면, true가 된다&lt;/li&gt;
-  &lt;li&gt;
-    &lt;table&gt;
-      &lt;tbody&gt;
-        &lt;tr&gt;
-          &lt;td&gt;점화식: f(x, y) = (f(x, y + map[y][x])&lt;/td&gt;
-          &lt;td&gt; &lt;/td&gt;
-          &lt;td&gt;f(x+ map[y][x], y))&lt;/td&gt;
-        &lt;/tr&gt;
-      &lt;/tbody&gt;
-    &lt;/table&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bool jump(vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; map, vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; cache, int x, int y) {
-    int width = map[0].size();
-    int height = map.size();
-    if (x &amp;gt;= width || y &amp;gt;= height )
-        return false;
-    
-    if(x==width=1 &amp;amp;&amp;amp; y == height-1)
-        return true;
-
-    int&amp;amp; val = cache[y][x];
-    if(val != -1)
-        return (val==1);
-    
-    int jumpSize = map[y][x];
-    return val = (jump(map, cache, x+jumpSize, y) || jump(map,cache, x, y+jumpSize));
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Fri, 02 Mar 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>와일드카드 스트링 매치</title>
-        <link>/2018/03/02/%EC%99%80%EC%9D%BC%EB%93%9C%EC%B9%B4%EB%93%9C%EB%A7%A4%EC%B9%AD.html</link>
-        <guid isPermaLink="true">/2018/03/02/%EC%99%80%EC%9D%BC%EB%93%9C%EC%B9%B4%EB%93%9C%EB%A7%A4%EC%B9%AD.html</guid>
-        <description>&lt;h2 id=&quot;와일드카드-스트링-매칭&quot;&gt;와일드카드 스트링 매칭&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;흔히쓰는 와일드카드 ?, *을 사용해서 문자열이 해당 패턴에 일치하는지 파악한다&lt;/li&gt;
-  &lt;li&gt;예) he?p =&amp;gt; help (O), he?p =&amp;gt; helpp (X), h&lt;em&gt;p =&amp;gt; help (O), h&lt;/em&gt;p =&amp;gt; helpp (O)&lt;/li&gt;
-  &lt;li&gt;DP를 사용해서 문제를 풀 수 있다&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;관찰&quot;&gt;관찰&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;문자열와 패턴을 각각 W, S라고 하자.&lt;/li&gt;
-  &lt;li&gt;만약 현재 위치 w,s에 대해 W[w] != S[s]이면 해당 없음&lt;/li&gt;
-  &lt;li&gt;W[w] == S[s] 이거나 W[w] == ‘?’이면 매칭이고, 다음 글자 를 계속 조사&lt;/li&gt;
-  &lt;li&gt;매칭하지 않아도 W[w] == ‘*‘이면 이후의 글자들을 전부 조사해서 매칭이 되는지의 여부를 파악한다&lt;/li&gt;
-  &lt;li&gt;W의 w+1과 S의 s+1 이후의 값들을 확인해서 하나라도 참이면 답은 참이 된다&lt;/li&gt;
-  &lt;li&gt;시간복잡도는 O(n&lt;sup&gt;2&lt;/sup&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;점화식&quot;&gt;점화식&lt;/h2&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    bool matchWords(vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; cache, 
-        const string&amp;amp; W,
-        int w, 
-        const string&amp;amp; S,
-        int s) {
-
-            int&amp;amp; ret = cache[w][s];
-            if(ret != -1)
-                return ret;
-            
-            while(s &amp;lt; S.size() &amp;amp;&amp;amp; w &amp;lt; W.size() &amp;amp;&amp;amp;
-                    (W[w] == '?' || W[w] == S[s]) {
-                        ++w;
-                        ++s;
-                    }
-            
-            if(w==W.size()) return ret = (s==S.size());
-            if(W[w] == '*') {
-                if(matchWords(cache, W, w+1, S, s) ||
-                    (s &amp;lt; S.size() &amp;amp;&amp;amp; matchWords(cache, W, w, S, s+1))
-                    return ret = 1;
-            }
-
-            return ret = 0;
-        }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Fri, 02 Mar 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>삼각형에서의 최대 경로</title>
-        <link>/2018/03/02/%EC%82%BC%EA%B0%81%ED%98%95%EC%97%90%EC%84%9C%EC%9D%98%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C.html</link>
-        <guid isPermaLink="true">/2018/03/02/%EC%82%BC%EA%B0%81%ED%98%95%EC%97%90%EC%84%9C%EC%9D%98%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C.html</guid>
-        <description>&lt;h2 id=&quot;삼각형에서의-최대-경로&quot;&gt;삼각형에서의 최대 경로&lt;/h2&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;6
-1 2
-3 7 4
-9 4 1 7
-2 7 5 9 4
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;맨 위의 숫자에서 시작해서 한 번에 한 칸씩 아래(바로 아래(y+1), 오른쪽 아래(x+1, y+1)로 내려가서 맨 아래줄에 도달하는 경로중 숫자의 합을 최대화 하는 경로는?&lt;/li&gt;
-  &lt;li&gt;경로가 여러개가 있기 때문에 메모이제이션이 쉽지 않음&lt;/li&gt;
-  &lt;li&gt;f(x,y,sum) = max(f(x+1,y, sum + triangle[y][x]), f(x,y+1, sum + triangle[y][x]))
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  int maxSum(const vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; input,
-              vector&amp;lt;vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;gt;&amp;amp; cache,
-              int x,
-              int y, int sum) {
-                  if(y == n-1)
-                      return sum + input[y][x];
-                    
-                  int&amp;amp; val = cache[y][x][sum];
-                  if(val != -1)
-                      return val;
-                    
-                  sum += input[y][x];
-                  return max(
-                      maxSum(input, cache, x+1, y+1, sum),
-                      maxSum(input, cache, x, y+1, sum)
-                  );
-              }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;재귀함수에 sum을 더해줄 필요가 없다. sum이 있건 없건 부분 경로의 최대 값이 중요하다&lt;/li&gt;
-  &lt;li&gt;Optimal Substructure&lt;/li&gt;
-  &lt;li&gt;f(x,y) = max(f(x+1,y), f(x,y+1)) + triangle[y][x];
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  int maxSum(const vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; input,
-              vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; cache,
-              int x,
-              int y) {
-
-                  int&amp;amp; ret = cache[y][x];
-
-                  if(ret != -1)
-                      return ret;
-
-                  if(y==n-1)
-                      return input[y][x];
-                    
-                  return ret = max(
-                                  maxSum(input, cache, x+1, y+1),
-                                  maxSum(input, cache, x, y+1)
-
-                  );
-              }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;시간복잡도 - 부분 문제에서는 O(N&lt;sup&gt;2&lt;/sup&gt;), 전체문제에서는 상수 시간이 추가되기 때문에 결국 O(N&lt;sup&gt;2&lt;/sup&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Fri, 02 Mar 2018 00:00:00 -0800</pubDate>
       </item>
     
   </channel>
