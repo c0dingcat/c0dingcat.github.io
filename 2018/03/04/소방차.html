@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>소방차 | c0dingcat</title>
+	<meta name="description" content="문제  서울 시내에 m개의 소방서가 있습니다.  화재 장소에서 가장 가까운 소방서에서 소방차를 보낸다고 할 때, 각 화재 장소에 소방차가 도달하기까지 걸리는 시간의 합을 계산하는 프로그램을 작성하세요  “예제 지도를 봅시다. 사각형으로 표시된 지점들은 소방서를, 음영으로 칠해진 지...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/03/04/%EC%86%8C%EB%B0%A9%EC%B0%A8.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="c0dingcat" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/ohhocat.jpg" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">c0dingcat</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">소방차</h1>
+    
+    <p class="meta">
+      March 4, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><h2 id="문제">문제</h2>
+<ul>
+  <li>서울 시내에 m개의 소방서가 있습니다.</li>
+  <li>화재 장소에서 가장 가까운 소방서에서 소방차를 보낸다고 할 때, 각 화재 장소에 소방차가 도달하기까지 걸리는 시간의 합을 계산하는 프로그램을 작성하세요
+<img src="/assets/img/fire_trucks.png" alt="소방서" /></li>
+  <li>“예제 지도를 봅시다. 사각형으로 표시된 지점들은 소방서를, 음영으로 칠해진 지점들은 불이 난 지점을 나타냅니다. 2번과 5번 장소에서는 6번 소방서가 가장 가깝고, 3번 장소에서는 4번 소방서가 가장 가깝습니다. 이때, 각 장소에 소방차가 도착하기까지 걸리는 시간은 2번 장소에 8분, 5번 장소에 4분, 3번 장소에 4분으로 총 합은 16분이 됩니다.” 예제 설명 발췌 - https://algospot.com/judge/problem/read/FIRETRUCKS</li>
+</ul>
+
+<h2 id="풀이법">풀이법</h2>
+<ul>
+  <li>다익스트라를 돌릴때 시작점을 여러개로 두면 된다</li>
+</ul>
+
+<h2 id="코드">코드</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct edge {
+    double cost;
+    int u;
+    edge(double c, int u_):cost(c),u(u_){}
+    edge(){}
+};
+
+struct {
+    bool operator()(const edge&amp; lhs, const edge&amp; rhs){
+        return lhs.cost &gt; rhs.cost;
+    }
+} op_comp;
+
+void dijstra(const map&lt;int, vector&lt;edge&gt;&gt;&amp; source, const vector&lt;int&gt;&amp; input) {
+    vector&lt;int&gt; dists(source.size(), MAX_VALUE);
+    vector&lt;int&gt; from(source.size(), -1);
+    priority_queue&lt;edge, vector&lt;edge&gt;, op_comp&gt; que;
+    
+    for(int i = 0 ; i &lt; input.size(); i++){
+        from[i] = i;
+        edge e(0.00, i);
+        que.push_back(e);
+    }
+    
+    while(!que.empty()) {
+        edge e1 = que.top(); que.pop();
+        
+        double cost1 = e1.cost;
+        
+        for(int i = 0 ; i &lt; source[e1.u].size(); i++) {
+            edge e2 = source[e1.u][i];
+            double cost2 = e2.cost;
+            if(dists[e2.u] &gt; (cost1+cost2)) {
+                dists[e2.u] = costs1 + costs2;
+                from[e2.u] = from[e1.u];
+                que.push(e2);
+            }
+        }
+    }
+
+</code></pre></div></div>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#그래프">#그래프</a>
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#다익스트라">#다익스트라</a>
+    
+    <a class="tag" href="/tags#최소거리">#최소거리</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

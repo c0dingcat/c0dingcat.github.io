@@ -5,7 +5,7 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
     <link>http://localhost:4000/</link>
     <description>daily log</description>
-    <pubDate>Mon, 05 Mar 2018 02:08:46 -0800</pubDate>
+    <pubDate>Mon, 05 Mar 2018 23:13:02 -0800</pubDate>
     
       <item>
         <title>펜윅트리 - 빠르고 간단한 구간 합</title>
@@ -147,6 +147,134 @@ int countRanges(int k, int n) {
     return ret;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sun, 04 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>소방차</title>
+        <link>/2018/03/04/%EC%86%8C%EB%B0%A9%EC%B0%A8.html</link>
+        <guid isPermaLink="true">/2018/03/04/%EC%86%8C%EB%B0%A9%EC%B0%A8.html</guid>
+        <description>&lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;서울 시내에 m개의 소방서가 있습니다.&lt;/li&gt;
+  &lt;li&gt;화재 장소에서 가장 가까운 소방서에서 소방차를 보낸다고 할 때, 각 화재 장소에 소방차가 도달하기까지 걸리는 시간의 합을 계산하는 프로그램을 작성하세요
+&lt;img src=&quot;/assets/img/fire_trucks.png&quot; alt=&quot;소방서&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;“예제 지도를 봅시다. 사각형으로 표시된 지점들은 소방서를, 음영으로 칠해진 지점들은 불이 난 지점을 나타냅니다. 2번과 5번 장소에서는 6번 소방서가 가장 가깝고, 3번 장소에서는 4번 소방서가 가장 가깝습니다. 이때, 각 장소에 소방차가 도착하기까지 걸리는 시간은 2번 장소에 8분, 5번 장소에 4분, 3번 장소에 4분으로 총 합은 16분이 됩니다.” 예제 설명 발췌 - https://algospot.com/judge/problem/read/FIRETRUCKS&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;풀이법&quot;&gt;풀이법&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;다익스트라를 돌릴때 시작점을 여러개로 두면 된다&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct edge {
+    double cost;
+    int u;
+    edge(double c, int u_):cost(c),u(u_){}
+    edge(){}
+};
+
+struct {
+    bool operator()(const edge&amp;amp; lhs, const edge&amp;amp; rhs){
+        return lhs.cost &amp;gt; rhs.cost;
+    }
+} op_comp;
+
+void dijstra(const map&amp;lt;int, vector&amp;lt;edge&amp;gt;&amp;gt;&amp;amp; source, const vector&amp;lt;int&amp;gt;&amp;amp; input) {
+    vector&amp;lt;int&amp;gt; dists(source.size(), MAX_VALUE);
+    vector&amp;lt;int&amp;gt; from(source.size(), -1);
+    priority_queue&amp;lt;edge, vector&amp;lt;edge&amp;gt;, op_comp&amp;gt; que;
+    
+    for(int i = 0 ; i &amp;lt; input.size(); i++){
+        from[i] = i;
+        edge e(0.00, i);
+        que.push_back(e);
+    }
+    
+    while(!que.empty()) {
+        edge e1 = que.top(); que.pop();
+        
+        double cost1 = e1.cost;
+        
+        for(int i = 0 ; i &amp;lt; source[e1.u].size(); i++) {
+            edge e2 = source[e1.u][i];
+            double cost2 = e2.cost;
+            if(dists[e2.u] &amp;gt; (cost1+cost2)) {
+                dists[e2.u] = costs1 + costs2;
+                from[e2.u] = from[e1.u];
+                que.push(e2);
+            }
+        }
+    }
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sun, 04 Mar 2018 00:00:00 -0800</pubDate>
+      </item>
+    
+      <item>
+        <title>정렬 알고리즘</title>
+        <link>/2018/03/04/%EC%84%A0%ED%83%9D%EC%A0%95%EB%A0%AC.html</link>
+        <guid isPermaLink="true">/2018/03/04/%EC%84%A0%ED%83%9D%EC%A0%95%EB%A0%AC.html</guid>
+        <description>&lt;h2 id=&quot;선택정렬-selection-sort&quot;&gt;선택정렬 (Selection Sort)&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/Selection-Sort-Animation.gif&quot; alt=&quot;선택정렬&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;앞에서부터 가장 작은 수를 찾아 전체를 순환해서 위치를 교환한다&lt;/li&gt;
+  &lt;li&gt;비교횟수: N + N-1 + N-2 … N*(N-1)/2&lt;/li&gt;
+  &lt;li&gt;데이터 교환 횟수: N (inplace교환이기 떄문에 요소가 많은 경우에 좋다)&lt;/li&gt;
+  &lt;li&gt;추가 공간 필요 없음&lt;/li&gt;
+  &lt;li&gt;안정성 없음&lt;/li&gt;
+  &lt;li&gt;Worst case: 역순배열&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;삽입정렬-insertion-sort&quot;&gt;삽입정렬 (Insertion Sort)&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/Insertion-sort.png&quot; alt=&quot;삽입정렬&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;이미 정렬된 배열에서 효과적임&lt;/li&gt;
+  &lt;li&gt;Worst case: 역순배열 O(N&lt;sup&gt;2&lt;/sup&gt;)&lt;/li&gt;
+  &lt;li&gt;정렬된 배열에 대해서는 O(N)&lt;/li&gt;
+  &lt;li&gt;안정성 있음&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;퀵소트&quot;&gt;퀵소트&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/quicksort_animation.gif&quot; alt=&quot;퀵소트&quot; /&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void qsort(const vector&amp;lt;int&amp;gt;&amp;amp; source, int left, int right){
+    // 포인터 셋팅
+    int sp = left, ep = right;
+    // 피봇 셋팅
+    int pivot = source[(left + right) / 2];
+    do {
+        // 피봇보다 작은 값
+        while (source[sp] &amp;lt; pivot) sp++;
+        // 피봇보다 큰 값
+        while (source[ep] &amp;gt; pivot) ep--;
+        // Swap
+        if (sp&amp;lt;= ep) {
+            swap(source[sp], source[ep]);
+            sp++;
+            ep--;
+        }
+	} while (sp&amp;lt;= ep);
+
+    // 왼쪽 퀵소트
+    if (left &amp;lt; ep)
+        quickSort(source, left, ep);
+        
+    // 오른쪽 퀵소트
+    if (sp &amp;lt; right)
+        quickSort(source, sp, right);
+}        
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;합병정렬-merge-sort&quot;&gt;합병정렬 (Merge Sort)&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/merge-sort-animation.gif&quot; alt=&quot;합병정렬&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;O(N):&lt;/li&gt;
+  &lt;li&gt;Stability: Yes&lt;/li&gt;
+  &lt;li&gt;Space Complexity: O(N) additional space required&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Sun, 04 Mar 2018 00:00:00 -0800</pubDate>
       </item>
@@ -546,116 +674,6 @@ int tiling(const vector&amp;lt;int&amp;gt;&amp;amp; input, int width) {
     int &amp;amp; ret = cache[width];
     if(ret !=-1) return ret;
     return ret = (tiling(input, width-2) + tiling(input, width-1))%mod_num;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Sat, 03 Mar 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>원주율 외우기</title>
-        <link>/2018/03/03/%EC%9B%90%EC%A3%BC%EC%9C%A8%EC%99%B8%EC%9A%B0%EA%B8%B0.html</link>
-        <guid isPermaLink="true">/2018/03/03/%EC%9B%90%EC%A3%BC%EC%9C%A8%EC%99%B8%EC%9A%B0%EA%B8%B0.html</guid>
-        <description>&lt;h2 id=&quot;출처&quot;&gt;출처&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;알고리즘 문제 해결 전략 - 문제 8.7&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;관찰&quot;&gt;관찰&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;원주율을 몇 만 자리까지 외우기 위해 일반적으로 쓰는 방법은 3~5글자 정도로 끓어서 외운다&lt;/li&gt;
-  &lt;li&gt;주어진 숫자에 대해 최소의 난이도를 구하는 방법을 계산하시오
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;경우                  예                   난이도
-모든 숫자가 같을때               ex)333,55555         1
-숫자가 1씩 증가 혹은 감소         ex)23456,3210        2
-두개의 숫자가 번갈아 가면서 나타날때  ex)323, 54545       4
-...
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;코드&quot;&gt;코드&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;DP를 써서 점화식을 먼저 세운다&lt;/li&gt;
-  &lt;li&gt;F(L) = min(F(L,3), F(L,4), F(L,5))&lt;/li&gt;
-  &lt;li&gt;F(L,3) -&amp;gt; min(F(L,4), F(L,5), F(L,6)) + classify(L,3)&lt;/li&gt;
-  &lt;li&gt;classify하는 부분은 경우에 따라 파싱하면 됨&lt;/li&gt;
-  &lt;li&gt;DP의 점화식에 따른 구현을 눈여겨 보도록 하자&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int classify(const string&amp;amp; input, int spos, int length) {
-    /// 문자열을 끓어서 classify 해서 돌려준다
-}
-
-int memorize(const string&amp;amp; input, vector&amp;lt;int&amp;gt;&amp;amp; cache, int begin) {
-    if(begin == input.size())
-        return 0;
-    
-    int&amp;amp; ret = cache[begin];
-    if(ret != -1)
-        return ret;
-    ret = INF;
-    // 3~5글자 사이로 끓어 읽어서 최소값을 구한다
-    for(int L = 3 ; L &amp;lt;= 5; ++L) {
-        if(begin + L &amp;lt;= input.size()) {
-            ret = min(ret,
-                     memorize(input, cache, begin+L) + classify(input, begin, L));
-        }
-    }
-    return ret;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Sat, 03 Mar 2018 00:00:00 -0800</pubDate>
-      </item>
-    
-      <item>
-        <title>삼각형 위의 최대 경로 개수 세기</title>
-        <link>/2018/03/03/%EC%82%BC%EA%B0%81%ED%98%95-%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C-%EA%B0%9C%EC%88%98%EC%84%B8%EA%B8%B0.html</link>
-        <guid isPermaLink="true">/2018/03/03/%EC%82%BC%EA%B0%81%ED%98%95-%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C-%EA%B0%9C%EC%88%98%EC%84%B8%EA%B8%B0.html</guid>
-        <description>&lt;h2 id=&quot;출처&quot;&gt;출처&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;알고리즘 문제 해결 전략 - 8.11 경우의 수와 확률&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;문제설명&quot;&gt;문제설명&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;이전의 문제는 최대 경로의 합을 구했을뿐, 경로 자체는 구하지 않았다&lt;/li&gt;
-  &lt;li&gt;최대 경로는 유일하지 않을 수도 있다&lt;/li&gt;
-  &lt;li&gt;문제를 해결하기 위해 두 개의 다른 동적 계획법 문제를 해결&lt;/li&gt;
-  &lt;li&gt;합을 먼저 구하고, 그 합을 구하는 도중에 만든 캐싱을 통해 패스를 구현&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct triangle {
-    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; input;
-    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; cache;
-    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; countCache;
-    
-    int path(int y, int x) {
-        if(y == input.size() -1)
-            return input[y][x];
-        
-        int&amp;amp; ret = cache[y][x];
-        if(ret != -1)
-            return ret;
-        
-        return ret = max(path(y+1,x), path(y+1,x+1))+input[y][x];
-    }
-    
-    int count(int y, int x) {
-        if(y==input.size()-1)
-            return 1;
-        
-        int &amp;amp; ret = countCache[y][x];
-        if(ret!=-1)
-            return ret;
-        
-        if(path(y+1,x+1)&amp;gt;=path(y+1,x))
-            ret += path(y+1,x+1);
-        if(path(y+1,x+1)&amp;lt;=path(y+1,x))
-            ret += path(y+1,x);
-        return ret;
-    }
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>

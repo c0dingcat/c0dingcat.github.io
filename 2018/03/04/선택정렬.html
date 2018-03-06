@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>정렬 알고리즘 | c0dingcat</title>
+	<meta name="description" content="선택정렬 (Selection Sort)  앞에서부터 가장 작은 수를 찾아 전체를 순환해서 위치를 교환한다  비교횟수: N + N-1 + N-2 … N*(N-1)/2  데이터 교환 횟수: N (inplace교환이기 떄문에 요소가 많은 경우에 좋다)  추가 공간 필요 없음  안정성 없...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/03/04/%EC%84%A0%ED%83%9D%EC%A0%95%EB%A0%AC.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="c0dingcat" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/ohhocat.jpg" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">c0dingcat</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">정렬 알고리즘</h1>
+    
+    <p class="meta">
+      March 4, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><h2 id="선택정렬-selection-sort">선택정렬 (Selection Sort)</h2>
+<p><img src="/assets/img/Selection-Sort-Animation.gif" alt="선택정렬" /></p>
+<ul>
+  <li>앞에서부터 가장 작은 수를 찾아 전체를 순환해서 위치를 교환한다</li>
+  <li>비교횟수: N + N-1 + N-2 … N*(N-1)/2</li>
+  <li>데이터 교환 횟수: N (inplace교환이기 떄문에 요소가 많은 경우에 좋다)</li>
+  <li>추가 공간 필요 없음</li>
+  <li>안정성 없음</li>
+  <li>Worst case: 역순배열</li>
+</ul>
+
+<h2 id="삽입정렬-insertion-sort">삽입정렬 (Insertion Sort)</h2>
+<p><img src="/assets/img/Insertion-sort.png" alt="삽입정렬" /></p>
+<ul>
+  <li>이미 정렬된 배열에서 효과적임</li>
+  <li>Worst case: 역순배열 O(N<sup>2</sup>)</li>
+  <li>정렬된 배열에 대해서는 O(N)</li>
+  <li>안정성 있음</li>
+</ul>
+
+<h2 id="퀵소트">퀵소트</h2>
+<p><img src="/assets/img/quicksort_animation.gif" alt="퀵소트" /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void qsort(const vector&lt;int&gt;&amp; source, int left, int right){
+    // 포인터 셋팅
+    int sp = left, ep = right;
+    // 피봇 셋팅
+    int pivot = source[(left + right) / 2];
+    do {
+        // 피봇보다 작은 값
+        while (source[sp] &lt; pivot) sp++;
+        // 피봇보다 큰 값
+        while (source[ep] &gt; pivot) ep--;
+        // Swap
+        if (sp&lt;= ep) {
+            swap(source[sp], source[ep]);
+            sp++;
+            ep--;
+        }
+	} while (sp&lt;= ep);
+
+    // 왼쪽 퀵소트
+    if (left &lt; ep)
+        quickSort(source, left, ep);
+        
+    // 오른쪽 퀵소트
+    if (sp &lt; right)
+        quickSort(source, sp, right);
+}        
+</code></pre></div></div>
+<h2 id="합병정렬-merge-sort">합병정렬 (Merge Sort)</h2>
+<p><img src="/assets/img/merge-sort-animation.gif" alt="합병정렬" /></p>
+<ul>
+  <li>O(N):</li>
+  <li>Stability: Yes</li>
+  <li>Space Complexity: O(N) additional space required</li>
+</ul>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#선택정렬">#선택정렬</a>
+    
+    <a class="tag" href="/tags#삽입정렬">#삽입정렬</a>
+    
+    <a class="tag" href="/tags#퀵정렬">#퀵정렬</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

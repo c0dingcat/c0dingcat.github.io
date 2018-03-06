@@ -198,6 +198,28 @@
       }
       ,
     
+      "2018-03-04-ec-86-8c-eb-b0-a9-ec-b0-a8-html": {
+        "title": "소방차",
+        "tags": "그래프, 알고리즘, 다익스트라, 최소거리",
+        "date": "March 4, 2018",
+        "author": "",
+        "category": "",
+        "content": "문제  서울 시내에 m개의 소방서가 있습니다.  화재 장소에서 가장 가까운 소방서에서 소방차를 보낸다고 할 때, 각 화재 장소에 소방차가 도달하기까지 걸리는 시간의 합을 계산하는 프로그램을 작성하세요  “예제 지도를 봅시다. 사각형으로 표시된 지점들은 소방서를, 음영으로 칠해진 지점들은 불이 난 지점을 나타냅니다. 2번과 5번 장소에서는 6번 소방서가 가장 가깝고, 3번 장소에서는 4번 소방서가 가장 가깝습니다. 이때, 각 장소에 소방차가 도착하기까지 걸리는 시간은 2번 장소에 8분, 5번 장소에 4분, 3번 장소에 4분으로 총 합은 16분이 됩니다.” 예제 설명 발췌 - https://algospot.com/judge/problem/read/FIRETRUCKS풀이법  다익스트라를 돌릴때 시작점을 여러개로 두면 된다코드struct edge {    double cost;    int u;    edge(double c, int u_):cost(c),u(u_){}    edge(){}};struct {    bool operator()(const edge&amp; lhs, const edge&amp; rhs){        return lhs.cost &gt; rhs.cost;    }} op_comp;void dijstra(const map&lt;int, vector&lt;edge&gt;&gt;&amp; source, const vector&lt;int&gt;&amp; input) {    vector&lt;int&gt; dists(source.size(), MAX_VALUE);    vector&lt;int&gt; from(source.size(), -1);    priority_queue&lt;edge, vector&lt;edge&gt;, op_comp&gt; que;        for(int i = 0 ; i &lt; input.size(); i++){        from[i] = i;        edge e(0.00, i);        que.push_back(e);    }        while(!que.empty()) {        edge e1 = que.top(); que.pop();                double cost1 = e1.cost;                for(int i = 0 ; i &lt; source[e1.u].size(); i++) {            edge e2 = source[e1.u][i];            double cost2 = e2.cost;            if(dists[e2.u] &gt; (cost1+cost2)) {                dists[e2.u] = costs1 + costs2;                from[e2.u] = from[e1.u];                que.push(e2);            }        }    }",
+        "url": "//2018/03/04/%EC%86%8C%EB%B0%A9%EC%B0%A8.html"
+      }
+      ,
+    
+      "2018-03-04-ec-84-a0-ed-83-9d-ec-a0-95-eb-a0-ac-html": {
+        "title": "정렬 알고리즘",
+        "tags": "알고리즘, 선택정렬, 삽입정렬, 퀵정렬",
+        "date": "March 4, 2018",
+        "author": "",
+        "category": "",
+        "content": "선택정렬 (Selection Sort)  앞에서부터 가장 작은 수를 찾아 전체를 순환해서 위치를 교환한다  비교횟수: N + N-1 + N-2 … N*(N-1)/2  데이터 교환 횟수: N (inplace교환이기 떄문에 요소가 많은 경우에 좋다)  추가 공간 필요 없음  안정성 없음  Worst case: 역순배열삽입정렬 (Insertion Sort)  이미 정렬된 배열에서 효과적임  Worst case: 역순배열 O(N2)  정렬된 배열에 대해서는 O(N)  안정성 있음퀵소트void qsort(const vector&lt;int&gt;&amp; source, int left, int right){    // 포인터 셋팅    int sp = left, ep = right;    // 피봇 셋팅    int pivot = source[(left + right) / 2];    do {        // 피봇보다 작은 값        while (source[sp] &lt; pivot) sp++;        // 피봇보다 큰 값        while (source[ep] &gt; pivot) ep--;        // Swap        if (sp&lt;= ep) {            swap(source[sp], source[ep]);            sp++;            ep--;        }\t} while (sp&lt;= ep);    // 왼쪽 퀵소트    if (left &lt; ep)        quickSort(source, left, ep);            // 오른쪽 퀵소트    if (sp &lt; right)        quickSort(source, sp, right);}        합병정렬 (Merge Sort)  O(N):  Stability: Yes  Space Complexity: O(N) additional space required",
+        "url": "//2018/03/04/%EC%84%A0%ED%83%9D%EC%A0%95%EB%A0%AC.html"
+      }
+      ,
+    
       "2018-03-04-eb-b9-84-eb-8c-80-ec-b9-ad-ed-83-80-ec-9d-bc-eb-a7-81-html": {
         "title": "비대칭 타일링",
         "tags": "알고리즘, DP, 확률과 경우의 수, 비대칭, 타일링",
