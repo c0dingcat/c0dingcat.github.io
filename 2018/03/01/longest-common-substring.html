@@ -170,18 +170,25 @@
 </ul>
 
 <h2 id="코드">코드</h2>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    for(int i = 0 ; i &lt; A.size(); i++) {
-        for(int j = 0; j &lt; B.size(); j++) {
-            if(A[i] == B[j]) {
-                table[i][j] = table[i-1][j-1] + 1;
-                result = max(result, table[i][j]);
-            }
-            else {
-                table[i][j] = 0 ;
-            }
-        }
-    }
-</code></pre></div></div>
+<ul>
+  <li>DP 풀이
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  for(int i = 0 ; i &lt; A.size(); i++) {
+      for(int j = 0; j &lt; B.size(); j++) {
+          if(A[i] == B[j]) {
+              table[i][j] = table[i-1][j-1] + 1;
+              result = max(result, table[i][j]);
+          }
+          else {
+              table[i][j] = 0 ;
+          }
+      }
+  }
+</code></pre></div>    </div>
+  </li>
+  <li>Suffix Array로 문제해결
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div>    </div>
+  </li>
+</ul>
 </section>
   
 <footer>
