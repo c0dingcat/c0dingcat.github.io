@@ -2,8 +2,8 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>정렬된 LinkedList를 BST로 변환하기 | c0dingcat</title>
-	<meta name="description" content="  정렬된 linkedlist를 binary search 방식으로 BST로 변환한다  0~n개의 노드가 있을떄 중간 노드(n/2)의 값을 구하고 왼쪽 노드는 왼쪽 중간 노드를 구해서 (0~n/2의 중간값 n/4) 값을 설정한다  오른쪽 노드의 값은 n/2에서 n까지의 중간값을 구해...">
+	<title> c0dingcat</title>
+	<meta name="description" content="daily log">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/2018/02/28/linkedlist-to-bst.html">
+	<link rel="canonical" href="/blog/page11/">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="c0dingcat" href="/feed.xml" />
@@ -151,63 +151,46 @@
 </header>
 
     <div class="content">
-      <article >
-  <header style="background-image: url('/')">
-    <h1 class="title">정렬된 LinkedList를 BST로 변환하기</h1>
-    
-    <p class="meta">
-      February 28, 2018
-      
-    </p>
-  </header>
-  <section class="post-content"><ul>
-  <li>정렬된 linkedlist를 binary search 방식으로 BST로 변환한다</li>
-  <li>0~n개의 노드가 있을떄 중간 노드(n/2)의 값을 구하고 왼쪽 노드는 왼쪽 중간 노드를 구해서 (0~n/2의 중간값 n/4) 값을 설정한다</li>
-  <li>오른쪽 노드의 값은 n/2에서 n까지의 중간값을 구해서 설정하는 방식으로 재귀적으로 호출해서 BST를 완성한다.</li>
-</ul>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tnode* llist_to_bst(lnode* head, lnode* tail) {
-    
-    if(head == nullptr)
-        return nullptr;
-    
-    lnode* fast_ptr = head;
-    lnode* slow_ptr = slow;
-    while(fast_ptr != nullptr &amp;&amp; fast_ptr != tail) {
-        fast_ptr = fast_ptr-&gt;next;
-        slow_ptr = slow_ptr-&gt;next;
-        if(fast_ptr!= nullptr &amp;&amp; fast_ptr != tail)
-            fast_ptr = fast_ptr-&gt;next;
-    }
-    
-    tnode * ptr = new tnode(slow_ptr-&gt;value);
-    ptr-&gt;left = llist_to_bst(head, slow_ptr);
-    ptr-&gt;right = llist_to_bst(slow_ptr-&gt;next, tail);
-    return ptr;
-}
-</code></pre></div></div>
-</section>
+      <div class="home">
   
-<footer>
-  <div class="tags">
+
+  <div class="posts">
     
-    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
-    
-    <a class="tag" href="/tags#BST">#BST</a>
-    
-    <a class="tag" href="/tags#Linked List">#Linked List</a>
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/02/17/median-value-of-bst.html">
+            median valud of BST
+          </a>
+        </h1>
+        <p class="meta">
+          February 17, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <h2 id="문제">문제</h2>
+
+
+        <a class="button" href="/2018/02/17/median-value-of-bst.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
     
   </div>
-</footer>
 
-
-</article>
-
-<!-- Disqus -->
-
-
-<!-- Post navigation -->
-
+  
+  <div class="pagination">
+    
+    <a href="/blog/page10" class="button" >
+      <i class="fa fa-chevron-left"></i>
+      Prev
+    </a>
+    
+    
+  </div>
+  
+</div>
 
     </div>
     

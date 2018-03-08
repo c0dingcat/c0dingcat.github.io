@@ -2,8 +2,8 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>펜윅트리 - 빠르고 간단한 구간 합 | c0dingcat</title>
-	<meta name="description" content="펜윅트리 (Fenwick)  구간합을 구하는데 특화된 간략화된 segement tree  segment tree가 미리 계사해 저장하는 정보의 상당수가 필요 없게됨  http://www.crocus.co.kr/666 설명 참조">
+	<title>2개의 정렬된 Array에서 교차점 찾기 | c0dingcat</title>
+	<meta name="description" content="2개의 정렬된 Array에서 교차점 찾기  그냥 무식하게 찾으면 O(m*n)  아래 방식으로 하면 최대 O(m+n)">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/2018/03/04/%ED%8E%9C%EC%9C%85%ED%8A%B8%EB%A6%AC.html">
+	<link rel="canonical" href="/2018/03/05/find-intersection.html">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="c0dingcat" href="/feed.xml" />
@@ -153,63 +153,36 @@
     <div class="content">
       <article >
   <header style="background-image: url('/')">
-    <h1 class="title">펜윅트리 - 빠르고 간단한 구간 합</h1>
+    <h1 class="title">2개의 정렬된 Array에서 교차점 찾기</h1>
     
     <p class="meta">
-      March 4, 2018
+      March 5, 2018
       
     </p>
   </header>
-  <section class="post-content"><h2 id="펜윅트리-fenwick">펜윅트리 (Fenwick)</h2>
-<p><img src="/assets/img/fenwick.png" alt="풴윅트리" /></p>
+  <section class="post-content"><h2 id="2개의-정렬된-array에서-교차점-찾기">2개의 정렬된 Array에서 교차점 찾기</h2>
 <ul>
-  <li>구간합을 구하는데 특화된 간략화된 segement tree</li>
-  <li>segment tree가 미리 계사해 저장하는 정보의 상당수가 필요 없게됨</li>
-  <li>http://www.crocus.co.kr/666 설명 참조</li>
+  <li>그냥 무식하게 찾으면 O(m*n)</li>
+  <li>아래 방식으로 하면 최대 O(m+n)</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>using namespace std;
-int sum(vector&lt;int&gt; &amp;tree, int i) {
-    int ans = 0;
-    while (i &gt; 0) {
-        ans += tree[i];
-        i -= (i &amp; -i);
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector&lt;int&gt; findIntersection(vector&lt;int&gt; A, vector&lt;int&gt; B) {
+  vector&lt;int&gt; intersection;
+  int n1 = A.size();
+  int n2 = B.size();
+  int i = 0, j = 0;
+  while (i &lt; n1 &amp;&amp; j &lt; n2) {
+    if (A[i] &gt; B[j]) {
+      j++;
+    } else if (B[j] &gt; A[i]) {
+      i++;
+    } else {
+      intersection.push_back(A[i]);
+      i++;
+      j++;
     }
-    return ans;
-}
-void update(vector&lt;int&gt; &amp;tree, int i, int diff) {
-    while (i &lt; tree.size()) {
-        tree[i] += diff;
-        i += (i &amp; -i);
-    }
-}
-int main() {
-    int n, m, k;
-    scanf("%d %d %d",&amp;n,&amp;m,&amp;k);
-    vector&lt;int&gt; a(n+1);
-    vector&lt;int&gt; tree(n+1);
-    for (int i=1; i&lt;=n; i++) {
-        scanf("%lld",&amp;a[i]);
-        update(tree, i, a[i]);
-    }
-    m += k;
-    while (m--) {
-        int t1;
-        scanf("%d",&amp;t1);
-        if (t1 == 1) {
-            int t2;
-            int t3;
-            scanf("%d %d",&amp;t2,&amp;t3);
-            int diff = t3-a[t2];
-            a[t2] = t3;
-            update(tree, t2, diff);
-        } else {
-            int t2,t3;
-            scanf("%d %d",&amp;t2,&amp;t3);
-            printf("%d\n",sum(tree, t3) - sum(tree, t2-1));
-        }
-    }
-    return 0;
+  }
+  return intersection;
 }
 </code></pre></div></div>
 </section>
@@ -217,13 +190,9 @@ int main() {
 <footer>
   <div class="tags">
     
-    <a class="tag" href="/tags#자료구조">#자료구조</a>
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
     
-    <a class="tag" href="/tags#펜윅트리">#펜윅트리</a>
-    
-    <a class="tag" href="/tags#Segment Tree">#Segment Tree</a>
-    
-    <a class="tag" href="/tags#구간합">#구간합</a>
+    <a class="tag" href="/tags#Array">#Array</a>
     
   </div>
 </footer>

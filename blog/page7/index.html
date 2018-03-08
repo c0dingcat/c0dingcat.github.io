@@ -97,6 +97,8 @@
 			
 			
 			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -153,6 +155,56 @@
   
 
   <div class="posts">
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/02/28/longest-panlindrome-string.html">
+            정렬된 LinkedList를 BST로 변환하기
+          </a>
+        </h1>
+        <p class="meta">
+          February 28, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <ul>
+  <li>Given a string, find the longest substring which is palindrome. For example, if the given string is “forgeeksskeegfor”, the output should be “geeksskeeg”.</li>
+  <li>워낙 유명한 문제라.. 문제에 대한 설명은 생략한다</li>
+  <li>brute-force, dynamic programming 아니면 매 인덱스마다 좌우로 찾는 이 방법이 있다.</li>
+  <li></li>
+</ul>
+
+
+        <a class="button" href="/2018/02/28/longest-panlindrome-string.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/02/28/longest-increasing-sequence.html">
+            최장 증가 수열 - Longest increasing subsequence
+          </a>
+        </h1>
+        <p class="meta">
+          February 28, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <ul>
+  <li>최장 증가 수열 문제 - DP로 풀거나 lower_bound 사용해서 풀 수 있음</li>
+  <li>DP의 경우는 O(N^2), lower_bound의 경우는 O(NlogN)</li>
+</ul>
+
+
+        <a class="button" href="/2018/02/28/longest-increasing-sequence.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
     
     <div class="post-teaser">
       <header>
@@ -224,63 +276,6 @@ tags: [그래프,알고리즘, BST, Linked List]
 
 
         <a class="button" href="/2018/02/28/convert-bst-to-double-linked-list.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/02/26/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
-            크루스칼 알고리즘
-          </a>
-        </h1>
-        <p class="meta">
-          February 26, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        <ul>
-  <li>크루스칼 알고리즘</li>
-  <li>edge의 cost별로 정렬한다</li>
-  <li>하나씩 빼서 cycle을 만드는지 확인한다</li>
-  <li>사이클을 만들지 않는 edge들만 뽑아서 리턴한다</li>
-  <li>상당히 간단하다</li>
-  <li>사이클을 만드는데 사용하는 disjoined_set 알고리즘은 간단하지만 효과적이다</li>
-  <li>시간 복잡도는 모든 edge에 대해 정렬하기 때문에 O(ElogE)</li>
-  <li>disjoined set의 경우는 시간복잡도가 ELogE보다 작기 때문에, 정렬하는데 드는 시간이 driving force</li>
-</ul>
-
-
-        <a class="button" href="/2018/02/26/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/02/26/%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%B2%B4%ED%81%AC.html">
-            사이클 체크
-          </a>
-        </h1>
-        <p class="meta">
-          February 26, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        <ul>
-  <li>사이클 확인 알고지름</li>
-  <li>DFS 방식을 활용해서 사이클이 있는지 확인한다</li>
-  <li>현재 순환중이면 상태를 VISTING으로 변경해서 순환이 끝나지 않았음에도 불구하고 다시 체크하러 오는지 확인하다</li>
-  <li>현재 노드들을 순환중인데도 불구하고 다시 확인하러 오면 사이클이 있음</li>
-  <li>시간 복잡도는 O(E+V)</li>
-</ul>
-
-
-        <a class="button" href="/2018/02/26/%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%B2%B4%ED%81%AC.html">
           Continue reading
         </a>
       </div>

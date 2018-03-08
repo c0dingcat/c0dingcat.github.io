@@ -97,6 +97,8 @@
 			
 			
 			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -165,6 +167,28 @@
 <script>
   window.store = {
     
+      "2018-03-05-find-intersection-html": {
+        "title": "2개의 정렬된 Array에서 교차점 찾기",
+        "tags": "알고리즘, Array",
+        "date": "March 5, 2018",
+        "author": "",
+        "category": "",
+        "content": "2개의 정렬된 Array에서 교차점 찾기  그냥 무식하게 찾으면 O(m*n)  아래 방식으로 하면 최대 O(m+n)vector&lt;int&gt; findIntersection(vector&lt;int&gt; A, vector&lt;int&gt; B) {  vector&lt;int&gt; intersection;  int n1 = A.size();  int n2 = B.size();  int i = 0, j = 0;  while (i &lt; n1 &amp;&amp; j &lt; n2) {    if (A[i] &gt; B[j]) {      j++;    } else if (B[j] &gt; A[i]) {      i++;    } else {      intersection.push_back(A[i]);      i++;      j++;    }  }  return intersection;}",
+        "url": "//2018/03/05/find-intersection.html"
+      }
+      ,
+    
+      "2018-03-05-quickselect-html": {
+        "title": "QuickSelect",
+        "tags": "알고리즘, QuickSelect",
+        "date": "March 5, 2018",
+        "author": "",
+        "category": "",
+        "content": "QuickSelect  Two sorted array of size size n each. Find the Kth largest element in these two array  http://leetcode.com/2011/01/find-k-th-smallest-element-in-union-of.html  http://stackoverflow.com/questions/5000512/find-the-top-k-sums-of-two-sorted-arrays  The best solution, but non-trivial, O(lg m + lg n):struct input {    vector&lt;int&gt; source;    int spos;    int epos;    int getSize() {        return epos-spos+1;    }    static int pivotPos(const input&amp; s1, const input&amp; s2, int k) {        return (int)((double)s1.getSize() / (s1.getSize()+s2.getSize()) * (k-1));    }    void getLeftRight(int pivot_pos, int&amp; left, int&amp; right){        if(pivot_pos == 0)            left = INT_MIN;        else            left = source[pivot_pos-1];        if(pivot_pos == epos)            right = INT_MIN;        else            right = source[pivot_pos];    }}int findKthSmallest(input&amp; s1, input&amp; s2, int k){  int s1_pivot_pos = input.pivotPos(s1,s2,k);  int s2_pivot_pos = (k-1) - s1_pivot_pos;   int s1_left, s1_right;  s1.getLeftRight(s1_left, s1_right);  int s2_left, s2_right;  s2.getLeftRight(s2_left, s2_right);   if (s2_left &lt; s1_right &amp;&amp; s1_right &lt; s2_right)    return s1_right;  else if (s1_left &lt; s2_right &amp;&amp; s2_right &lt; s1_right)    return s2_right;   if (s1_right &lt; s2_right){    return findKthSmallest(        s1.left += s1_pivot_pos + 1;        s1.right -= s1_pivot_pos -1;        s2.right = s2_pivot_pos;        s1,         s2,         k-s1_pivot_pos-1);  }  else{      s1.right = s1_pivot_pos;      s2.left += s2_pivot_pos+1;      s2.right -= s2_pivot_pos-1;    return findKthSmallest(        s1,         s2,         k-s2_pivot_pos-1);  }}",
+        "url": "//2018/03/05/QuickSelect.html"
+      }
+      ,
+    
       "2018-03-04-ed-8e-9c-ec-9c-85-ed-8a-b8-eb-a6-ac-html": {
         "title": "펜윅트리 - 빠르고 간단한 구간 합",
         "tags": "자료구조, 펜윅트리, Segment Tree, 구간합",
@@ -215,7 +239,7 @@
         "date": "March 4, 2018",
         "author": "",
         "category": "",
-        "content": "선택정렬 (Selection Sort)  앞에서부터 가장 작은 수를 찾아 전체를 순환해서 위치를 교환한다  비교횟수: N + N-1 + N-2 … N*(N-1)/2  데이터 교환 횟수: N (inplace교환이기 떄문에 요소가 많은 경우에 좋다)  추가 공간 필요 없음  안정성 없음  Worst case: 역순배열삽입정렬 (Insertion Sort)  이미 정렬된 배열에서 효과적임  Worst case: 역순배열 O(N2)  정렬된 배열에 대해서는 O(N)  안정성 있음퀵소트void qsort(const vector&lt;int&gt;&amp; source, int left, int right){    // 포인터 셋팅    int sp = left, ep = right;    // 피봇 셋팅    int pivot = source[(left + right) / 2];    do {        // 피봇보다 작은 값        while (source[sp] &lt; pivot) sp++;        // 피봇보다 큰 값        while (source[ep] &gt; pivot) ep--;        // Swap        if (sp&lt;= ep) {            swap(source[sp], source[ep]);            sp++;            ep--;        }\t} while (sp&lt;= ep);    // 왼쪽 퀵소트    if (left &lt; ep)        quickSort(source, left, ep);            // 오른쪽 퀵소트    if (sp &lt; right)        quickSort(source, sp, right);}        합병정렬 (Merge Sort)  O(N):  Stability: Yes  Space Complexity: O(N) additional space required",
+        "content": "선택정렬 (Selection Sort)  앞에서부터 가장 작은 수를 찾아 전체를 순환해서 위치를 교환한다  비교횟수: N + N-1 + N-2 … N*(N-1)/2  데이터 교환 횟수: N (inplace교환이기 떄문에 요소가 많은 경우에 좋다)  추가 공간 필요 없음  안정성 없음  Worst case: 역순배열삽입정렬 (Insertion Sort)  이미 정렬된 배열에서 효과적임  Worst case: 역순배열 O(N2)  정렬된 배열에 대해서는 O(N)  안정성 있음퀵소트void pivot(vector&lt;int&gt;&amp; input, int&amp; lp, int&amp; rp) {    int pvt = input[(lp + rp)/2];    do {        while(input[lp] &lt; pvt) lp++;        while(input[rp] &gt; pvt) rp--;        if(lp &lt; rp){            swap(input[lp], input[rp]);            lp++;            rp--;        }    }while(lp &lt;= rp);}void qsort(vector&lt;int&gt;&amp; input, int left, int right) {    int lp = left, rp = right;        pivot(input,lp,rp);        if(rp &gt; left)        qsort(input, left, rp);        if(lp &lt; right)        qsort(input, lp, right);}     합병정렬 (Merge Sort)  O(N):  Stability: Yes  Space Complexity: O(N) additional space required",
         "url": "//2018/03/04/%EC%84%A0%ED%83%9D%EC%A0%95%EB%A0%AC.html"
       }
       ,
@@ -226,7 +250,7 @@
         "date": "March 4, 2018",
         "author": "",
         "category": "",
-        "content": "문제  타일링 문제 + 대칭 타일링을 제외하 경우의 수 탐색  대칭 타일링 방법을 전체 경우에서 제외 혹은 비대칭 타일링 방법을 직접 카운트  책 참조코드int asymmetric(int width) {    if(width%2 ==1)        return (tiling(width) - tiling(width/2) + MOD) %MOD;    int ret = }",
+        "content": "문제  타일링 문제 + 대칭 타일링을 제외하는 경우의 수 탐색  대칭 타일링 방법을 전체 경우에서 제외 혹은 비대칭 타일링 방법을 직접 카운트  n이 짝수인 경우와 홀수인 경우 대칭으로 타일링이 될 수 있는 경우의 수를 제거  책 참조코드int asymmetric(int width) {    if(width%2 ==1)        return (tiling(width) - tiling(width/2) + MOD) %MOD;    int ret = tiling(width);    ret = (ret - tiling(width/2) + MOD) % MOD;    ret = (ret - tiling(width/2-1) + MOD) % MOD;    return ret;}",
         "url": "//2018/03/04/%EB%B9%84%EB%8C%80%EC%B9%AD-%ED%83%80%EC%9D%BC%EB%A7%81.html"
       }
       ,
@@ -292,7 +316,7 @@
         "date": "March 4, 2018",
         "author": "",
         "category": "",
-        "content": "문제  배낭에 절박도를 최대화할 수 있는 물건들의 목록들을 계산하는 방법 코드int asymmetric(int width) {    if(width%2 ==1)        return (tiling(width) - tiling(width/2) + MOD) %MOD;    int ret = }",
+        "content": "문제  배낭에 절박도를 최대화할 수 있는 물건들의 목록들을 계산하는 방법   부분문제: pack(items) = 지금까지 고른 물건들의 목록이 items에 주어질 때, 남은 용량을 채워 얻을 수 있는 최대의 절박도 합  pack(capacity, item) = 캐리어에 용량이 capacity만큼 남았을 때 item 이후의 물건들을 싸서 얻을 수 있는 최대 절박도  특정 물건을 가져가는 경우 pack(capacity - volume[item], item+1) + need[item]  해당 물건을 가져가지 않는 경우 pack(capacity, item)  절박도 = max(pack(capacity - volume[item], item+1) + need[item], pack(capacity, item))  시간 복잡도는 capacity가 0~w 범위이고, 아이템들이 0~n개가 있다고 하면 O(nw)  선택된 물건들의 리스트는 pack(capacity, item) == pack(capacity, item+1) 인지의 여부로 판단할 수 있다  선택된 물건들의 리스트는 pack(capacity, item) == pack(capacity, item+1) 인지의 여부로 판단할 수 있다코드struct knapsack {    vector&lt;item&gt; items;    map&lt;int,vector&lt;int&gt;&gt; cache;    int pack(int capacity, int item) {        if(item == items.size()) return 0;        int&amp; ret = cache[capacity][item];        if(ret != -1) return ret;        ret = pack(capacity, item+1);        if(capacity &gt;= items[item].volume)            ret = max(ret, pack(capacity - items[item].volume, item+1)) + items[item].needs;        return ret;    }    void reconstruct(int capacity, int item, vector&lt;int&gt;&amp; selected) {        if(item == items.size()) return ;        if(pack(capacity, item) == pack(capacity, item+1)){            reconstuct(capacity, item+1, selected);        }        else{            items.push_back(item);            reconstruct(capacity - items[item].volume, item+1, selected);        }    }}  }}",
         "url": "//2018/03/04/knapsack-problem.html"
       }
       ,
@@ -364,7 +388,7 @@
       ,
     
       "2018-03-03-shortest-palindrome-html": {
-        "title": "KMP 알고리즘",
+        "title": "Shortest Palindrome",
         "tags": "알고리즘, 문자열, KMP, Panlindrome",
         "date": "March 3, 2018",
         "author": "",
@@ -497,11 +521,11 @@
     
       "2018-02-28-linkedlist-to-bst-html": {
         "title": "정렬된 LinkedList를 BST로 변환하기",
-        "tags": "그래프, 알고리즘, BST, Linked List",
+        "tags": "알고리즘, BST, Linked List",
         "date": "February 28, 2018",
         "author": "",
         "category": "",
-        "content": "  정렬된 linkedlist를 binary search 방식으로 BST로 변환한다  0~n개의 노드가 있을떄 중간 노드(n/2)의 값을 구하고 왼쪽 노드는 왼쪽 중간 노드를 구해서 (0~n/2의 중간값 n/4) 값을 설정한다  오른쪽 노드의 값은 n/2에서 n까지의 중간값을 구해서 설정하는 방식으로 재귀적으로 호출해서 BST를 완성한다.’’’tnode* llist_to_bst(lnode* head, lnode* tail) {if(head == nullptr)    return nullptr;lnode* fast_ptr = head;lnode* slow_ptr = slow;while(fast_ptr != nullptr &amp;&amp; fast_ptr != tail) {    fast_ptr = fast_ptr-&gt;next;    slow_ptr = slow_ptr-&gt;next;    if(fast_ptr!= nullptr &amp;&amp; fast_ptr != tail)        fast_ptr = fast_ptr-&gt;next;}tnode * ptr = new tnode(slow_ptr-&gt;value);ptr-&gt;left = llist_to_bst(head, slow_ptr);ptr-&gt;right = llist_to_bst(slow_ptr-&gt;next, tail);return ptr; } '''",
+        "content": "  정렬된 linkedlist를 binary search 방식으로 BST로 변환한다  0~n개의 노드가 있을떄 중간 노드(n/2)의 값을 구하고 왼쪽 노드는 왼쪽 중간 노드를 구해서 (0~n/2의 중간값 n/4) 값을 설정한다  오른쪽 노드의 값은 n/2에서 n까지의 중간값을 구해서 설정하는 방식으로 재귀적으로 호출해서 BST를 완성한다.tnode* llist_to_bst(lnode* head, lnode* tail) {        if(head == nullptr)        return nullptr;        lnode* fast_ptr = head;    lnode* slow_ptr = slow;    while(fast_ptr != nullptr &amp;&amp; fast_ptr != tail) {        fast_ptr = fast_ptr-&gt;next;        slow_ptr = slow_ptr-&gt;next;        if(fast_ptr!= nullptr &amp;&amp; fast_ptr != tail)            fast_ptr = fast_ptr-&gt;next;    }        tnode * ptr = new tnode(slow_ptr-&gt;value);    ptr-&gt;left = llist_to_bst(head, slow_ptr);    ptr-&gt;right = llist_to_bst(slow_ptr-&gt;next, tail);    return ptr;}",
         "url": "//2018/02/28/linkedlist-to-bst.html"
       }
       ,
@@ -512,7 +536,7 @@
         "date": "February 28, 2018",
         "author": "",
         "category": "",
-        "content": "문제  You are given a very large binary tree, return the root node of the largest BST in the given tree분석  왼쪽, 오른쪽 순환하면서 BST 조건에 맞는 노드를 찾기 시작한다  현재 노드 값이 알려진 Max 값보다 크게 되면 BST가 아니다  현재 노드의 값이 알려진 Min 값보다 작다면 BST가 아니다  왼쪽 노드가 BST이고, 오른쪽 노드가 BST라면 두 개의 값을 합치고 +1 해서 현재까지 알려진 최대 BST보다 큰 트리인지 비교한다  만약 크다면 현재 노드 값을 헤드값으로 기억한다코드int find_biggest_bst(    node* ptr,     int&amp; min, int &amp;max,     int&amp; total_nodes,     node*&amp; head) {      if(!ptr)        return 0;        int left = find_biggest_bst(ptr, min, max, total_nodes, head);    int current_min = (left ==0)?ptr-&gt;value: min;    if((left==-1) || (left != 0 &amp;&amp; ptr-&gt;value &gt; max)) {        return -1;    }        int right = find_biggest_bst(ptr, min, max, total_nodes, head);    int current_max = (right == 0)? ptr-&gt;value:max;    if(right == -1 || (right != 0 &amp;&amp; ptr-&gt;value &lt; min)) {        return -1;    }        int total = left + right + 1;    current_min = min;    current_max = max;    if(total_nodes &lt; total) {        total_ndoes = total;    }    return total;}",
+        "content": "문제  You are given a very large binary tree, return the root node of the largest BST in the given tree분석  왼쪽, 오른쪽 순환하면서 BST 조건에 맞는 노드를 찾기 시작한다  현재 노드 값이 알려진 Max 값보다 크게 되면 BST가 아니다  현재 노드의 값이 알려진 Min 값보다 작다면 BST가 아니다  왼쪽 노드가 BST이고, 오른쪽 노드가 BST라면 두 개의 값을 합치고 +1 해서 현재까지 알려진 최대 BST보다 큰 트리인지 비교한다  만약 크다면 현재 노드 값을 헤드값으로 기억한다코드int find_biggest_bst(    node* ptr,     int&amp; min, int &amp;max,     int&amp; total_nodes,     node*&amp; head) {      if(!ptr)        return 0;        int left = find_biggest_bst(ptr, min, max, total_nodes, head);    int current_min = (left == 0) ? ptr-&gt;value: min;    if((left==-1) || (left != 0 &amp;&amp; ptr-&gt;value &gt; max)) {        return -1;    }        int right = find_biggest_bst(ptr, min, max, total_nodes, head);    int current_max = (right == 0) ? ptr-&gt;value:max;    if(right == -1 || (right != 0 &amp;&amp; ptr-&gt;value &lt; min)) {        return -1;    }        int total = left + right + 1;    current_min = min;    current_max = max;    total_nodes = max(total_nodes, total);    return total;}",
         "url": "//2018/02/28/find-biggest-bst.html"
       }
       ,

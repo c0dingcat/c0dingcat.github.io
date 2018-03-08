@@ -2,8 +2,8 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>펜윅트리 - 빠르고 간단한 구간 합 | c0dingcat</title>
-	<meta name="description" content="펜윅트리 (Fenwick)  구간합을 구하는데 특화된 간략화된 segement tree  segment tree가 미리 계사해 저장하는 정보의 상당수가 필요 없게됨  http://www.crocus.co.kr/666 설명 참조">
+	<title>QuickSelect | c0dingcat</title>
+	<meta name="description" content="QuickSelect  Two sorted array of size size n each. Find the Kth largest element in these two array  http://leetcode.com/2011/01/find-k-th-smallest-element-in...">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/2018/03/04/%ED%8E%9C%EC%9C%85%ED%8A%B8%EB%A6%AC.html">
+	<link rel="canonical" href="/2018/03/05/QuickSelect.html">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="c0dingcat" href="/feed.xml" />
@@ -153,63 +153,77 @@
     <div class="content">
       <article >
   <header style="background-image: url('/')">
-    <h1 class="title">펜윅트리 - 빠르고 간단한 구간 합</h1>
+    <h1 class="title">QuickSelect</h1>
     
     <p class="meta">
-      March 4, 2018
+      March 5, 2018
       
     </p>
   </header>
-  <section class="post-content"><h2 id="펜윅트리-fenwick">펜윅트리 (Fenwick)</h2>
-<p><img src="/assets/img/fenwick.png" alt="풴윅트리" /></p>
+  <section class="post-content"><h2 id="quickselect">QuickSelect</h2>
 <ul>
-  <li>구간합을 구하는데 특화된 간략화된 segement tree</li>
-  <li>segment tree가 미리 계사해 저장하는 정보의 상당수가 필요 없게됨</li>
-  <li>http://www.crocus.co.kr/666 설명 참조</li>
+  <li>Two sorted array of size size n each. Find the Kth largest element in these two array</li>
+  <li>http://leetcode.com/2011/01/find-k-th-smallest-element-in-union-of.html</li>
+  <li>http://stackoverflow.com/questions/5000512/find-the-top-k-sums-of-two-sorted-arrays</li>
+  <li>The best solution, but non-trivial, O(lg m + lg n):</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>using namespace std;
-int sum(vector&lt;int&gt; &amp;tree, int i) {
-    int ans = 0;
-    while (i &gt; 0) {
-        ans += tree[i];
-        i -= (i &amp; -i);
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct input {
+    vector&lt;int&gt; source;
+    int spos;
+    int epos;
+    int getSize() {
+        return epos-spos+1;
     }
-    return ans;
+    static int pivotPos(const input&amp; s1, const input&amp; s2, int k) {
+        return (int)((double)s1.getSize() / (s1.getSize()+s2.getSize()) * (k-1));
+    }
+    void getLeftRight(int pivot_pos, int&amp; left, int&amp; right){
+        if(pivot_pos == 0)
+            left = INT_MIN;
+        else
+            left = source[pivot_pos-1];
+        if(pivot_pos == epos)
+            right = INT_MIN;
+        else
+            right = source[pivot_pos];
+    }
 }
-void update(vector&lt;int&gt; &amp;tree, int i, int diff) {
-    while (i &lt; tree.size()) {
-        tree[i] += diff;
-        i += (i &amp; -i);
-    }
-}
-int main() {
-    int n, m, k;
-    scanf("%d %d %d",&amp;n,&amp;m,&amp;k);
-    vector&lt;int&gt; a(n+1);
-    vector&lt;int&gt; tree(n+1);
-    for (int i=1; i&lt;=n; i++) {
-        scanf("%lld",&amp;a[i]);
-        update(tree, i, a[i]);
-    }
-    m += k;
-    while (m--) {
-        int t1;
-        scanf("%d",&amp;t1);
-        if (t1 == 1) {
-            int t2;
-            int t3;
-            scanf("%d %d",&amp;t2,&amp;t3);
-            int diff = t3-a[t2];
-            a[t2] = t3;
-            update(tree, t2, diff);
-        } else {
-            int t2,t3;
-            scanf("%d %d",&amp;t2,&amp;t3);
-            printf("%d\n",sum(tree, t3) - sum(tree, t2-1));
-        }
-    }
-    return 0;
+
+int findKthSmallest(input&amp; s1, input&amp; s2, int k){
+
+  int s1_pivot_pos = input.pivotPos(s1,s2,k);
+  int s2_pivot_pos = (k-1) - s1_pivot_pos;
+ 
+  int s1_left, s1_right;
+  s1.getLeftRight(s1_left, s1_right);
+
+  int s2_left, s2_right;
+  s2.getLeftRight(s2_left, s2_right);
+ 
+  if (s2_left &lt; s1_right &amp;&amp; s1_right &lt; s2_right)
+    return s1_right;
+  else if (s1_left &lt; s2_right &amp;&amp; s2_right &lt; s1_right)
+    return s2_right;
+ 
+  if (s1_right &lt; s2_right){
+    return findKthSmallest(
+        s1.left += s1_pivot_pos + 1;
+        s1.right -= s1_pivot_pos -1;
+        s2.right = s2_pivot_pos;
+        s1, 
+        s2, 
+        k-s1_pivot_pos-1);
+  }
+  else{
+      s1.right = s1_pivot_pos;
+      s2.left += s2_pivot_pos+1;
+      s2.right -= s2_pivot_pos-1;
+    return findKthSmallest(
+        s1, 
+        s2, 
+        k-s2_pivot_pos-1);
+  }
 }
 </code></pre></div></div>
 </section>
@@ -217,13 +231,9 @@ int main() {
 <footer>
   <div class="tags">
     
-    <a class="tag" href="/tags#자료구조">#자료구조</a>
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
     
-    <a class="tag" href="/tags#펜윅트리">#펜윅트리</a>
-    
-    <a class="tag" href="/tags#Segment Tree">#Segment Tree</a>
-    
-    <a class="tag" href="/tags#구간합">#구간합</a>
+    <a class="tag" href="/tags#QuickSelect">#QuickSelect</a>
     
   </div>
 </footer>

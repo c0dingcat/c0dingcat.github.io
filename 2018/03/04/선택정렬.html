@@ -97,6 +97,8 @@
 			
 			
 			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -180,32 +182,30 @@
 
 <h2 id="퀵소트">퀵소트</h2>
 <p><img src="/assets/img/quicksort_animation.gif" alt="퀵소트" /></p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void qsort(const vector&lt;int&gt;&amp; source, int left, int right){
-    // 포인터 셋팅
-    int sp = left, ep = right;
-    // 피봇 셋팅
-    int pivot = source[(left + right) / 2];
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void pivot(vector&lt;int&gt;&amp; input, int&amp; lp, int&amp; rp) {
+    int pvt = input[(lp + rp)/2];
     do {
-        // 피봇보다 작은 값
-        while (source[sp] &lt; pivot) sp++;
-        // 피봇보다 큰 값
-        while (source[ep] &gt; pivot) ep--;
-        // Swap
-        if (sp&lt;= ep) {
-            swap(source[sp], source[ep]);
-            sp++;
-            ep--;
+        while(input[lp] &lt; pvt) lp++;
+        while(input[rp] &gt; pvt) rp--;
+        if(lp &lt; rp){
+            swap(input[lp], input[rp]);
+            lp++;
+            rp--;
         }
-	} while (sp&lt;= ep);
+    }while(lp &lt;= rp);
+}
 
-    // 왼쪽 퀵소트
-    if (left &lt; ep)
-        quickSort(source, left, ep);
-        
-    // 오른쪽 퀵소트
-    if (sp &lt; right)
-        quickSort(source, sp, right);
-}        
+void qsort(vector&lt;int&gt;&amp; input, int left, int right) {
+    int lp = left, rp = right;
+    
+    pivot(input,lp,rp);
+    
+    if(rp &gt; left)
+        qsort(input, left, rp);
+    
+    if(lp &lt; right)
+        qsort(input, lp, right);
+}     
 </code></pre></div></div>
 <h2 id="합병정렬-merge-sort">합병정렬 (Merge Sort)</h2>
 <p><img src="/assets/img/merge-sort-animation.gif" alt="합병정렬" /></p>

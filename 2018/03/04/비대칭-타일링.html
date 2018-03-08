@@ -3,7 +3,7 @@
   <head>
 	<meta charset="utf-8">
 	<title>비대칭 타일링 | c0dingcat</title>
-	<meta name="description" content="문제  타일링 문제 + 대칭 타일링을 제외하 경우의 수 탐색  대칭 타일링 방법을 전체 경우에서 제외 혹은 비대칭 타일링 방법을 직접 카운트  책 참조">
+	<meta name="description" content="문제  타일링 문제 + 대칭 타일링을 제외하는 경우의 수 탐색  대칭 타일링 방법을 전체 경우에서 제외 혹은 비대칭 타일링 방법을 직접 카운트  n이 짝수인 경우와 홀수인 경우 대칭으로 타일링이 될 수 있는 경우의 수를 제거  책 참조">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -97,6 +97,8 @@
 			
 			
 			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -159,9 +161,11 @@
     </p>
   </header>
   <section class="post-content"><h2 id="문제">문제</h2>
+<p><img src="/assets/img/asymtiling.jpg" alt="비대칭타일링" /></p>
 <ul>
-  <li>타일링 문제 + 대칭 타일링을 제외하 경우의 수 탐색</li>
+  <li>타일링 문제 + 대칭 타일링을 제외하는 경우의 수 탐색</li>
   <li>대칭 타일링 방법을 전체 경우에서 제외 혹은 비대칭 타일링 방법을 직접 카운트</li>
+  <li>n이 짝수인 경우와 홀수인 경우 대칭으로 타일링이 될 수 있는 경우의 수를 제거</li>
   <li>책 참조</li>
 </ul>
 
@@ -169,7 +173,10 @@
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int asymmetric(int width) {
     if(width%2 ==1)
         return (tiling(width) - tiling(width/2) + MOD) %MOD;
-    int ret = 
+    int ret = tiling(width);
+    ret = (ret - tiling(width/2) + MOD) % MOD;
+    ret = (ret - tiling(width/2-1) + MOD) % MOD;
+    return ret;
 }
 </code></pre></div></div>
 </section>

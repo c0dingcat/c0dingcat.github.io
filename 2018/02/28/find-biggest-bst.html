@@ -97,6 +97,8 @@
 			
 			
 			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -182,13 +184,13 @@
         return 0;
     
     int left = find_biggest_bst(ptr, min, max, total_nodes, head);
-    int current_min = (left ==0)?ptr-&gt;value: min;
+    int current_min = (left == 0) ? ptr-&gt;value: min;
     if((left==-1) || (left != 0 &amp;&amp; ptr-&gt;value &gt; max)) {
         return -1;
     }
     
     int right = find_biggest_bst(ptr, min, max, total_nodes, head);
-    int current_max = (right == 0)? ptr-&gt;value:max;
+    int current_max = (right == 0) ? ptr-&gt;value:max;
     if(right == -1 || (right != 0 &amp;&amp; ptr-&gt;value &lt; min)) {
         return -1;
     }
@@ -197,9 +199,7 @@
     current_min = min;
     current_max = max;
 
-    if(total_nodes &lt; total) {
-        total_ndoes = total;
-    }
+    total_nodes = max(total_nodes, total);
     return total;
 }
 </code></pre></div></div>

@@ -97,6 +97,8 @@
 			
 			
 			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -153,6 +155,63 @@
   
 
   <div class="posts">
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/02/26/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
+            크루스칼 알고리즘
+          </a>
+        </h1>
+        <p class="meta">
+          February 26, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <ul>
+  <li>크루스칼 알고리즘</li>
+  <li>edge의 cost별로 정렬한다</li>
+  <li>하나씩 빼서 cycle을 만드는지 확인한다</li>
+  <li>사이클을 만들지 않는 edge들만 뽑아서 리턴한다</li>
+  <li>상당히 간단하다</li>
+  <li>사이클을 만드는데 사용하는 disjoined_set 알고리즘은 간단하지만 효과적이다</li>
+  <li>시간 복잡도는 모든 edge에 대해 정렬하기 때문에 O(ElogE)</li>
+  <li>disjoined set의 경우는 시간복잡도가 ELogE보다 작기 때문에, 정렬하는데 드는 시간이 driving force</li>
+</ul>
+
+
+        <a class="button" href="/2018/02/26/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/02/26/%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%B2%B4%ED%81%AC.html">
+            사이클 체크
+          </a>
+        </h1>
+        <p class="meta">
+          February 26, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <ul>
+  <li>사이클 확인 알고지름</li>
+  <li>DFS 방식을 활용해서 사이클이 있는지 확인한다</li>
+  <li>현재 순환중이면 상태를 VISTING으로 변경해서 순환이 끝나지 않았음에도 불구하고 다시 체크하러 오는지 확인하다</li>
+  <li>현재 노드들을 순환중인데도 불구하고 다시 확인하러 오면 사이클이 있음</li>
+  <li>시간 복잡도는 O(E+V)</li>
+</ul>
+
+
+        <a class="button" href="/2018/02/26/%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%B2%B4%ED%81%AC.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
     
     <div class="post-teaser">
       <header>
@@ -215,51 +274,6 @@
         
 
         <a class="button" href="/2018/02/26/find-largest-bst.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/02/26/connect-all-the-nodes.html">
-            섬의 개수 세기
-          </a>
-        </h1>
-        <p class="meta">
-          February 26, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        <ul>
-  <li>next 노드를 구하기 위해서는 부모노드의 next를 타고 가서 왼쪽 노드가 있는지 확인한다 없으면 오른쪽 노드</li>
-  <li>왼쪽 오른쪽 자식 노드가 존재하지 않으면 또 부모 노드의 옆의 노드로 가서 위와 동일하게 반복한다</li>
-  <li>횡으로 탐색이 끝나면, 다음 자식 노드로 내려가기 위해서 왼쪽 자식 노드 혹은 오른쪽 자식 노드의 값을 사용해서 동일하게 옆의 노드를 체크한다</li>
-</ul>
-
-
-        <a class="button" href="/2018/02/26/connect-all-the-nodes.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/02/25/number-of-islands.html">
-            Number Of Islands
-          </a>
-        </h1>
-        <p class="meta">
-          February 25, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        
-
-        <a class="button" href="/2018/02/25/number-of-islands.html">
           Continue reading
         </a>
       </div>

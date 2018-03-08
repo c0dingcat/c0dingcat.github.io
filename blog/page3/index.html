@@ -97,6 +97,8 @@
 			
 			
 			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -157,6 +159,74 @@
     <div class="post-teaser">
       <header>
         <h1>
+          <a class="post-link" href="/2018/03/04/%EB%82%98%EB%AC%B4%EC%9E%90%EB%A5%B4%EA%B8%B0.html">
+            나무 자르기
+          </a>
+        </h1>
+        <p class="meta">
+          March 4, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <h2 id="문제">문제</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n. Determine the maximum value obtainable by cutting up the rod and selling the pieces. For example, if length of the rod is 8 and the values of different pieces are given as following, then the maximum obtainable value is 22 (by cutting in two pieces of lengths 2 and 6)
+</code></pre></div></div>
+<ul>
+  <li>주어진 제약조건에 따라 나무를 자를때 얻을 수 있는 최대 값
+<img src="/assets/img/cut-a-rod.png" alt="나무 길이 및 가격" /></li>
+  <li>이전의 max 가치와 현재 가격을 빼고 계산했을의 가치를 서로 비교해서 최대 값을 반환한다 - knapsack문제와 동일함
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cutRod(n) = max(price[i] + cutRod(n-i-1)) for all i in {0, 1 .. n-1}
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+
+        <a class="button" href="/2018/03/04/%EB%82%98%EB%AC%B4%EC%9E%90%EB%A5%B4%EA%B8%B0.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/03/04/%EA%B7%B8%EB%9E%98%ED%94%84.html">
+            그래프
+          </a>
+        </h1>
+        <p class="meta">
+          March 4, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <h2 id="그래프">그래프</h2>
+<ul>
+  <li>무향 그래프</li>
+  <li>방향 그래프 혹은 유향 그래프</li>
+  <li>가중치 그래프</li>
+  <li>단순 그래프</li>
+  <li>DAG (directed acyclic graph)</li>
+  <li>철도망</li>
+  <li>소셜 네트워크 분석</li>
+  <li>인터넷 전송 속도 계산</li>
+  <li>한 붓 그리기</li>
+  <li>외환 거래</li>
+  <li>할일 목록 정리 - 위상 정렬</li>
+  <li>퍼즐 - 최소한으로 타일을 움직여 15-퍼즐을 푸는 문제</li>
+  <li>게임판 덮기</li>
+  <li>회의실 배정 등등 - 만족성 문제</li>
+</ul>
+
+
+        <a class="button" href="/2018/03/04/%EA%B7%B8%EB%9E%98%ED%94%84.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
           <a class="post-link" href="/2018/03/04/%EA%B5%AC%EA%B0%84%ED%8A%B8%EB%A6%AC.html">
             구간트리 - Segment Tree
           </a>
@@ -199,6 +269,14 @@
 <ul>
   <li>배낭에 절박도를 최대화할 수 있는 물건들의 목록들을 계산하는 방법
  <img src="/assets/img/knapsack.png" alt="부피 및 절박도" /></li>
+  <li>부분문제: pack(items) = 지금까지 고른 물건들의 목록이 items에 주어질 때, 남은 용량을 채워 얻을 수 있는 최대의 절박도 합</li>
+  <li>pack(capacity, item) = 캐리어에 용량이 capacity만큼 남았을 때 item 이후의 물건들을 싸서 얻을 수 있는 최대 절박도</li>
+  <li>특정 물건을 가져가는 경우 pack(capacity - volume[item], item+1) + need[item]</li>
+  <li>해당 물건을 가져가지 않는 경우 pack(capacity, item)</li>
+  <li>절박도 = max(pack(capacity - volume[item], item+1) + need[item], pack(capacity, item))</li>
+  <li>시간 복잡도는 capacity가 0~w 범위이고, 아이템들이 0~n개가 있다고 하면 <strong>O(nw)</strong></li>
+  <li>선택된 물건들의 리스트는 pack(capacity, item) == pack(capacity, item+1) 인지의 여부로 판단할 수 있다</li>
+  <li>선택된 물건들의 리스트는 pack(capacity, item) == pack(capacity, item+1) 인지의 여부로 판단할 수 있다</li>
 </ul>
 
 
@@ -228,55 +306,6 @@
 
 
         <a class="button" href="/2018/03/04/Running-median.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/03/04/PreOrder-InOrder%EB%A1%9C-PostOrder-%EC%95%8C%EC%95%84%EB%82%B4%EA%B8%B0.html">
-            트리의 PreOrder, InOrder 순회로 PotOrder 알아내기
-          </a>
-        </h1>
-        <p class="meta">
-          March 4, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        <h2 id="문제">문제</h2>
-<ul>
-  <li>주어진 PreOrder, InOrder 순환 값으로 PostOrder 순환 값을 에측하라</li>
-  <li>트리를 주어진 순환 값으로 부터 구성하면서 PostOrder 순환을 한다</li>
-</ul>
-
-
-        <a class="button" href="/2018/03/04/PreOrder-InOrder%EB%A1%9C-PostOrder-%EC%95%8C%EC%95%84%EB%82%B4%EA%B8%B0.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/03/03/%ED%83%80%EC%9D%BC%EB%A7%81.html">
-            타일링 방법의 수 세기
-          </a>
-        </h1>
-        <p class="meta">
-          March 3, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        <h2 id="출처">출처</h2>
-<ul>
-  <li>알고리즘 문제 해결 전략 - 8.11 경우의 수와 확률</li>
-</ul>
-
-
-        <a class="button" href="/2018/03/03/%ED%83%80%EC%9D%BC%EB%A7%81.html">
           Continue reading
         </a>
       </div>

@@ -3,7 +3,7 @@
   <head>
 	<meta charset="utf-8">
 	<title>Knapsack problem | c0dingcat</title>
-	<meta name="description" content="문제  배낭에 절박도를 최대화할 수 있는 물건들의 목록들을 계산하는 방법 ">
+	<meta name="description" content="문제  배낭에 절박도를 최대화할 수 있는 물건들의 목록들을 계산하는 방법   부분문제: pack(items) = 지금까지 고른 물건들의 목록이 items에 주어질 때, 남은 용량을 채워 얻을 수 있는 최대의 절박도 합  pack(capacity, item) = 캐리어에 용량이 ca...">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -97,6 +97,8 @@
 			
 			
 			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -162,15 +164,43 @@
 <ul>
   <li>배낭에 절박도를 최대화할 수 있는 물건들의 목록들을 계산하는 방법
  <img src="/assets/img/knapsack.png" alt="부피 및 절박도" /></li>
+  <li>부분문제: pack(items) = 지금까지 고른 물건들의 목록이 items에 주어질 때, 남은 용량을 채워 얻을 수 있는 최대의 절박도 합</li>
+  <li>pack(capacity, item) = 캐리어에 용량이 capacity만큼 남았을 때 item 이후의 물건들을 싸서 얻을 수 있는 최대 절박도</li>
+  <li>특정 물건을 가져가는 경우 pack(capacity - volume[item], item+1) + need[item]</li>
+  <li>해당 물건을 가져가지 않는 경우 pack(capacity, item)</li>
+  <li>절박도 = max(pack(capacity - volume[item], item+1) + need[item], pack(capacity, item))</li>
+  <li>시간 복잡도는 capacity가 0~w 범위이고, 아이템들이 0~n개가 있다고 하면 <strong>O(nw)</strong></li>
+  <li>선택된 물건들의 리스트는 pack(capacity, item) == pack(capacity, item+1) 인지의 여부로 판단할 수 있다</li>
+  <li>선택된 물건들의 리스트는 pack(capacity, item) == pack(capacity, item+1) 인지의 여부로 판단할 수 있다</li>
 </ul>
 
 <h2 id="코드">코드</h2>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int asymmetric(int width) {
-    if(width%2 ==1)
-        return (tiling(width) - tiling(width/2) + MOD) %MOD;
-    int ret = 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct knapsack {
+    vector&lt;item&gt; items;
+    map&lt;int,vector&lt;int&gt;&gt; cache;
+    int pack(int capacity, int item) {
+        if(item == items.size()) return 0;
+        int&amp; ret = cache[capacity][item];
+        if(ret != -1) return ret;
+        ret = pack(capacity, item+1);
+        if(capacity &gt;= items[item].volume)
+            ret = max(ret, pack(capacity - items[item].volume, item+1)) + items[item].needs;
+        return ret;
+    }
+    void reconstruct(int capacity, int item, vector&lt;int&gt;&amp; selected) {
+        if(item == items.size()) return ;
+        if(pack(capacity, item) == pack(capacity, item+1)){
+            reconstuct(capacity, item+1, selected);
+        }
+        else{
+            items.push_back(item);
+            reconstruct(capacity - items[item].volume, item+1, selected);
+        }
+    }
+}  }
 }
 </code></pre></div></div>
+
 </section>
   
 <footer>
