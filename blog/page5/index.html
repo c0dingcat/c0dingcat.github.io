@@ -99,6 +99,10 @@
 			
 			
 			
+			
+			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -159,138 +163,153 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/03/Shortest-Palindrome.html">
-            Shortest Palindrome
+          <a class="post-link" href="/2018/03/04/%EB%82%98%EB%AC%B4%EC%9E%90%EB%A5%B4%EA%B8%B0.html">
+            나무 자르기
           </a>
         </h1>
         <p class="meta">
-          March 3, 2018
+          March 4, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="shortest-palindrome">Shortest Palindrome</h2>
-
-
-        <a class="button" href="/2018/03/03/Shortest-Palindrome.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/03/03/KMP-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
-            KMP 알고리즘
-          </a>
-        </h1>
-        <p class="meta">
-          March 3, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        <h2 id="출처">출처</h2>
+        <h2 id="문제">문제</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n. Determine the maximum value obtainable by cutting up the rod and selling the pieces. For example, if length of the rod is 8 and the values of different pieces are given as following, then the maximum obtainable value is 22 (by cutting in two pieces of lengths 2 and 6)
+</code></pre></div></div>
 <ul>
-  <li>http://www.crocus.co.kr/559</li>
-  <li>http://jason9319.tistory.com/130</li>
-</ul>
-
-
-        <a class="button" href="/2018/03/03/KMP-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/03/03/JIS.html">
-            합친 LIS
-          </a>
-        </h1>
-        <p class="meta">
-          March 3, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        <h2 id="출처">출처</h2>
-<ul>
-  <li>알고리즘 문제 해결 전랙 1권 8.5</li>
-</ul>
-
-
-        <a class="button" href="/2018/03/03/JIS.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/03/02/%EC%9D%B4%ED%95%AD%EA%B3%84%EC%88%98%EA%B5%AC%ED%95%98%EA%B8%B0.html">
-            이항계수 구하기 - binominal coefficient
-          </a>
-        </h1>
-        <p class="meta">
-          March 2, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        <h2 id="이항계수파스칼의-삼각형-구하기">이항계수(파스칼의 삼각형) 구하기</h2>
-<p><img src="/assets/img/pascaltree.png" alt="파스칼 트리" /></p>
-<ul>
-  <li>파스칼 트리 구하기 문제</li>
-  <li>파스칼 트리와 이항계수의 관계는 이 블로그를 참조: http://blog.naver.com/PostView.nhn?blogId=vollollov&amp;logNo=220947452823</li>
-  <li>간략하게 그림만 보면 아래와 같은 관계가 있다 (출처: 위의 블로그)</li>
-  <li><img src="/assets/img/0226_02.gif" alt="이항계수와파스칼트리" /></li>
-  <li>(n,r)  = (n-1,r-1) + (n-1,r)</li>
-  <li>이항계수 (n,r)은 n개의 서로 다른 원소 중에서 r개의 원소를 순서없이 골라내는 방법의 수</li>
-  <li>중복계산되는 항이 많기 때문에 메모이제이션 사용해서 계산량 줄이는 것이 필요</li>
-</ul>
-
-
-        <a class="button" href="/2018/03/02/%EC%9D%B4%ED%95%AD%EA%B3%84%EC%88%98%EA%B5%AC%ED%95%98%EA%B8%B0.html">
-          Continue reading
-        </a>
-      </div>
-    </div>
-    
-    <div class="post-teaser">
-      <header>
-        <h1>
-          <a class="post-link" href="/2018/03/02/%EC%99%B8%EB%B0%9C%EB%9B%B0%EA%B8%B0.html">
-            외발뛰기
-          </a>
-        </h1>
-        <p class="meta">
-          March 2, 2018
-        </p>
-      </header>
-      <div class="excerpt">
-        <h2 id="외발뛰기">외발뛰기</h2>
-<p><img src="/assets/img/jumpgame.png" alt="외발뛰기" /></p>
-<ul>
-  <li>게임판의 왼쪽 칸 위에서 오른쪽 칸에 도착하는 하는 것이 가능하는지 파악하는 것이 목적</li>
-  <li>각 게임판에 있는 숫자만큼 아래나 오른쪽으로 이동 가능</li>
-  <li>DP를 사용하며, 메모이제이션을 사용해서 문제를 빨리 해결 가능</li>
-  <li>미로의 끝까지 가는 것을 확인하는 것이 목적이기 때문에, 아래로 바로 내려가거나 오른쪽으로 가는 두 가지 방법중 한가지라도 걸리면, true가 된다</li>
-  <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>점화식: f(x, y) = (f(x, y + map[y][x])</td>
-          <td> </td>
-          <td>f(x+ map[y][x], y))</td>
-        </tr>
-      </tbody>
-    </table>
+  <li>주어진 제약조건에 따라 나무를 자를때 얻을 수 있는 최대 값
+<img src="/assets/img/cut-a-rod.png" alt="나무 길이 및 가격" /></li>
+  <li>이전의 max 가치와 현재 가격을 빼고 계산했을의 가치를 서로 비교해서 최대 값을 반환한다 - knapsack문제와 동일함
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cutRod(n) = max(price[i] + cutRod(n-i-1)) for all i in {0, 1 .. n-1}
+</code></pre></div>    </div>
   </li>
 </ul>
 
 
-        <a class="button" href="/2018/03/02/%EC%99%B8%EB%B0%9C%EB%9B%B0%EA%B8%B0.html">
+        <a class="button" href="/2018/03/04/%EB%82%98%EB%AC%B4%EC%9E%90%EB%A5%B4%EA%B8%B0.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/03/04/%EA%B7%B8%EB%9E%98%ED%94%84.html">
+            그래프
+          </a>
+        </h1>
+        <p class="meta">
+          March 4, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <h2 id="그래프">그래프</h2>
+<ul>
+  <li>무향 그래프</li>
+  <li>방향 그래프 혹은 유향 그래프</li>
+  <li>가중치 그래프</li>
+  <li>단순 그래프</li>
+  <li>DAG (directed acyclic graph)</li>
+  <li>철도망</li>
+  <li>소셜 네트워크 분석</li>
+  <li>인터넷 전송 속도 계산</li>
+  <li>한 붓 그리기</li>
+  <li>외환 거래</li>
+  <li>할일 목록 정리 - 위상 정렬</li>
+  <li>퍼즐 - 최소한으로 타일을 움직여 15-퍼즐을 푸는 문제</li>
+  <li>게임판 덮기</li>
+  <li>회의실 배정 등등 - 만족성 문제</li>
+</ul>
+
+
+        <a class="button" href="/2018/03/04/%EA%B7%B8%EB%9E%98%ED%94%84.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/03/04/%EA%B5%AC%EA%B0%84%ED%8A%B8%EB%A6%AC.html">
+            구간트리 - Segment Tree
+          </a>
+        </h1>
+        <p class="meta">
+          March 4, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <h2 id="구간트리">구간트리</h2>
+<ul>
+  <li>저장된 자료들을 적절치 전처리해 질의들을 빠르게 대답할 수 있게 해줌</li>
+  <li>그림에서 맨 위가 루트에서 표현하는 구간이고, 양쪽 아래는 루트의 두 자식노드들이 표현하는 구간
+<img src="/assets/img/segment-tree.png" alt="구간트리" /></li>
+  <li>구간트리는 일반적으로 꽉찬 이진 트리</li>
+  <li>배열로 표현을 많이 함 - 원소의 4배 정도로 사이즈를 잡으면 메모리는 낭비되도 전체 요소들을 저장하는데 문제 없음</li>
+  <li>어떤 구간이 주어지건 답을 찾기 위해 드는 시간은 O(lgn)</li>
+</ul>
+
+
+        <a class="button" href="/2018/03/04/%EA%B5%AC%EA%B0%84%ED%8A%B8%EB%A6%AC.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/03/04/knapsack-problem.html">
+            Knapsack problem
+          </a>
+        </h1>
+        <p class="meta">
+          March 4, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <h2 id="문제">문제</h2>
+<ul>
+  <li>배낭에 절박도를 최대화할 수 있는 물건들의 목록들을 계산하는 방법
+ <img src="/assets/img/knapsack.png" alt="부피 및 절박도" /></li>
+  <li>부분문제: pack(items) = 지금까지 고른 물건들의 목록이 items에 주어질 때, 남은 용량을 채워 얻을 수 있는 최대의 절박도 합</li>
+  <li>pack(capacity, item) = 캐리어에 용량이 capacity만큼 남았을 때 item 이후의 물건들을 싸서 얻을 수 있는 최대 절박도</li>
+  <li>특정 물건을 가져가는 경우 pack(capacity - volume[item], item+1) + need[item]</li>
+  <li>해당 물건을 가져가지 않는 경우 pack(capacity, item)</li>
+  <li>절박도 = max(pack(capacity - volume[item], item+1) + need[item], pack(capacity, item))</li>
+  <li>시간 복잡도는 capacity가 0~w 범위이고, 아이템들이 0~n개가 있다고 하면 <strong>O(nw)</strong></li>
+  <li>선택된 물건들의 리스트는 pack(capacity, item) == pack(capacity, item+1) 인지의 여부로 판단할 수 있다</li>
+  <li>선택된 물건들의 리스트는 pack(capacity, item) == pack(capacity, item+1) 인지의 여부로 판단할 수 있다</li>
+</ul>
+
+
+        <a class="button" href="/2018/03/04/knapsack-problem.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/2018/03/04/Running-median.html">
+            변화하는 중간 값 - Running Median
+          </a>
+        </h1>
+        <p class="meta">
+          March 4, 2018
+        </p>
+      </header>
+      <div class="excerpt">
+        <h2 id="문제">문제</h2>
+<ul>
+  <li>텅빈 수열에서 시작해서 각 수가 추가될 때마다 중간 값을 계산하는 프로그램을 작성하시오</li>
+  <li>유사문제: https://www.geeksforgeeks.org/median-of-stream-of-integers-running-integers/</li>
+</ul>
+
+
+        <a class="button" href="/2018/03/04/Running-median.html">
           Continue reading
         </a>
       </div>

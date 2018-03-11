@@ -99,6 +99,10 @@
 			
 			
 			
+			
+			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -167,6 +171,116 @@
 <script>
   window.store = {
     
+      "2018-03-08-ec-a4-91-eb-b3-b5-eb-ac-b8-ec-9e-90-ec-97-b4-ec-b0-be-ea-b8-b0-html": {
+        "title": "중복 문자열 찾기",
+        "tags": "알고리즘, 문자열, Google Interview",
+        "date": "March 8, 2018",
+        "author": "",
+        "category": "",
+        "content": "문자열 안에서 중복 문자열 찾기  Give a string, finds all duplicate substrings of length kset&lt;string&gt; findDups(string&amp; input, int k)    set&lt;string&gt; temp;    set&lt;string&gt; result;        for(int i = 0 ; i &lt; input.size() - k, i++ ) {        string str = input.substr(i,k);        if(temp.count(str) !=0)            result.insert(str)        else            temp.insert(str);    }        return result;}",
+        "url": "//2018/03/08/%EC%A4%91%EB%B3%B5%EB%AC%B8%EC%9E%90%EC%97%B4%EC%B0%BE%EA%B8%B0.html"
+      }
+      ,
+    
+      "2018-03-07-period-string-html": {
+        "title": "Minimum Sliding Window",
+        "tags": "알고리즘, Minimum Sliding Window",
+        "date": "March 7, 2018",
+        "author": "",
+        "category": "",
+        "content": "Minimum Sliding Window  일종의 분포수 세기  필요로 하는 글자수들의 수를 기록한 후, 문자열을 탐색시에 해당 문자를 만나면 required flag를 1만큼 감소시킨다  required된 글자를 모두 충족하면, 현재 위치에서 거리르 계산하고 이 값이 이전의 최소값보다 적은지 비교한다  적다면 최소값과 현재의 좌측 시작값을 업데이트한다  required만족한 상태에서 현재 상태를 리셋한다          이전에 관련 글자가 나오지 않았다면 required를 1 증가해서 필요로 하는 글자가 하나 더 있음을 알린다      마지막 위치를 업데이트 한다      struct checkCounter {    map&lt;char int&gt; charCounter;    int required;    int last_pos = 0;    int min_distance = INF;    int min_left = 0;        void init(string&amp; str) {        required = str.size();        for(int i = 0 ; i &lt; required; i++)            charCounter[str[i]]++;    }    void fulfilled() const { return required == 0;}    void update(char ch) {        charCounter[ch]--;        if(charCounter[ch] &gt;=0)            required--;    }    void reset(int current, char ch) {        if(current-last_pos &lt; min_distance) {            min_distance = current-last_pos;            min_left = last_pos;        }        charCounter[ch]++;        if(charCounter[ch] &gt; 0)             required++;        last_pos++;            }}string minWindow(string&amp; s1, string&amp; s2) {    checkCounter counter;    counter.init(s2);    int i =0 ;    while(i &lt;= s1.size()) {        if(!counter.fulfilled()) {            if(i == s1.size()) break;            counter.update(s1[i]);        }        else {            counter.reset(i, s1[i]);        }    }    return counter.min_distance == INT_MAX?         \"\" : s1.substr(counter.min_left, counter.min_distance);}응용 문제  구글 인터뷰 문제  똑같다. string이 vector&lt;string&gt;으로 바뀐것을 제외하고는  처음에는 다익스트라를 생각했는데 문제 유형을 잘 기억하자  시간복잡도는 O(n)Give a string [] words, Find the shortest string [] containing the keyword inside. example: words: sky cloud google search sky work blue keywords: sky blue return: sky work bluestruct checkCounter {    map&lt;string, int&gt; charCounter;    int required;    int last_pos = 0;    int min_distance = INF;    int min_left = 0;        void init(vector&lt;string&gt;&amp; vec) {        required = vec.size();        for(int i = 0 ; i &lt; required; i++)            charCounter[vec[i]]++;    }    void fulfilled() const { return required == 0;}    void update(string&amp; str) {        charCounter[str]--;        if(charCounter[str] &gt;=0)            required--;    }    void reset(int current, string&amp; str) {        if(current-last_pos &lt; min_distance) {            min_distance = current-last_pos;            min_left = last_pos;        }        charCounter[str]++;        if(charCounter[str] &gt; 0)             required++;        last_pos++;     }}string minWindow(vector&lt;string&gt;&amp; s1, vector&lt;string&gt;&amp; s2) {    checkCounter counter;    counter.init(s2);    int i =0 ;    while(i &lt;= s1.size()) {        if(!counter.fulfilled()) {            if(i == s1.size()) break;            counter.update(s1[i]);        }        else {            counter.reset(i, s1[i]);        }    }    return counter.min_distance == INT_MAX?         \"\" : s1.substr(counter.min_left, counter.min_distance);}",
+        "url": "//2018/03/07/Period-String.html"
+      }
+      ,
+    
+      "2018-03-07-minimum-sliding-window-html": {
+        "title": "Minimum Sliding Window",
+        "tags": "알고리즘, Minimum Sliding Window",
+        "date": "March 7, 2018",
+        "author": "",
+        "category": "",
+        "content": "Minimum Sliding Window  일종의 분포수 세기  필요로 하는 글자수들의 수를 기록한 후, 문자열을 탐색시에 해당 문자를 만나면 required flag를 1만큼 감소시킨다  required된 글자를 모두 충족하면, 현재 위치에서 거리르 계산하고 이 값이 이전의 최소값보다 적은지 비교한다  적다면 최소값과 현재의 좌측 시작값을 업데이트한다  required만족한 상태에서 현재 상태를 리셋한다          이전에 관련 글자가 나오지 않았다면 required를 1 증가해서 필요로 하는 글자가 하나 더 있음을 알린다      마지막 위치를 업데이트 한다      struct checkCounter {    map&lt;char int&gt; charCounter;    int required;    int last_pos = 0;    int min_distance = INF;    int min_left = 0;        void init(string&amp; str) {        required = str.size();        for(int i = 0 ; i &lt; required; i++)            charCounter[str[i]]++;    }    void fulfilled() const { return required == 0;}    void update(char ch) {        charCounter[ch]--;        if(charCounter[ch] &gt;=0)            required--;    }    void reset(int current, char ch) {        if(current-last_pos &lt; min_distance) {            min_distance = current-last_pos;            min_left = last_pos;        }        charCounter[ch]++;        if(charCounter[ch] &gt; 0)             required++;        last_pos++;            }}string minWindow(string&amp; s1, string&amp; s2) {    checkCounter counter;    counter.init(s2);    int i =0 ;    while(i &lt;= s1.size()) {        if(!counter.fulfilled()) {            if(i == s1.size()) break;            counter.update(s1[i]);        }        else {            counter.reset(i, s1[i]);        }    }    return counter.min_distance == INT_MAX?         \"\" : s1.substr(counter.min_left, counter.min_distance);}응용 문제  구글 인터뷰 문제  똑같다. string이 vector&lt;string&gt;으로 바뀐것을 제외하고는  처음에는 다익스트라를 생각했는데 문제 유형을 잘 기억하자  시간복잡도는 O(n)Give a string [] words, Find the shortest string [] containing the keyword inside. example: words: sky cloud google search sky work blue keywords: sky blue return: sky work bluestruct checkCounter {    map&lt;string, int&gt; charCounter;    int required;    int last_pos = 0;    int min_distance = INF;    int min_left = 0;        void init(vector&lt;string&gt;&amp; vec) {        required = vec.size();        for(int i = 0 ; i &lt; required; i++)            charCounter[vec[i]]++;    }    void fulfilled() const { return required == 0;}    void update(string&amp; str) {        charCounter[str]--;        if(charCounter[str] &gt;=0)            required--;    }    void reset(int current, string&amp; str) {        if(current-last_pos &lt; min_distance) {            min_distance = current-last_pos;            min_left = last_pos;        }        charCounter[str]++;        if(charCounter[str] &gt; 0)             required++;        last_pos++;     }}string minWindow(vector&lt;string&gt;&amp; s1, vector&lt;string&gt;&amp; s2) {    checkCounter counter;    counter.init(s2);    int i =0 ;    while(i &lt;= s1.size()) {        if(!counter.fulfilled()) {            if(i == s1.size()) break;            counter.update(s1[i]);        }        else {            counter.reset(i, s1[i]);        }    }    return counter.min_distance == INT_MAX?         \"\" : s1.substr(counter.min_left, counter.min_distance);}",
+        "url": "//2018/03/07/Minimum-Sliding-Window.html"
+      }
+      ,
+    
+      "2018-03-07-graham-algorithm-html": {
+        "title": "Graham Algorithm",
+        "tags": "알고리즘, Convex hull, Graham Algorithm",
+        "date": "March 7, 2018",
+        "author": "",
+        "category": "",
+        "content": "Graham Algorithm  Convex hull 알고리즘  시간복잡도는 NlogN  given a list of points in a rectangular coordinate system,  seeking any two points, such that all the remaining points will be in only one side of the line.코드struct pt {    int x,y;    pt(int x_, int y_): x(x_),y(y_){}};bool func(vector&lt;pt&gt;&amp; input) {        // find a point in the left    pt points[2];    points[0] = input[0];    int idx = 0;    for(int i = 1; i &lt; input.size(); i++) {        if(points[0].x &gt; input[i].x) {            points[0].x = input[i].x;            idx = i;        }    }        swap(vector[0], vector[idx]);    swap(vector[1], vector[(idx+1)%input.size()]);    points[1] = input[1];        for(int i = 2 ; i &lt; input.size();i++) {        bool b = checkDirection(points[0], input[i], points[1]);        if(b){            points[1] = input[i];        }    }    return points    }bool checkDirection(pt pt1, pt p2, pt p3) {    return (p3.y-p2.y)*(p2.x - p1.x) - (p2.y-p1.y)*(p3.x-p2.x);    if(value &gt; 0)        return true;        return false;}",
+        "url": "//2018/03/07/Graham-Algorithm.html"
+      }
+      ,
+    
+      "2018-03-06-ec-9e-90-ec-a0-84-ea-b1-b0-ed-83-80-ea-b8-b0-html": {
+        "title": "Word Ladder",
+        "tags": "알고리즘, 그래프, BFS",
+        "date": "March 6, 2018",
+        "author": "",
+        "category": "",
+        "content": "Word Ladder 문제  전형적인 BFS 문제  생각보단 어렵지 않다  시작 단어에서 한글자씩 바꿔서 사전에 있는지 확인하고 있으면 탐색 큐에 넣는다  다음 루프에서 큐에 집어 넣은 단어들을 전부 꺼내서 다시 BFS 이 때 나온 단어가 끝 단어와 같으면 종료  루프를 마치면 거리 + 1Well, this problem has a nice BFS structure.Let’s see the example in the problem statement.start = \"hit\"end = \"cog\"dict = [\"hot\", \"dot\", \"dog\", \"lot\", \"log\"]Since only one letter can be changed at a time, if we start from \"hit\", we can only change to those words which have only one different letter from it, like \"hot\". Putting in graph-theoretic terms, we can say that \"hot\" is a neighbor of \"hit\".The idea is simpy to begin from start, then visit its neighbors, then the non-visited neighbors of its neighbors… Well, this is just the typical BFS structure.To simplify the problem, we insert end into dict. Once we meet end during the BFS, we know we have found the answer. We maintain a variable dist for the current distance of the transformation and update it by dist++ after we finish a round of BFS search (note that it should fit the definition of the distance in the problem statement). Also, to avoid visiting a word for more than once, we erase it from dict once it is visited.코드int ladderLength(string beginWord, string endWord, unordered_set&lt;string&gt;&amp; wordDict) {    wordDict.insert(endWord);    queue&lt;string&gt; toVisit;    addNextWords(beginWord, wordDict, toVisit);    int dist = 2;    while (!toVisit.empty()) {        int num = toVisit.size();        for (int i = 0; i &lt; num; i++) {            string word = toVisit.front();            toVisit.pop();            if (word == endWord) return dist;            addNextWords(word, wordDict, toVisit);        }        dist++;    }    return -1;}void addNextWords(string word, unordered_set&lt;string&gt;&amp; wordDict, queue&lt;string&gt;&amp; toVisit) {    wordDict.erase(word);    for (int p = 0; p &lt; (int)word.length(); p++) {        char letter = word[p];        for (int k = 0; k &lt; 26; k++) {             word[p] = 'a' + k;            if (wordDict.find(word) != wordDict.end()) {                toVisit.push(word);                wordDict.erase(word);            }        }        word[p] = letter;    } } ",
+        "url": "//2018/03/06/%EC%9E%90%EC%A0%84%EA%B1%B0%ED%83%80%EA%B8%B0.html"
+      }
+      ,
+    
+      "2018-03-06-word-ladder-html": {
+        "title": "Word Ladder",
+        "tags": "알고리즘, 그래프, BFS",
+        "date": "March 6, 2018",
+        "author": "",
+        "category": "",
+        "content": "Word Ladder 문제  전형적인 BFS 문제  생각보단 어렵지 않다  시작 단어에서 한글자씩 바꿔서 사전에 있는지 확인하고 있으면 탐색 큐에 넣는다  다음 루프에서 큐에 집어 넣은 단어들을 전부 꺼내서 다시 BFS 이 때 나온 단어가 끝 단어와 같으면 종료  루프를 마치면 거리 + 1Well, this problem has a nice BFS structure.Let’s see the example in the problem statement.start = \"hit\"end = \"cog\"dict = [\"hot\", \"dot\", \"dog\", \"lot\", \"log\"]Since only one letter can be changed at a time, if we start from \"hit\", we can only change to those words which have only one different letter from it, like \"hot\". Putting in graph-theoretic terms, we can say that \"hot\" is a neighbor of \"hit\".The idea is simpy to begin from start, then visit its neighbors, then the non-visited neighbors of its neighbors… Well, this is just the typical BFS structure.To simplify the problem, we insert end into dict. Once we meet end during the BFS, we know we have found the answer. We maintain a variable dist for the current distance of the transformation and update it by dist++ after we finish a round of BFS search (note that it should fit the definition of the distance in the problem statement). Also, to avoid visiting a word for more than once, we erase it from dict once it is visited.코드int ladderLength(string beginWord, string endWord, unordered_set&lt;string&gt;&amp; wordDict) {    wordDict.insert(endWord);    queue&lt;string&gt; toVisit;    addNextWords(beginWord, wordDict, toVisit);    int dist = 2;    while (!toVisit.empty()) {        int num = toVisit.size();        for (int i = 0; i &lt; num; i++) {            string word = toVisit.front();            toVisit.pop();            if (word == endWord) return dist;            addNextWords(word, wordDict, toVisit);        }        dist++;    }    return -1;}void addNextWords(string word, unordered_set&lt;string&gt;&amp; wordDict, queue&lt;string&gt;&amp; toVisit) {    wordDict.erase(word);    for (int p = 0; p &lt; (int)word.length(); p++) {        char letter = word[p];        for (int k = 0; k &lt; 26; k++) {             word[p] = 'a' + k;            if (wordDict.find(word) != wordDict.end()) {                toVisit.push(word);                wordDict.erase(word);            }        }        word[p] = letter;    } } ",
+        "url": "//2018/03/06/Word-Ladder.html"
+      }
+      ,
+    
+      "2018-03-06-smash-word-html": {
+        "title": "Smash Word",
+        "tags": "알고리즘, 그래프, DFS",
+        "date": "March 6, 2018",
+        "author": "",
+        "category": "",
+        "content": "Smash Word 문제  To a word, and a map, map which is a word, ask this if a word is smash able? That is, you can smash one letter each time, and the rest of the letters can form a single word (the new word is still in the map) until it is completely hit. For example: sprint -&gt; print -&gt; pint -&gt; pit -&gt; it -&gt; i -&gt; “”코드bool smash_word(string&amp; current, stack&lt;string&gt;&amp; wordStack, const map&lt;string, int&gt;&amp; dic) {    int length = current.size();    if(length == 0) {        cout &lt;&lt; current &lt;&lt; endl;        return true;    }    for(int i = 0 ; i &lt; length; i++ ) {        string word = current.erase(i);        if(word == \"\" || dic.count(word)!=0) {            wordStack.push(word);            if(smash_word(word, wordStack, dic)) {                return true;            }            else                wordStack.pop();        }    }    return false;}",
+        "url": "//2018/03/06/Smash-Word.html"
+      }
+      ,
+    
+      "2018-03-06-minimum-turns-html": {
+        "title": "Minimum Turns",
+        "tags": "알고리즘, Minimum Turns",
+        "date": "March 6, 2018",
+        "author": "",
+        "category": "",
+        "content": "Minimum Turns 문제  주어진 글자들은 한글자만 변형이 가능하고 맨 앞으로 옮기는 것만 허용된다  문자열을 변형해서 주어진 문자열이 될떄까지의 최소 턴 수를 구하라  예) 소스: abc, 타켓: cba abc-&gt;bac-&gt;cba  문제가 쉬어 보이지만 어렵다… 한참을 봤는데 잘 모르겠음.코드int minimumTurns(const string&amp; s1, const string&amp; s2) {    if(s1.size() != s2.size())        return -1;        if(s1 == s2)        return 0;        int index = s2.size() - 1;    while(index &gt;=0 &amp;&amp; s1[index] == s2[index])        index --;        if(s2[index] == s1[0])        return index;    return index+1;}",
+        "url": "//2018/03/06/Minimum-Turns.html"
+      }
+      ,
+    
+      "2018-03-06-minimum-swap-html": {
+        "title": "Minimum Swap",
+        "tags": "알고리즘, 그래프, BFS, Minmum Swap, Google Interview",
+        "date": "March 6, 2018",
+        "author": "",
+        "category": "",
+        "content": "Minimum Swap 문제  Word Ladder 문제와 유사  Minimum number of swaps of chars in only one string to make two strings the same코드struct node {    string str;    int steps;    node(string s, int st):str(s), steps(st){}};int numberOfSteps(string&amp; s1, const string&amp; s2) {    map&lt;string,int&gt; visited;    int steps = 0 ;    queue&lt;node&gt; que;    que.push(node(s1,0));        while(!que.empty()) {        node n = que.front();         que.pop();        if(n.str == s2)            return n.steps;                for(int i = 0; i &lt; n.str.size(); i++){            for(int j = i+1; j &lt; n.str.size(); j++) {                string derived = n.str;                if(derived[i] != derived[j]) {                    swap(derived[i], derived[j]);                    if(!visited.count(derived)) {                        que.push(node(derived, n.steps+1));                        visited.insert(make_pair(derived,1));                    }                }            }        }    }    return -1;}",
+        "url": "//2018/03/06/Minimum-Swap.html"
+      }
+      ,
+    
+      "2018-03-06-dfs-html": {
+        "title": "DFS 깊이 우선 탐색",
+        "tags": "알고리즘, 그래프, DFS",
+        "date": "March 6, 2018",
+        "author": "",
+        "category": "",
+        "content": "DFS  인접리스트: O(V+E)  인접행렬: O(V2)코드void dfs(int here){    cout &lt;&lt; “DFS visits “ &lt;&lt; here &lt;&lt;endl;    visited[here] = true;    for(int i = 0 ;  i &lt; adj[here].size(); ++i){        int there = adj[here][i];        if( !visited[there]){        dfs(there);        }    }   }DFS 방식을 사용한 사이클 찾기using namespace std;enum STATUS {  NOT_VISITED,    VISITING,    VISITED};bool hasCycle(map&lt;int,vector&lt;int&gt;&gt;&amp; input,             map&lt;int, int&gt;&amp; visited,             int here) {    if(visited[here] == VISITING){        cout &lt;&lt; here &lt;&lt; \" confirmed visiting\" &lt;&lt; endl;        return true;    }    else if(visited[here] == VISITED)        return false;        visited[here] = VISITING;    cout &lt;&lt; here &lt;&lt; \" visiting \" &lt;&lt; endl;        for(int there : input[here]) {        cout &lt;&lt; there &lt;&lt; \" checking \" &lt;&lt; endl;        if(hasCycle(input, visited, there))            return true;    }    visited[here] = VISITED;    return false;}void process(const vector&lt;vector&lt;int&gt;&gt;&amp; input, map&lt;int, vector&lt;int&gt;&gt;&amp; output){    for(auto entry : input) {        int u = entry[0];        int v = entry[1];                    if(!output.count(u)) {            vector&lt;int&gt; vec = { v };            output.insert(make_pair(u, vec));        }        else {            output[u].push_back(v);        }    }}int main() {    vector&lt;vector&lt;int&gt;&gt; input = {        {1,2},        {1,3},        {2,3},        {3,4},        {2,4},        {3,5},        {4,5},        {4,6},        {5,6},    };        map&lt;int, vector&lt;int&gt;&gt; source;    process(input, source);    map&lt;int,int&gt; visited;    for(auto kvp : source)        visited.insert(make_pair(kvp.first,0));    bool cycle = hasCycle(source, visited, 1);    cout &lt;&lt; \"cycle: \" &lt;&lt; cycle &lt;&lt; endl;}",
+        "url": "//2018/03/06/DFS.html"
+      }
+      ,
+    
       "2018-03-05-find-intersection-html": {
         "title": "2개의 정렬된 Array에서 교차점 찾기",
         "tags": "알고리즘, Array",
@@ -195,7 +309,7 @@
         "date": "March 4, 2018",
         "author": "",
         "category": "",
-        "content": "펜윅트리 (Fenwick)  구간합을 구하는데 특화된 간략화된 segement tree  segment tree가 미리 계사해 저장하는 정보의 상당수가 필요 없게됨  http://www.crocus.co.kr/666 설명 참조using namespace std;int sum(vector&lt;int&gt; &amp;tree, int i) {    int ans = 0;    while (i &gt; 0) {        ans += tree[i];        i -= (i &amp; -i);    }    return ans;}void update(vector&lt;int&gt; &amp;tree, int i, int diff) {    while (i &lt; tree.size()) {        tree[i] += diff;        i += (i &amp; -i);    }}int main() {    int n, m, k;    scanf(\"%d %d %d\",&amp;n,&amp;m,&amp;k);    vector&lt;int&gt; a(n+1);    vector&lt;int&gt; tree(n+1);    for (int i=1; i&lt;=n; i++) {        scanf(\"%lld\",&amp;a[i]);        update(tree, i, a[i]);    }    m += k;    while (m--) {        int t1;        scanf(\"%d\",&amp;t1);        if (t1 == 1) {            int t2;            int t3;            scanf(\"%d %d\",&amp;t2,&amp;t3);            int diff = t3-a[t2];            a[t2] = t3;            update(tree, t2, diff);        } else {            int t2,t3;            scanf(\"%d %d\",&amp;t2,&amp;t3);            printf(\"%d\\n\",sum(tree, t3) - sum(tree, t2-1));        }    }    return 0;}",
+        "content": "펜윅트리 (Fenwick)  구간합을 구하는데 특화된 간략화된 segement tree  segment tree가 미리 계사해 저장하는 정보의 상당수가 필요 없게됨  http://www.crocus.co.kr/666 설명 참조using namespace std;struct fenwick_tree {    vector&lt;int&gt; source;    long sum(int i)    {        long ans = 0;        while (i &gt; 0){            ans += source[i];            i -= (i &amp; -i); // 최하위 비트 지우기         }        return ans;    }         void update(int i, int diff)    {        while (i &lt; source.size())        {            source[i] += diff;            i += (i &amp; -i);        }    }};삽입정렬 시간 재기  삽입 정렬시 숫자를 몇 번이나 옮기는지 계산하는 프로그램 작성  하나씩 값을 더해가면서 계산하면 아래의 코드가 맞다는 것을 알게됨    int countMoves(const vector&lt;int&gt;&amp; input) {  fenwickTree tree(input.size()+1);  int ret = 0;  for(int i = 0 ; i &lt; input.size(); ++i) {      ret += tree.sum(input.size()+1) - tree.sum(input[i]);      tree.add(input[i],1);  }  return ret;}      ",
         "url": "//2018/03/04/%ED%8E%9C%EC%9C%85%ED%8A%B8%EB%A6%AC.html"
       }
       ,
@@ -222,14 +336,14 @@
       }
       ,
     
-      "2018-03-04-ec-86-8c-eb-b0-a9-ec-b0-a8-html": {
+      "2018-03-04-ec-86-8c-eb-b0-a9-ec-84-9c-html": {
         "title": "소방차",
         "tags": "그래프, 알고리즘, 다익스트라, 최소거리",
         "date": "March 4, 2018",
         "author": "",
         "category": "",
         "content": "문제  서울 시내에 m개의 소방서가 있습니다.  화재 장소에서 가장 가까운 소방서에서 소방차를 보낸다고 할 때, 각 화재 장소에 소방차가 도달하기까지 걸리는 시간의 합을 계산하는 프로그램을 작성하세요  “예제 지도를 봅시다. 사각형으로 표시된 지점들은 소방서를, 음영으로 칠해진 지점들은 불이 난 지점을 나타냅니다. 2번과 5번 장소에서는 6번 소방서가 가장 가깝고, 3번 장소에서는 4번 소방서가 가장 가깝습니다. 이때, 각 장소에 소방차가 도착하기까지 걸리는 시간은 2번 장소에 8분, 5번 장소에 4분, 3번 장소에 4분으로 총 합은 16분이 됩니다.” 예제 설명 발췌 - https://algospot.com/judge/problem/read/FIRETRUCKS풀이법  다익스트라를 돌릴때 시작점을 여러개로 두면 된다코드struct edge {    double cost;    int u;    edge(double c, int u_):cost(c),u(u_){}    edge(){}};struct {    bool operator()(const edge&amp; lhs, const edge&amp; rhs){        return lhs.cost &gt; rhs.cost;    }} op_comp;void dijstra(const map&lt;int, vector&lt;edge&gt;&gt;&amp; source, const vector&lt;int&gt;&amp; input) {    vector&lt;int&gt; dists(source.size(), MAX_VALUE);    vector&lt;int&gt; from(source.size(), -1);    priority_queue&lt;edge, vector&lt;edge&gt;, op_comp&gt; que;        for(int i = 0 ; i &lt; input.size(); i++){        from[i] = i;        edge e(0.00, i);        que.push_back(e);    }        while(!que.empty()) {        edge e1 = que.top(); que.pop();                double cost1 = e1.cost;                for(int i = 0 ; i &lt; source[e1.u].size(); i++) {            edge e2 = source[e1.u][i];            double cost2 = e2.cost;            if(dists[e2.u] &gt; (cost1+cost2)) {                dists[e2.u] = costs1 + costs2;                from[e2.u] = from[e1.u];                que.push(e2);            }        }    }",
-        "url": "//2018/03/04/%EC%86%8C%EB%B0%A9%EC%B0%A8.html"
+        "url": "//2018/03/04/%EC%86%8C%EB%B0%A9%EC%84%9C.html"
       }
       ,
     
@@ -294,7 +408,7 @@
         "date": "March 4, 2018",
         "author": "",
         "category": "",
-        "content": "그래프  무향 그래프  방향 그래프 혹은 유향 그래프  가중치 그래프  단순 그래프  DAG (directed acyclic graph)  철도망  소셜 네트워크 분석  인터넷 전송 속도 계산  한 붓 그리기  외환 거래  할일 목록 정리 - 위상 정렬  퍼즐 - 최소한으로 타일을 움직여 15-퍼즐을 푸는 문제  게임판 덮기  회의실 배정 등등 - 만족성 문제그래프 표현  인접 리스트    vector&lt;list&lt;int&gt;&gt; adjacentstruct edge {  int vertex;  int weight;};vector&lt;edge&gt; adjacent        인접 행렬    vector&lt;vector&lt;bool&gt;&gt; adjacent;        인접 리스트 장단점          메모리를 적게 먹음 O(V+E)      간선 (u,v)가 존재하는지 일일히 확인이 필요              인접 행렬          메모리를 엄청 먹음 O(V2)      간선 확인이 간단함      DFS  인접 리스트의 경우 시간 복잡도는 O(V+E)  인접 행렬의 경우 O(V2)위상정렬  의존성 있는 작업들이 주어질때, 어떤 순서대로 수행해야 하는지 계산해 준다  dependency graph오일러 서킷",
+        "content": "그래프  무향 그래프  방향 그래프 혹은 유향 그래프  가중치 그래프  단순 그래프  DAG (directed acyclic graph)  철도망  소셜 네트워크 분석  인터넷 전송 속도 계산  한 붓 그리기  외환 거래  할일 목록 정리 - 위상 정렬  퍼즐 - 최소한으로 타일을 움직여 15-퍼즐을 푸는 문제  게임판 덮기  회의실 배정 등등 - 만족성 문제그래프 표현  인접 리스트    vector&lt;list&lt;int&gt;&gt; adjacentstruct edge {  int vertex;  int weight;};vector&lt;edge&gt; adjacent        인접 행렬    vector&lt;vector&lt;bool&gt;&gt; adjacent;        인접 리스트 장단점          메모리를 적게 먹음 O(V+E)      간선 (u,v)가 존재하는지 일일히 확인이 필요        인접 행렬          메모리를 엄청 먹음 O(V2)      간선 확인이 간단함      DFS  인접 리스트의 경우 시간 복잡도는 O(V+E)  인접 행렬의 경우 O(V2)위상정렬  의존성 있는 작업들이 주어질때, 어떤 순서대로 수행해야 하는지 계산해 준다  dependency graph오일러 서킷  그래프의 모든 간선을 정확히 한 번씩 지나서 시작점으로 돌아오는 경로를 찾는 문제  시작점을 u, 끝점을 v라고 할때          u != v 인 경우, 짝수 개의 간선이 필요 (들어오는데 하나, 나가는데 하나의 간선)      그래프의 모든 정점들이 짝수점이어야 오일러 서킷이 존재할 수 있음      모든 정점이 짝수점이면 항상 오일러 서킷이 존재한다      코드vector&lt;vector&lt;int&gt;&gt; adj;void getEulerCircuit(int here, vector&lt;int&gt;&amp; circuit) {    for(int there = 0 ; there &lt; adj.size(); ++there) {        while(adj[here][there]&gt;0) {            adj[here][there]--;            adj[there][here]--;            getEulerCircuit(there, circuit);        }        circuit.push_back(here);    }}단어 제한 끝말 잊기  사용할 수 있는 단어들의 목록이 주어질때, 단어들을 전부 사용하고 게임이 끝날 수 있는지, 그럴 수 있다면 어떤 순서로 단어를 사용해야 하는지를 계산하는 프로그램  방향 그래프를 만든다 (시작 글자와 끝글자로)  dog -&gt; d -&gt; g (cost: dog), god: g-&gt;d (cost: god)struct edge {    int vertex;    string word;}map&lt;int, vector&lt;int&gt;&gt; adj;vector&lt;int&gt; indegree, outdegree;void makeGraph(const vector&lt;string&gt;&amp; words) {    for(int i = 0 ;  )}BFS  거의 대부분 길찾기 문제로 사용됨",
         "url": "//2018/03/04/%EA%B7%B8%EB%9E%98%ED%94%84.html"
       }
       ,
@@ -388,12 +502,12 @@
       ,
     
       "2018-03-03-shortest-palindrome-html": {
-        "title": "Shortest Palindrome",
+        "title": "가장 짧은 회문 만들기",
         "tags": "알고리즘, 문자열, KMP, Panlindrome",
         "date": "March 3, 2018",
         "author": "",
         "category": "",
-        "content": "Shortest Palindrome출처  https://leetcode.com/problems/shortest-palindrome/description/문제  주어진 스티링 S에 대해서 글자들을 앞부분에 더해서 회문으로 만들 수 있다. 이때, 가장 짧은 글자를 더해서 만들 수 있는 회문을 구하라.  Given “aacecaaa”, return “aaacecaaa”.Given “abcd”, return “dcbabcd”.분석  Bruteforce로 할 수 있는 방법:          S를 reverse 해서 reversed 된 스트링의 substring과 S의 서브스트링을 비교한다.      Time complexity: O(N2)      Space complexity: O(N)        string shortestPalindrome(string s){ int n = s.size(); string rev(s); reverse(rev.begin(), rev.end()); int j = 0; for (int i = 0; i &lt; n; i++) {  if (s.substr(0, n - i) == rev.substr(i))      return rev.substr(0, i) + s; } return \"\";}                      KMP 방식을 사용한다          KMP 방식에 따라 Fail function lookup table 을 만들면 얼마만큼의 prefix가 현재까지 매칭되었는지를 알 수 있고 이 값을 사용해서 panlindrome을 만들기 위해 필요한 문자열을 알 수 있게 된다.      입력 S을 reverse한후 ‘#’ 와 함께 원래 입력에 더한다 string input = s + ‘#’ + reverse(s)      ’#’은 원래 값과 reverse된 문자열이 섞이지 않도록 필요              KMP fail_function을 만들어서 surfix와 동일한 prefix의 최장 길이를 구할 수 있고 이 길이를 알면 reverse된 문자열에서 필요한 문자열을 뽑아낼 수 있다```class Solution {  public:  string shortestPalindrome(string input) {        int n = input.length();  string rev(input);  std::reverse(rev.begin(), rev.end());        string source = input + “#” + rev;  int len = source.size();        vector fail_table(len, 0);        for(int pos = 1; pos &lt; len; pos++){      int last_match_pos = fail_table[pos-1];      while(last_match_pos &gt; 0             &amp;&amp; source[pos] != source[last_match_pos])          last_match_pos = fail_table[last_match_pos-1];          if(source[pos] == source[last_match_pos])      ++last_match_pos;          fail_table[pos] = last_match_pos;   }                 return rev.substr(0, n - fail_table[len - 1]) + input;            ```",
+        "content": "Shortest Palindrome출처  https://leetcode.com/problems/shortest-palindrome/description/문제  주어진 스티링 S에 대해서 글자들을 앞부분에 더해서 회문으로 만들 수 있다. 이때, 가장 짧은 글자를 더해서 만들 수 있는 회문을 구하라.  Given “aacecaaa”, return “aaacecaaa”.Given “abcd”, return “dcbabcd”.분석  Bruteforce로 할 수 있는 방법:          S를 reverse 해서 reversed 된 스트링의 substring과 S의 서브스트링을 비교한다.      Time complexity: O(N2)      Space complexity: O(N)      string shortestPalindrome(string s){    int n = s.size();    string rev(s);    reverse(rev.begin(), rev.end());    int j = 0;    for (int i = 0; i &lt; n; i++) {        if (s.substr(0, n - i) == rev.substr(i))            return rev.substr(0, i) + s;    }    return \"\";}  KMP 방식을 사용한다          KMP 방식에 따라 Fail function lookup table 을 만들면 얼마만큼의 prefix가 현재까지 매칭되었는지를 알 수 있고 이 값을 사용해서 panlindrome을 만들기 위해 필요한 문자열을 알 수 있게 된다.      입력 S을 reverse한후 ‘#’ 와 함께 원래 입력에 더한다 string input = s + ‘#’ + reverse(s)      ’#’은 원래 값과 reverse된 문자열이 섞이지 않도록 필요      KMP fail_function을 만들어서 surfix와 동일한 prefix의 최장 길이를 구할 수 있고 이 길이를 알면 reverse된 문자열에서 필요한 문자열을 뽑아낼 수 있다      class Solution {    public:    string shortestPalindrome(string input) {                int n = input.length();        string rev(input);        std::reverse(rev.begin(), rev.end());                string source = input + \"#\" + rev;        int len = source.size();                    vector&lt;int&gt; fail_table(len, 0);                for(int pos = 1; pos &lt; len; pos++){            int last_match_pos = fail_table[pos-1];            while(last_match_pos &gt; 0                   &amp;&amp; source[pos] != source[last_match_pos])                last_match_pos = fail_table[last_match_pos-1];                        if(source[pos] == source[last_match_pos])                ++last_match_pos;                        fail_table[pos] = last_match_pos;        }                 return rev.substr(0, n - fail_table[len - 1]) + input;         ",
         "url": "//2018/03/03/Shortest-Palindrome.html"
       }
       ,

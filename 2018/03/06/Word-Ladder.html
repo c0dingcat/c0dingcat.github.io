@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>Word Ladder | c0dingcat</title>
+	<meta name="description" content="Word Ladder 문제  전형적인 BFS 문제  생각보단 어렵지 않다  시작 단어에서 한글자씩 바꿔서 사전에 있는지 확인하고 있으면 탐색 큐에 넣는다  다음 루프에서 큐에 집어 넣은 단어들을 전부 꺼내서 다시 BFS 이 때 나온 단어가 끝 단어와 같으면 종료  루프를 마치면 거...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/03/06/Word-Ladder.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="c0dingcat" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/ohhocat.jpg" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">c0dingcat</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Word Ladder</h1>
+    
+    <p class="meta">
+      March 6, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><h2 id="word-ladder-문제">Word Ladder 문제</h2>
+<ul>
+  <li>전형적인 BFS 문제</li>
+  <li>생각보단 어렵지 않다</li>
+  <li>시작 단어에서 한글자씩 바꿔서 사전에 있는지 확인하고 있으면 탐색 큐에 넣는다</li>
+  <li>다음 루프에서 큐에 집어 넣은 단어들을 전부 꺼내서 다시 BFS 이 때 나온 단어가 끝 단어와 같으면 종료</li>
+  <li>루프를 마치면 거리 + 1</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Well, this problem has a nice BFS structure.
+Let’s see the example in the problem statement.
+
+start = "hit"
+
+end = "cog"
+
+dict = ["hot", "dot", "dog", "lot", "log"]
+
+Since only one letter can be changed at a time, if we start from "hit", we can only change to those words which have only one different letter from it, like "hot". Putting in graph-theoretic terms, we can say that "hot" is a neighbor of "hit".
+
+The idea is simpy to begin from start, then visit its neighbors, then the non-visited neighbors of its neighbors… Well, this is just the typical BFS structure.
+
+To simplify the problem, we insert end into dict. Once we meet end during the BFS, we know we have found the answer. We maintain a variable dist for the current distance of the transformation and update it by dist++ after we finish a round of BFS search (note that it should fit the definition of the distance in the problem statement). Also, to avoid visiting a word for more than once, we erase it from dict once it is visited.
+</code></pre></div></div>
+
+<h2 id="코드">코드</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int ladderLength(string beginWord, string endWord, unordered_set&lt;string&gt;&amp; wordDict) {
+    wordDict.insert(endWord);
+    queue&lt;string&gt; toVisit;
+    addNextWords(beginWord, wordDict, toVisit);
+    int dist = 2;
+    while (!toVisit.empty()) {
+        int num = toVisit.size();
+        for (int i = 0; i &lt; num; i++) {
+            string word = toVisit.front();
+            toVisit.pop();
+            if (word == endWord) return dist;
+            addNextWords(word, wordDict, toVisit);
+        }
+        dist++;
+    }
+    return -1;
+}
+
+void addNextWords(string word, unordered_set&lt;string&gt;&amp; wordDict, queue&lt;string&gt;&amp; toVisit) {
+    wordDict.erase(word);
+    for (int p = 0; p &lt; (int)word.length(); p++) {
+        char letter = word[p];
+        for (int k = 0; k &lt; 26; k++) { 
+            word[p] = 'a' + k;
+            if (wordDict.find(word) != wordDict.end()) {
+                toVisit.push(word);
+                wordDict.erase(word);
+            }
+        }
+        word[p] = letter;
+    } 
+} 
+</code></pre></div></div>
+
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#그래프">#그래프</a>
+    
+    <a class="tag" href="/tags#BFS">#BFS</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

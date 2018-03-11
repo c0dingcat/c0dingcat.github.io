@@ -99,6 +99,10 @@
 			
 			
 			
+			
+			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -159,23 +163,22 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/05/find-intersection.html">
-            2개의 정렬된 Array에서 교차점 찾기
+          <a class="post-link" href="/2018/03/08/%EC%A4%91%EB%B3%B5%EB%AC%B8%EC%9E%90%EC%97%B4%EC%B0%BE%EA%B8%B0.html">
+            중복 문자열 찾기
           </a>
         </h1>
         <p class="meta">
-          March 5, 2018
+          March 8, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="2개의-정렬된-array에서-교차점-찾기">2개의 정렬된 Array에서 교차점 찾기</h2>
+        <h2 id="문자열-안에서-중복-문자열-찾기">문자열 안에서 중복 문자열 찾기</h2>
 <ul>
-  <li>그냥 무식하게 찾으면 O(m*n)</li>
-  <li>아래 방식으로 하면 최대 O(m+n)</li>
+  <li>Give a string, finds all duplicate substrings of length k</li>
 </ul>
 
 
-        <a class="button" href="/2018/03/05/find-intersection.html">
+        <a class="button" href="/2018/03/08/%EC%A4%91%EB%B3%B5%EB%AC%B8%EC%9E%90%EC%97%B4%EC%B0%BE%EA%B8%B0.html">
           Continue reading
         </a>
       </div>
@@ -184,25 +187,31 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/05/QuickSelect.html">
-            QuickSelect
+          <a class="post-link" href="/2018/03/07/Period-String.html">
+            Minimum Sliding Window
           </a>
         </h1>
         <p class="meta">
-          March 5, 2018
+          March 7, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="quickselect">QuickSelect</h2>
+        <h2 id="minimum-sliding-window">Minimum Sliding Window</h2>
 <ul>
-  <li>Two sorted array of size size n each. Find the Kth largest element in these two array</li>
-  <li>http://leetcode.com/2011/01/find-k-th-smallest-element-in-union-of.html</li>
-  <li>http://stackoverflow.com/questions/5000512/find-the-top-k-sums-of-two-sorted-arrays</li>
-  <li>The best solution, but non-trivial, O(lg m + lg n):</li>
+  <li>일종의 분포수 세기</li>
+  <li>필요로 하는 글자수들의 수를 기록한 후, 문자열을 탐색시에 해당 문자를 만나면 required flag를 1만큼 감소시킨다</li>
+  <li>required된 글자를 모두 충족하면, 현재 위치에서 거리르 계산하고 이 값이 이전의 최소값보다 적은지 비교한다</li>
+  <li>적다면 최소값과 현재의 좌측 시작값을 업데이트한다</li>
+  <li>required만족한 상태에서 현재 상태를 리셋한다
+    <ul>
+      <li>이전에 관련 글자가 나오지 않았다면 required를 1 증가해서 필요로 하는 글자가 하나 더 있음을 알린다</li>
+      <li>마지막 위치를 업데이트 한다</li>
+    </ul>
+  </li>
 </ul>
 
 
-        <a class="button" href="/2018/03/05/QuickSelect.html">
+        <a class="button" href="/2018/03/07/Period-String.html">
           Continue reading
         </a>
       </div>
@@ -211,25 +220,31 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/04/%ED%8E%9C%EC%9C%85%ED%8A%B8%EB%A6%AC.html">
-            펜윅트리 - 빠르고 간단한 구간 합
+          <a class="post-link" href="/2018/03/07/Minimum-Sliding-Window.html">
+            Minimum Sliding Window
           </a>
         </h1>
         <p class="meta">
-          March 4, 2018
+          March 7, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="펜윅트리-fenwick">펜윅트리 (Fenwick)</h2>
-<p><img src="/assets/img/fenwick.png" alt="풴윅트리" /></p>
+        <h2 id="minimum-sliding-window">Minimum Sliding Window</h2>
 <ul>
-  <li>구간합을 구하는데 특화된 간략화된 segement tree</li>
-  <li>segment tree가 미리 계사해 저장하는 정보의 상당수가 필요 없게됨</li>
-  <li>http://www.crocus.co.kr/666 설명 참조</li>
+  <li>일종의 분포수 세기</li>
+  <li>필요로 하는 글자수들의 수를 기록한 후, 문자열을 탐색시에 해당 문자를 만나면 required flag를 1만큼 감소시킨다</li>
+  <li>required된 글자를 모두 충족하면, 현재 위치에서 거리르 계산하고 이 값이 이전의 최소값보다 적은지 비교한다</li>
+  <li>적다면 최소값과 현재의 좌측 시작값을 업데이트한다</li>
+  <li>required만족한 상태에서 현재 상태를 리셋한다
+    <ul>
+      <li>이전에 관련 글자가 나오지 않았다면 required를 1 증가해서 필요로 하는 글자가 하나 더 있음을 알린다</li>
+      <li>마지막 위치를 업데이트 한다</li>
+    </ul>
+  </li>
 </ul>
 
 
-        <a class="button" href="/2018/03/04/%ED%8E%9C%EC%9C%85%ED%8A%B8%EB%A6%AC.html">
+        <a class="button" href="/2018/03/07/Minimum-Sliding-Window.html">
           Continue reading
         </a>
       </div>
@@ -238,23 +253,25 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/04/%EC%A0%91%EB%AF%B8%EC%82%AC-%EB%B0%B0%EC%97%B4-%EB%A7%A8%EB%B2%84-%EB%A7%88%EC%9D%B4%EC%96%B4%EC%8A%A4.html">
-            접미사 배열 - 맨버-마이너스 알고리즘
+          <a class="post-link" href="/2018/03/07/Graham-Algorithm.html">
+            Graham Algorithm
           </a>
         </h1>
         <p class="meta">
-          March 4, 2018
+          March 7, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="접미사-배열">접미사 배열</h2>
+        <h2 id="graham-algorithm">Graham Algorithm</h2>
 <ul>
-  <li>접미사 배열의 길이는 항상 H이므로 문자열 탐색 시에 접미사 배열 내부의 아이템을 찾는 시간은 logH, 문자열 검색에 N</li>
-  <li>그래서 시간 복잡도는 O(NlogH)</li>
+  <li>Convex hull 알고리즘</li>
+  <li>시간복잡도는 NlogN</li>
+  <li>given a list of points in a rectangular coordinate system,</li>
+  <li>seeking any two points, such that all the remaining points will be in only one side of the line.</li>
 </ul>
 
 
-        <a class="button" href="/2018/03/04/%EC%A0%91%EB%AF%B8%EC%82%AC-%EB%B0%B0%EC%97%B4-%EB%A7%A8%EB%B2%84-%EB%A7%88%EC%9D%B4%EC%96%B4%EC%8A%A4.html">
+        <a class="button" href="/2018/03/07/Graham-Algorithm.html">
           Continue reading
         </a>
       </div>
@@ -263,24 +280,26 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/04/%EC%98%A8%EB%9D%BC%EC%9D%B8-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
-            외계 신호 분석 - 온라인 알고리즘
+          <a class="post-link" href="/2018/03/06/%EC%9E%90%EC%A0%84%EA%B1%B0%ED%83%80%EA%B8%B0.html">
+            Word Ladder
           </a>
         </h1>
         <p class="meta">
-          March 4, 2018
+          March 6, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="문제">문제</h2>
+        <h2 id="word-ladder-문제">Word Ladder 문제</h2>
 <ul>
-  <li>알고리즘 문제해결 전력 19.6 - 외계신호 분석</li>
-  <li>신호 생성 방식 A[0] = 1983, A[i] = (A[i-1]*214013+2531011) mod 2<sup>32</sup></li>
-  <li>슬라이딩 윈도우 기법으로 한꺼번에 많은 메모리를 할당하지 않고, 바로 합이 k가 되는 숫자들을 구하고 있음</li>
+  <li>전형적인 BFS 문제</li>
+  <li>생각보단 어렵지 않다</li>
+  <li>시작 단어에서 한글자씩 바꿔서 사전에 있는지 확인하고 있으면 탐색 큐에 넣는다</li>
+  <li>다음 루프에서 큐에 집어 넣은 단어들을 전부 꺼내서 다시 BFS 이 때 나온 단어가 끝 단어와 같으면 종료</li>
+  <li>루프를 마치면 거리 + 1</li>
 </ul>
 
 
-        <a class="button" href="/2018/03/04/%EC%98%A8%EB%9D%BC%EC%9D%B8-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.html">
+        <a class="button" href="/2018/03/06/%EC%9E%90%EC%A0%84%EA%B1%B0%ED%83%80%EA%B8%B0.html">
           Continue reading
         </a>
       </div>

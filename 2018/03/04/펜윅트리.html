@@ -99,6 +99,10 @@
 			
 			
 			
+			
+			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -169,49 +173,45 @@
 </ul>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>using namespace std;
-int sum(vector&lt;int&gt; &amp;tree, int i) {
-    int ans = 0;
-    while (i &gt; 0) {
-        ans += tree[i];
-        i -= (i &amp; -i);
+struct fenwick_tree {
+    vector&lt;int&gt; source;
+    long sum(int i)
+    {
+        long ans = 0;
+        while (i &gt; 0){
+            ans += source[i];
+            i -= (i &amp; -i); // 최하위 비트 지우기 
+        }
+        return ans;
     }
-    return ans;
-}
-void update(vector&lt;int&gt; &amp;tree, int i, int diff) {
-    while (i &lt; tree.size()) {
-        tree[i] += diff;
-        i += (i &amp; -i);
-    }
-}
-int main() {
-    int n, m, k;
-    scanf("%d %d %d",&amp;n,&amp;m,&amp;k);
-    vector&lt;int&gt; a(n+1);
-    vector&lt;int&gt; tree(n+1);
-    for (int i=1; i&lt;=n; i++) {
-        scanf("%lld",&amp;a[i]);
-        update(tree, i, a[i]);
-    }
-    m += k;
-    while (m--) {
-        int t1;
-        scanf("%d",&amp;t1);
-        if (t1 == 1) {
-            int t2;
-            int t3;
-            scanf("%d %d",&amp;t2,&amp;t3);
-            int diff = t3-a[t2];
-            a[t2] = t3;
-            update(tree, t2, diff);
-        } else {
-            int t2,t3;
-            scanf("%d %d",&amp;t2,&amp;t3);
-            printf("%d\n",sum(tree, t3) - sum(tree, t2-1));
+     
+    void update(int i, int diff)
+    {
+        while (i &lt; source.size())
+        {
+            source[i] += diff;
+            i += (i &amp; -i);
         }
     }
-    return 0;
-}
+};
 </code></pre></div></div>
+
+<h2 id="삽입정렬-시간-재기">삽입정렬 시간 재기</h2>
+<ul>
+  <li>삽입 정렬시 숫자를 몇 번이나 옮기는지 계산하는 프로그램 작성</li>
+  <li>하나씩 값을 더해가면서 계산하면 아래의 코드가 맞다는 것을 알게됨
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int countMoves(const vector&lt;int&gt;&amp; input) {
+  fenwickTree tree(input.size()+1);
+  int ret = 0;
+  for(int i = 0 ; i &lt; input.size(); ++i) {
+      ret += tree.sum(input.size()+1) - tree.sum(input[i]);
+      tree.add(input[i],1);
+  }
+  return ret;
+}
+</code></pre></div>    </div>
+  </li>
+</ul>
 </section>
   
 <footer>

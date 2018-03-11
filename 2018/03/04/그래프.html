@@ -99,6 +99,10 @@
 			
 			
 			
+			
+			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -197,7 +201,6 @@ vector&lt;edge&gt; adjacent
     <ul>
       <li>메모리를 적게 먹음 O(V+E)</li>
       <li>간선 (u,v)가 존재하는지 일일히 확인이 필요</li>
-      <li></li>
     </ul>
   </li>
   <li>인접 행렬
@@ -221,6 +224,55 @@ vector&lt;edge&gt; adjacent
 </ul>
 
 <h2 id="오일러-서킷">오일러 서킷</h2>
+<ul>
+  <li>그래프의 모든 간선을 정확히 한 번씩 지나서 시작점으로 돌아오는 경로를 찾는 문제</li>
+  <li>시작점을 u, 끝점을 v라고 할때
+    <ul>
+      <li>u != v 인 경우, 짝수 개의 간선이 필요 (들어오는데 하나, 나가는데 하나의 간선)</li>
+      <li>그래프의 모든 정점들이 짝수점이어야 오일러 서킷이 존재할 수 있음</li>
+      <li>모든 정점이 짝수점이면 항상 오일러 서킷이 존재한다</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="코드">코드</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector&lt;vector&lt;int&gt;&gt; adj;
+
+void getEulerCircuit(int here, vector&lt;int&gt;&amp; circuit) {
+    for(int there = 0 ; there &lt; adj.size(); ++there) {
+        while(adj[here][there]&gt;0) {
+            adj[here][there]--;
+            adj[there][here]--;
+            getEulerCircuit(there, circuit);
+        }
+        circuit.push_back(here);
+    }
+
+}
+</code></pre></div></div>
+
+<h2 id="단어-제한-끝말-잊기">단어 제한 끝말 잊기</h2>
+<ul>
+  <li>사용할 수 있는 단어들의 목록이 주어질때, 단어들을 전부 사용하고 게임이 끝날 수 있는지, 그럴 수 있다면 어떤 순서로 단어를 사용해야 하는지를 계산하는 프로그램</li>
+  <li>방향 그래프를 만든다 (시작 글자와 끝글자로)</li>
+  <li>dog -&gt; d -&gt; g (cost: dog), god: g-&gt;d (cost: god)</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct edge {
+    int vertex;
+    string word;
+}
+map&lt;int, vector&lt;int&gt;&gt; adj;
+vector&lt;int&gt; indegree, outdegree;
+void makeGraph(const vector&lt;string&gt;&amp; words) {
+    for(int i = 0 ;  )
+}
+</code></pre></div></div>
+
+<h2 id="bfs">BFS</h2>
+<ul>
+  <li>거의 대부분 길찾기 문제로 사용됨</li>
+</ul>
 </section>
   
 <footer>

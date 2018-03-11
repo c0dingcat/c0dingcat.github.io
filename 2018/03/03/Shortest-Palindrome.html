@@ -2,7 +2,7 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>Shortest Palindrome | c0dingcat</title>
+	<title>가장 짧은 회문 만들기 | c0dingcat</title>
 	<meta name="description" content="Shortest Palindrome">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -99,6 +99,10 @@
 			
 			
 			
+			
+			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -153,7 +157,7 @@
     <div class="content">
       <article >
   <header style="background-image: url('/')">
-    <h1 class="title">Shortest Palindrome</h1>
+    <h1 class="title">가장 짧은 회문 만들기</h1>
     
     <p class="meta">
       March 3, 2018
@@ -180,63 +184,63 @@ Given “abcd”, return “dcbabcd”.</li>
     <ul>
       <li>S를 reverse 해서 reversed 된 스트링의 substring과 S의 서브스트링을 비교한다.</li>
       <li>Time complexity: O(N2)</li>
-      <li>Space complexity: O(N)
-        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>string shortestPalindrome(string s)
-{
- int n = s.size();
- string rev(s);
- reverse(rev.begin(), rev.end());
- int j = 0;
- for (int i = 0; i &lt; n; i++) {
-  if (s.substr(0, n - i) == rev.substr(i))
-      return rev.substr(0, i) + s;
- }
- return "";
-}
-</code></pre></div>        </div>
-      </li>
+      <li>Space complexity: O(N)</li>
     </ul>
   </li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>string shortestPalindrome(string s)
+{
+    int n = s.size();
+    string rev(s);
+    reverse(rev.begin(), rev.end());
+    int j = 0;
+    for (int i = 0; i &lt; n; i++) {
+        if (s.substr(0, n - i) == rev.substr(i))
+            return rev.substr(0, i) + s;
+    }
+    return "";
+}
+</code></pre></div></div>
+
+<ul>
   <li>KMP 방식을 사용한다
     <ul>
       <li>KMP 방식에 따라 Fail function lookup table 을 만들면 얼마만큼의 prefix가 현재까지 매칭되었는지를 알 수 있고 이 값을 사용해서 panlindrome을 만들기 위해 필요한 문자열을 알 수 있게 된다.</li>
       <li>입력 S을 reverse한후 ‘#’ 와 함께 원래 입력에 더한다 string input = s + ‘#’ + reverse(s)</li>
       <li>’#’은 원래 값과 reverse된 문자열이 섞이지 않도록 필요</li>
-      <li>
-        <p>KMP fail_function을 만들어서 surfix와 동일한 prefix의 최장 길이를 구할 수 있고 이 길이를 알면 reverse된 문자열에서 필요한 문자열을 뽑아낼 수 있다
-```
-class Solution {  <br />
-public:
-  string shortestPalindrome(string input) {</p>
-
-        <p>int n = input.length();
-  string rev(input);
-  std::reverse(rev.begin(), rev.end());</p>
-
-        <p>string source = input + “#” + rev;
-  int len = source.size();</p>
-
-        <p>vector<int> fail_table(len, 0);</int></p>
-
-        <p>for(int pos = 1; pos &lt; len; pos++){
-      int last_match_pos = fail_table[pos-1];
-      while(last_match_pos &gt; 0 
-            &amp;&amp; source[pos] != source[last_match_pos])
-          last_match_pos = fail_table[last_match_pos-1];</p>
-
-        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  if(source[pos] == source[last_match_pos])
-      ++last_match_pos;
-        
-  fail_table[pos] = last_match_pos;   } 
-</code></pre></div>        </div>
-
-        <p>return rev.substr(0, n - fail_table[len - 1]) + input;</p>
-      </li>
+      <li>KMP fail_function을 만들어서 surfix와 동일한 prefix의 최장 길이를 구할 수 있고 이 길이를 알면 reverse된 문자열에서 필요한 문자열을 뽑아낼 수 있다</li>
     </ul>
   </li>
 </ul>
 
-<p>```</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Solution {    
+public:
+    string shortestPalindrome(string input) {
+        
+        int n = input.length();
+        string rev(input);
+        std::reverse(rev.begin(), rev.end());
+        
+        string source = input + "#" + rev;
+        int len = source.size();   
+         
+        vector&lt;int&gt; fail_table(len, 0);
+        
+        for(int pos = 1; pos &lt; len; pos++){
+            int last_match_pos = fail_table[pos-1];
+            while(last_match_pos &gt; 0 
+                  &amp;&amp; source[pos] != source[last_match_pos])
+                last_match_pos = fail_table[last_match_pos-1];
+            
+            if(source[pos] == source[last_match_pos])
+                ++last_match_pos;
+            
+            fail_table[pos] = last_match_pos;
+        } 
+        
+        return rev.substr(0, n - fail_table[len - 1]) + input;         
+</code></pre></div></div>
 </section>
   
 <footer>

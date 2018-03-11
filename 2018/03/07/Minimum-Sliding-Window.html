@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>Minimum Sliding Window | c0dingcat</title>
+	<meta name="description" content="Minimum Sliding Window  일종의 분포수 세기  필요로 하는 글자수들의 수를 기록한 후, 문자열을 탐색시에 해당 문자를 만나면 required flag를 1만큼 감소시킨다  required된 글자를 모두 충족하면, 현재 위치에서 거리르 계산하고 이 값이 이전의 최소...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/03/07/Minimum-Sliding-Window.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="c0dingcat" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/ohhocat.jpg" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">c0dingcat</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Minimum Sliding Window</h1>
+    
+    <p class="meta">
+      March 7, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><h2 id="minimum-sliding-window">Minimum Sliding Window</h2>
+<ul>
+  <li>일종의 분포수 세기</li>
+  <li>필요로 하는 글자수들의 수를 기록한 후, 문자열을 탐색시에 해당 문자를 만나면 required flag를 1만큼 감소시킨다</li>
+  <li>required된 글자를 모두 충족하면, 현재 위치에서 거리르 계산하고 이 값이 이전의 최소값보다 적은지 비교한다</li>
+  <li>적다면 최소값과 현재의 좌측 시작값을 업데이트한다</li>
+  <li>required만족한 상태에서 현재 상태를 리셋한다
+    <ul>
+      <li>이전에 관련 글자가 나오지 않았다면 required를 1 증가해서 필요로 하는 글자가 하나 더 있음을 알린다</li>
+      <li>마지막 위치를 업데이트 한다</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">checkCounter</span> <span class="p">{</span>
+    <span class="n">map</span><span class="o">&lt;</span><span class="kt">char</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">charCounter</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">required</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">last_pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">min_distance</span> <span class="o">=</span> <span class="n">INF</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">min_left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="kt">void</span> <span class="nf">init</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">str</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">required</span> <span class="o">=</span> <span class="n">str</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">required</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+            <span class="n">charCounter</span><span class="p">[</span><span class="n">str</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">fulfilled</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">required</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;}</span>
+    <span class="kt">void</span> <span class="n">update</span><span class="p">(</span><span class="kt">char</span> <span class="n">ch</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">charCounter</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span><span class="o">--</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">charCounter</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">&gt;=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">required</span><span class="o">--</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">reset</span><span class="p">(</span><span class="kt">int</span> <span class="n">current</span><span class="p">,</span> <span class="kt">char</span> <span class="n">ch</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">current</span><span class="o">-</span><span class="n">last_pos</span> <span class="o">&lt;</span> <span class="n">min_distance</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">min_distance</span> <span class="o">=</span> <span class="n">current</span><span class="o">-</span><span class="n">last_pos</span><span class="p">;</span>
+            <span class="n">min_left</span> <span class="o">=</span> <span class="n">last_pos</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">charCounter</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">charCounter</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> 
+            <span class="n">required</span><span class="o">++</span><span class="p">;</span>
+        <span class="n">last_pos</span><span class="o">++</span><span class="p">;</span>        
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">string</span> <span class="n">minWindow</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">s1</span><span class="p">,</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">s2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">checkCounter</span> <span class="n">counter</span><span class="p">;</span>
+    <span class="n">counter</span><span class="p">.</span><span class="n">init</span><span class="p">(</span><span class="n">s2</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span><span class="mi">0</span> <span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">s1</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">counter</span><span class="p">.</span><span class="n">fulfilled</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">s1</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="k">break</span><span class="p">;</span>
+            <span class="n">counter</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="n">counter</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">counter</span><span class="p">.</span><span class="n">min_distance</span> <span class="o">==</span> <span class="n">INT_MAX</span><span class="o">?</span> 
+        <span class="s">""</span> <span class="o">:</span> <span class="n">s1</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">counter</span><span class="p">.</span><span class="n">min_left</span><span class="p">,</span> <span class="n">counter</span><span class="p">.</span><span class="n">min_distance</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="응용-문제">응용 문제</h2>
+<ul>
+  <li>구글 인터뷰 문제</li>
+  <li>똑같다. <code class="highlighter-rouge">string</code>이 <code class="highlighter-rouge">vector&lt;string&gt;</code>으로 바뀐것을 제외하고는</li>
+  <li>처음에는 다익스트라를 생각했는데 문제 유형을 잘 기억하자</li>
+  <li>시간복잡도는 O(n)</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Give a string [] words, 
+Find the shortest string [] containing the keyword inside. 
+example: 
+words: sky cloud google search sky work blue 
+keywords: sky blue 
+return: sky work blue
+</code></pre></div></div>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">checkCounter</span> <span class="p">{</span>
+    <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">charCounter</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">required</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">last_pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">min_distance</span> <span class="o">=</span> <span class="n">INF</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">min_left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="kt">void</span> <span class="nf">init</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">required</span> <span class="o">=</span> <span class="n">vec</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">required</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+            <span class="n">charCounter</span><span class="p">[</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">fulfilled</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">required</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;}</span>
+    <span class="kt">void</span> <span class="n">update</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">str</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">charCounter</span><span class="p">[</span><span class="n">str</span><span class="p">]</span><span class="o">--</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">charCounter</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">&gt;=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">required</span><span class="o">--</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">reset</span><span class="p">(</span><span class="kt">int</span> <span class="n">current</span><span class="p">,</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">str</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">current</span><span class="o">-</span><span class="n">last_pos</span> <span class="o">&lt;</span> <span class="n">min_distance</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">min_distance</span> <span class="o">=</span> <span class="n">current</span><span class="o">-</span><span class="n">last_pos</span><span class="p">;</span>
+            <span class="n">min_left</span> <span class="o">=</span> <span class="n">last_pos</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">charCounter</span><span class="p">[</span><span class="n">str</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">charCounter</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> 
+            <span class="n">required</span><span class="o">++</span><span class="p">;</span>
+        <span class="n">last_pos</span><span class="o">++</span><span class="p">;</span> 
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">string</span> <span class="n">minWindow</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">s1</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">s2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">checkCounter</span> <span class="n">counter</span><span class="p">;</span>
+    <span class="n">counter</span><span class="p">.</span><span class="n">init</span><span class="p">(</span><span class="n">s2</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span><span class="mi">0</span> <span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">s1</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">counter</span><span class="p">.</span><span class="n">fulfilled</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">s1</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="k">break</span><span class="p">;</span>
+            <span class="n">counter</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="n">counter</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">counter</span><span class="p">.</span><span class="n">min_distance</span> <span class="o">==</span> <span class="n">INT_MAX</span><span class="o">?</span> 
+        <span class="s">""</span> <span class="o">:</span> <span class="n">s1</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">counter</span><span class="p">.</span><span class="n">min_left</span><span class="p">,</span> <span class="n">counter</span><span class="p">.</span><span class="n">min_distance</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#Minimum Sliding Window">#Minimum Sliding Window</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>Minimum Turns | c0dingcat</title>
+	<meta name="description" content="Minimum Turns 문제  주어진 글자들은 한글자만 변형이 가능하고 맨 앞으로 옮기는 것만 허용된다  문자열을 변형해서 주어진 문자열이 될떄까지의 최소 턴 수를 구하라  예) 소스: abc, 타켓: cba abc-&gt;bac-&gt;cba  문제가 쉬어 보이지만 어렵다… 한...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/03/06/Minimum-Turns.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="c0dingcat" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/ohhocat.jpg" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">c0dingcat</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Minimum Turns</h1>
+    
+    <p class="meta">
+      March 6, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><h2 id="minimum-turns-문제">Minimum Turns 문제</h2>
+<ul>
+  <li>주어진 글자들은 한글자만 변형이 가능하고 맨 앞으로 옮기는 것만 허용된다</li>
+  <li>문자열을 변형해서 주어진 문자열이 될떄까지의 최소 턴 수를 구하라</li>
+  <li>예) 소스: abc, 타켓: cba abc-&gt;bac-&gt;cba</li>
+  <li>문제가 쉬어 보이지만 어렵다… 한참을 봤는데 잘 모르겠음.</li>
+</ul>
+
+<h2 id="코드">코드</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int minimumTurns(const string&amp; s1, const string&amp; s2) {
+    if(s1.size() != s2.size())
+        return -1;
+    
+    if(s1 == s2)
+        return 0;
+    
+    int index = s2.size() - 1;
+    while(index &gt;=0 &amp;&amp; s1[index] == s2[index])
+        index --;
+    
+    if(s2[index] == s1[0])
+        return index;
+    return index+1;
+}
+</code></pre></div></div>
+
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#Minimum Turns">#Minimum Turns</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

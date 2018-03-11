@@ -99,6 +99,10 @@
 			
 			
 			
+			
+			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -159,25 +163,26 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/04/%EC%86%8C%EB%B0%A9%EC%B0%A8.html">
-            소방차
+          <a class="post-link" href="/2018/03/06/Word-Ladder.html">
+            Word Ladder
           </a>
         </h1>
         <p class="meta">
-          March 4, 2018
+          March 6, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="문제">문제</h2>
+        <h2 id="word-ladder-문제">Word Ladder 문제</h2>
 <ul>
-  <li>서울 시내에 m개의 소방서가 있습니다.</li>
-  <li>화재 장소에서 가장 가까운 소방서에서 소방차를 보낸다고 할 때, 각 화재 장소에 소방차가 도달하기까지 걸리는 시간의 합을 계산하는 프로그램을 작성하세요
-<img src="/assets/img/fire_trucks.png" alt="소방서" /></li>
-  <li>“예제 지도를 봅시다. 사각형으로 표시된 지점들은 소방서를, 음영으로 칠해진 지점들은 불이 난 지점을 나타냅니다. 2번과 5번 장소에서는 6번 소방서가 가장 가깝고, 3번 장소에서는 4번 소방서가 가장 가깝습니다. 이때, 각 장소에 소방차가 도착하기까지 걸리는 시간은 2번 장소에 8분, 5번 장소에 4분, 3번 장소에 4분으로 총 합은 16분이 됩니다.” 예제 설명 발췌 - https://algospot.com/judge/problem/read/FIRETRUCKS</li>
+  <li>전형적인 BFS 문제</li>
+  <li>생각보단 어렵지 않다</li>
+  <li>시작 단어에서 한글자씩 바꿔서 사전에 있는지 확인하고 있으면 탐색 큐에 넣는다</li>
+  <li>다음 루프에서 큐에 집어 넣은 단어들을 전부 꺼내서 다시 BFS 이 때 나온 단어가 끝 단어와 같으면 종료</li>
+  <li>루프를 마치면 거리 + 1</li>
 </ul>
 
 
-        <a class="button" href="/2018/03/04/%EC%86%8C%EB%B0%A9%EC%B0%A8.html">
+        <a class="button" href="/2018/03/06/Word-Ladder.html">
           Continue reading
         </a>
       </div>
@@ -186,28 +191,23 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/04/%EC%84%A0%ED%83%9D%EC%A0%95%EB%A0%AC.html">
-            정렬 알고리즘
+          <a class="post-link" href="/2018/03/06/Smash-Word.html">
+            Smash Word
           </a>
         </h1>
         <p class="meta">
-          March 4, 2018
+          March 6, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="선택정렬-selection-sort">선택정렬 (Selection Sort)</h2>
-<p><img src="/assets/img/Selection-Sort-Animation.gif" alt="선택정렬" /></p>
+        <h2 id="smash-word-문제">Smash Word 문제</h2>
 <ul>
-  <li>앞에서부터 가장 작은 수를 찾아 전체를 순환해서 위치를 교환한다</li>
-  <li>비교횟수: N + N-1 + N-2 … N*(N-1)/2</li>
-  <li>데이터 교환 횟수: N (inplace교환이기 떄문에 요소가 많은 경우에 좋다)</li>
-  <li>추가 공간 필요 없음</li>
-  <li>안정성 없음</li>
-  <li>Worst case: 역순배열</li>
+  <li>To a word, and a map, map which is a word, ask this if a word is smash able? That is, you can smash one letter each time, and the rest of the letters can form a single word (the new word is still in the map) until it is completely hit. 
+For example: sprint -&gt; print -&gt; pint -&gt; pit -&gt; it -&gt; i -&gt; “”</li>
 </ul>
 
 
-        <a class="button" href="/2018/03/04/%EC%84%A0%ED%83%9D%EC%A0%95%EB%A0%AC.html">
+        <a class="button" href="/2018/03/06/Smash-Word.html">
           Continue reading
         </a>
       </div>
@@ -216,26 +216,25 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/04/%EB%B9%84%EB%8C%80%EC%B9%AD-%ED%83%80%EC%9D%BC%EB%A7%81.html">
-            비대칭 타일링
+          <a class="post-link" href="/2018/03/06/Minimum-Turns.html">
+            Minimum Turns
           </a>
         </h1>
         <p class="meta">
-          March 4, 2018
+          March 6, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="문제">문제</h2>
-<p><img src="/assets/img/asymtiling.jpg" alt="비대칭타일링" /></p>
+        <h2 id="minimum-turns-문제">Minimum Turns 문제</h2>
 <ul>
-  <li>타일링 문제 + 대칭 타일링을 제외하는 경우의 수 탐색</li>
-  <li>대칭 타일링 방법을 전체 경우에서 제외 혹은 비대칭 타일링 방법을 직접 카운트</li>
-  <li>n이 짝수인 경우와 홀수인 경우 대칭으로 타일링이 될 수 있는 경우의 수를 제거</li>
-  <li>책 참조</li>
+  <li>주어진 글자들은 한글자만 변형이 가능하고 맨 앞으로 옮기는 것만 허용된다</li>
+  <li>문자열을 변형해서 주어진 문자열이 될떄까지의 최소 턴 수를 구하라</li>
+  <li>예) 소스: abc, 타켓: cba abc-&gt;bac-&gt;cba</li>
+  <li>문제가 쉬어 보이지만 어렵다… 한참을 봤는데 잘 모르겠음.</li>
 </ul>
 
 
-        <a class="button" href="/2018/03/04/%EB%B9%84%EB%8C%80%EC%B9%AD-%ED%83%80%EC%9D%BC%EB%A7%81.html">
+        <a class="button" href="/2018/03/06/Minimum-Turns.html">
           Continue reading
         </a>
       </div>
@@ -244,23 +243,23 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/04/%EB%8F%99%EC%A0%84%EB%B0%94%EA%BE%B8%EA%B8%B0.html">
-            Knapsack problem
+          <a class="post-link" href="/2018/03/06/Minimum-Swap.html">
+            Minimum Swap
           </a>
         </h1>
         <p class="meta">
-          March 4, 2018
+          March 6, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="문제">문제</h2>
+        <h2 id="minimum-swap-문제">Minimum Swap 문제</h2>
 <ul>
-  <li>배낭에 절박도를 최대화할 수 있는 물건들의 목록들을 계산하는 방법
- <img src="/assets/img/knapsack.png" alt="부피 및 절박도" /></li>
+  <li>Word Ladder 문제와 유사</li>
+  <li>Minimum number of swaps of chars in only one string to make two strings the same</li>
 </ul>
 
 
-        <a class="button" href="/2018/03/04/%EB%8F%99%EC%A0%84%EB%B0%94%EA%BE%B8%EA%B8%B0.html">
+        <a class="button" href="/2018/03/06/Minimum-Swap.html">
           Continue reading
         </a>
       </div>
@@ -269,25 +268,23 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/04/%EB%8B%AC%ED%8C%BD%EC%9D%B4-%EC%9A%B0%EB%AC%BC.html">
-            우물을 기어 오르는 달팽이
+          <a class="post-link" href="/2018/03/06/DFS.html">
+            DFS 깊이 우선 탐색
           </a>
         </h1>
         <p class="meta">
-          March 4, 2018
+          March 6, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="문제">문제</h2>
+        <h2 id="dfs">DFS</h2>
 <ul>
-  <li>깊이가 n인 우물이 있고, 우물의 맨 밑바닥에는 달팽이가 있다</li>
-  <li>맑은 날에는 2미터를 기어 올라갈 수 있지만, 비가 내리면 1미터를 올라갈 수 있음</li>
-  <li>비올 확률이 50%일때, m일 안에 달팽이가 우물 끝까지 올라갈 수 있는 확률</li>
-  <li>점화식 climb(n) = f(n+1,2) + f(n+1,1)</li>
+  <li>인접리스트: O(V+E)</li>
+  <li>인접행렬: O(V<sup>2</sup>)</li>
 </ul>
 
 
-        <a class="button" href="/2018/03/04/%EB%8B%AC%ED%8C%BD%EC%9D%B4-%EC%9A%B0%EB%AC%BC.html">
+        <a class="button" href="/2018/03/06/DFS.html">
           Continue reading
         </a>
       </div>

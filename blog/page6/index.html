@@ -99,6 +99,10 @@
 			
 			
 			
+			
+			
+			
+			
 			<!-- Social icons from Font Awesome, if enabled  -->
 			
 
@@ -159,24 +163,23 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/02/%EC%99%80%EC%9D%BC%EB%93%9C%EC%B9%B4%EB%93%9C%EB%A7%A4%EC%B9%AD.html">
-            와일드카드 스트링 매치
+          <a class="post-link" href="/2018/03/04/PreOrder-InOrder%EB%A1%9C-PostOrder-%EC%95%8C%EC%95%84%EB%82%B4%EA%B8%B0.html">
+            트리의 PreOrder, InOrder 순회로 PotOrder 알아내기
           </a>
         </h1>
         <p class="meta">
-          March 2, 2018
+          March 4, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="와일드카드-스트링-매칭">와일드카드 스트링 매칭</h2>
+        <h2 id="문제">문제</h2>
 <ul>
-  <li>흔히쓰는 와일드카드 ?, *을 사용해서 문자열이 해당 패턴에 일치하는지 파악한다</li>
-  <li>예) he?p =&gt; help (O), he?p =&gt; helpp (X), h<em>p =&gt; help (O), h</em>p =&gt; helpp (O)</li>
-  <li>DP를 사용해서 문제를 풀 수 있다</li>
+  <li>주어진 PreOrder, InOrder 순환 값으로 PostOrder 순환 값을 에측하라</li>
+  <li>트리를 주어진 순환 값으로 부터 구성하면서 PostOrder 순환을 한다</li>
 </ul>
 
 
-        <a class="button" href="/2018/03/02/%EC%99%80%EC%9D%BC%EB%93%9C%EC%B9%B4%EB%93%9C%EB%A7%A4%EC%B9%AD.html">
+        <a class="button" href="/2018/03/04/PreOrder-InOrder%EB%A1%9C-PostOrder-%EC%95%8C%EC%95%84%EB%82%B4%EA%B8%B0.html">
           Continue reading
         </a>
       </div>
@@ -185,49 +188,22 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/02/%EC%82%BC%EA%B0%81%ED%98%95%EC%97%90%EC%84%9C%EC%9D%98%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C.html">
-            삼각형에서의 최대 경로
+          <a class="post-link" href="/2018/03/03/%ED%83%80%EC%9D%BC%EB%A7%81.html">
+            타일링 방법의 수 세기
           </a>
         </h1>
         <p class="meta">
-          March 2, 2018
+          March 3, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="삼각형에서의-최대-경로">삼각형에서의 최대 경로</h2>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>6
-1 2
-3 7 4
-9 4 1 7
-2 7 5 9 4
-</code></pre></div></div>
+        <h2 id="출처">출처</h2>
 <ul>
-  <li>맨 위의 숫자에서 시작해서 한 번에 한 칸씩 아래(바로 아래(y+1), 오른쪽 아래(x+1, y+1)로 내려가서 맨 아래줄에 도달하는 경로중 숫자의 합을 최대화 하는 경로는?</li>
-  <li>경로가 여러개가 있기 때문에 메모이제이션이 쉽지 않음</li>
-  <li>f(x,y,sum) = max(f(x+1,y, sum + triangle[y][x]), f(x,y+1, sum + triangle[y][x]))
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  int maxSum(const vector&lt;vector&lt;int&gt;&gt;&amp; input,
-              vector&lt;vector&lt;vector&lt;int&gt;&gt;&gt;&amp; cache,
-              int x,
-              int y, int sum) {
-                  if(y == n-1)
-                      return sum + input[y][x];
-                    
-                  int&amp; val = cache[y][x][sum];
-                  if(val != -1)
-                      return val;
-                    
-                  sum += input[y][x];
-                  return max(
-                      maxSum(input, cache, x+1, y+1, sum),
-                      maxSum(input, cache, x, y+1, sum)
-                  );
-              }
-</code></pre></div>    </div>
-  </li>
+  <li>알고리즘 문제 해결 전략 - 8.11 경우의 수와 확률</li>
 </ul>
 
 
-        <a class="button" href="/2018/03/02/%EC%82%BC%EA%B0%81%ED%98%95%EC%97%90%EC%84%9C%EC%9D%98%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C.html">
+        <a class="button" href="/2018/03/03/%ED%83%80%EC%9D%BC%EB%A7%81.html">
           Continue reading
         </a>
       </div>
@@ -236,28 +212,22 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/01/longest-common-substring.html">
-            최장 공통 부분 문자열 - Longest Common Substring
+          <a class="post-link" href="/2018/03/03/%EC%9B%90%EC%A3%BC%EC%9C%A8%EC%99%B8%EC%9A%B0%EA%B8%B0.html">
+            원주율 외우기
           </a>
         </h1>
         <p class="meta">
-          March 1, 2018
+          March 3, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="설명">설명</h2>
+        <h2 id="출처">출처</h2>
 <ul>
-  <li>Longest Common Subsequence 문제와 거의 유사하지만 약간 다른 문제</li>
-  <li>아까의 로직과 비슷하다, 다만 문자열의 경우는 subsequence가 아니기 때문에 중간에 어긋나면 리셋이 가능하다</li>
-  <li>DP로 풀 수 있는 가장 일반적인 솔루션</li>
-  <li>두 개의 문자열에 대한 테이블을 만든다</li>
-  <li>LCSubstr(X, Y, m, n) = LCSubstr(X, Y, m-1, n-1) + 1 if X[m-1] = Y[n-1] 0  Otherwise (if X[m-1] != Y[n-1])</li>
-  <li>LCSubStr(X, Y, m, n)  = Max(LCSubstr(X, Y, i, j)) where 1 &lt;= i &lt;= m and 1 &lt;= j &lt;= n</li>
-  <li>시간 복잡도는 문자열 A가 N개의 글자로 이루어진 문자열이고 문자열 B가 M개의 글자로 이루어진 문자열이라면, N<em>M 번의 검사를 통해 테이블을 만들어야 하기 때문에 결국 O(N</em>M)</li>
+  <li>알고리즘 문제 해결 전략 - 문제 8.7</li>
 </ul>
 
 
-        <a class="button" href="/2018/03/01/longest-common-substring.html">
+        <a class="button" href="/2018/03/03/%EC%9B%90%EC%A3%BC%EC%9C%A8%EC%99%B8%EC%9A%B0%EA%B8%B0.html">
           Continue reading
         </a>
       </div>
@@ -266,27 +236,22 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/01/longest-common-sequence.html">
-            최장 공통 부분 수열 - Longest Common Subsequence
+          <a class="post-link" href="/2018/03/03/%EC%82%BC%EA%B0%81%ED%98%95-%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C-%EA%B0%9C%EC%88%98%EC%84%B8%EA%B8%B0.html">
+            삼각형 위의 최대 경로 개수 세기
           </a>
         </h1>
         <p class="meta">
-          March 1, 2018
+          March 3, 2018
         </p>
       </header>
       <div class="excerpt">
-        <h2 id="설명">설명</h2>
+        <h2 id="출처">출처</h2>
 <ul>
-  <li>두 문자열이 주어졌을 때, 두 문자열에 모두 포함된 가장 긴 공통 부분 문자열을 찾는 프로그램을 작성하시오.</li>
-  <li>두 문자열 ABRACADABRA와 ECADADABRBCRDARA의 공통 부분 문자열은 CA, CADA, ADABR, 빈 문자열 등이 있다. 이 중에서 가장 긴 공통 부분 문자열은 ADABR이며, 길이는 5이다. 또, 두 문자열이 UPWJCIRUCAXIIRGL와 SBQNYBSBZDFNEV인 경우에는 가장 긴 공통 부분 문자열은 빈 문자열이다.</li>
-  <li>두 개의 문자열에 대한 테이블을 만든다</li>
-  <li>LCS(X<sub>i</sub>, Y<sub>j</sub>) = 0 if x<sub>i</sub> = 0 or y<sub>j</sub> = 0</li>
-  <li>LCS(X<sub>i</sub>, Y<sub>j</sub>) = LCS(X<sub>i-1</sub>, Y<sub>j-1</sub>) +  1 if x<sub>i</sub> = y<sub>j</sub></li>
-  <li>LCS(X<sub>i</sub>, Y<sub>j</sub>) = longest(LCS(X<sub>i-1</sub>, Y<sub>j</sub>),LCS(X<sub>i</sub>, Y<sub>j-1</sub>))  if x<sub>i</sub> != y<sub>j</sub></li>
+  <li>알고리즘 문제 해결 전략 - 8.11 경우의 수와 확률</li>
 </ul>
 
 
-        <a class="button" href="/2018/03/01/longest-common-sequence.html">
+        <a class="button" href="/2018/03/03/%EC%82%BC%EA%B0%81%ED%98%95-%EC%B5%9C%EB%8C%80%EA%B2%BD%EB%A1%9C-%EA%B0%9C%EC%88%98%EC%84%B8%EA%B8%B0.html">
           Continue reading
         </a>
       </div>
@@ -295,26 +260,18 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/2018/03/01/find-max-sum-sequence.html">
-            정수 배열에서 가장 큰 이어지는 원소들의 합을 구하라 - 시간복잡도는 O(n)
+          <a class="post-link" href="/2018/03/03/get-max-even-sum-from-tree.html">
+            Get Max Even Sum From Tree
           </a>
         </h1>
         <p class="meta">
-          March 1, 2018
+          March 3, 2018
         </p>
       </header>
       <div class="excerpt">
-        <ul>
-  <li>출처: 매일프로그래밍 #1</li>
-  <li>Longest increasing subsequence</li>
-  <li>이 문제는 최대 합을 구하기 위해 원소들을 계속 더해 나갈때 음의 원소가 나왔을 때 그 원소를 계속 더하는게 맞는지 아닌지를 판단하는 것이 중요하다</li>
-  <li>아래에서 currentMax는 원소들을 계속 더해 가면서 현재 인덱스에서의 최대 값을 의미한다</li>
-  <li>maxMax 값은 이제까지 나왔던 값들 중에서 최대 값을 의미하다. 즉, 중간에 음수 값이 나왔을때 이 값이 일시적으로 currentMax보다 커질수 있다</li>
-  <li>쉽지만, 헤맬수 있는 문제..</li>
-</ul>
+        
 
-
-        <a class="button" href="/2018/03/01/find-max-sum-sequence.html">
+        <a class="button" href="/2018/03/03/get-max-even-sum-from-tree.html">
           Continue reading
         </a>
       </div>

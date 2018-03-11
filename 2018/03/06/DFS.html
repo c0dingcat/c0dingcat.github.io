@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>DFS 깊이 우선 탐색 | c0dingcat</title>
+	<meta name="description" content="DFS  인접리스트: O(V+E)  인접행렬: O(V2)">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/2018/03/06/DFS.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="c0dingcat" href="/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://blog.championswimmer.in/assets/css/pygments/solarized-light.css">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/assets/img/ohhocat.jpg" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">c0dingcat</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/tags.html">
+					tags
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+    
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">DFS 깊이 우선 탐색</h1>
+    
+    <p class="meta">
+      March 6, 2018
+      
+    </p>
+  </header>
+  <section class="post-content"><h2 id="dfs">DFS</h2>
+<ul>
+  <li>인접리스트: O(V+E)</li>
+  <li>인접행렬: O(V<sup>2</sup>)</li>
+</ul>
+
+<h2 id="코드">코드</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void dfs(int here){
+    cout &lt;&lt; “DFS visits “ &lt;&lt; here &lt;&lt;endl;
+    visited[here] = true;
+    for(int i = 0 ;  i &lt; adj[here].size(); ++i){
+        int there = adj[here][i];
+
+        if( !visited[there]){
+        dfs(there);
+        }
+    }   
+}
+</code></pre></div></div>
+<h2 id="dfs-방식을-사용한-사이클-찾기">DFS 방식을 사용한 사이클 찾기</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>using namespace std;
+
+enum STATUS {
+  NOT_VISITED,
+    VISITING,
+    VISITED
+};
+
+bool hasCycle(map&lt;int,vector&lt;int&gt;&gt;&amp; input,
+             map&lt;int, int&gt;&amp; visited,
+             int here) {
+    if(visited[here] == VISITING){
+        cout &lt;&lt; here &lt;&lt; " confirmed visiting" &lt;&lt; endl;
+        return true;
+    }
+    else if(visited[here] == VISITED)
+        return false;
+    
+    visited[here] = VISITING;
+    cout &lt;&lt; here &lt;&lt; " visiting " &lt;&lt; endl;
+    
+    for(int there : input[here]) {
+        cout &lt;&lt; there &lt;&lt; " checking " &lt;&lt; endl;
+        if(hasCycle(input, visited, there))
+            return true;
+    }
+    visited[here] = VISITED;
+    return false;
+}
+
+void process(const vector&lt;vector&lt;int&gt;&gt;&amp; input, map&lt;int, vector&lt;int&gt;&gt;&amp; output)
+{
+    for(auto entry : input) {
+        int u = entry[0];
+        int v = entry[1];
+            
+        if(!output.count(u)) {
+            vector&lt;int&gt; vec = { v };
+            output.insert(make_pair(u, vec));
+        }
+        else {
+            output[u].push_back(v);
+        }
+    }
+}
+
+int main() {
+    vector&lt;vector&lt;int&gt;&gt; input = {
+        {1,2},
+        {1,3},
+        {2,3},
+        {3,4},
+        {2,4},
+        {3,5},
+        {4,5},
+        {4,6},
+        {5,6},
+    };
+    
+    map&lt;int, vector&lt;int&gt;&gt; source;
+    process(input, source);
+    map&lt;int,int&gt; visited;
+    for(auto kvp : source)
+        visited.insert(make_pair(kvp.first,0));
+
+    bool cycle = hasCycle(source, visited, 1);
+    cout &lt;&lt; "cycle: " &lt;&lt; cycle &lt;&lt; endl;
+}
+</code></pre></div></div>
+
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/tags#알고리즘">#알고리즘</a>
+    
+    <a class="tag" href="/tags#그래프">#그래프</a>
+    
+    <a class="tag" href="/tags#DFS">#DFS</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>
