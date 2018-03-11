@@ -182,6 +182,17 @@
       }
       ,
     
+      "2018-03-08-subarray-ec-9a-94-ec-86-8c-ec-9d-98-ed-95-a9-html": {
+        "title": "Subarray 요소의 합이 특정 숫자의 배수가 되는지를 확인",
+        "tags": "알고리즘, 문자열, Google Interview",
+        "date": "March 8, 2018",
+        "author": "",
+        "category": "",
+        "content": "문자열 안에서 중복 문자열 찾기  Given a list of non-negative numbers and a target integer k,  write a function to check if the array has a continuous subarray of size at least 2 that sums up to the multiple of k, that is, sums up to n*k where n is also an integer. **/bool checkSumOfSubArray(const vector&lt;int&gt;&amp; input, int k) {    for(int i = 1; i &lt; input.size(); i++)        input[i] += input[i-1];        for(int hi = input.size() -1 ; hi &gt;=0 ; hi--) {        for(int lo = -1 ; lo &lt; hi ; lo++){            int low_value = (lo == -1)? 0 : input[lo];            if((input[hi] - low_value)%k == 0)                return true;        }    }    return false;}",
+        "url": "//2018/03/08/SubArray-%EC%9A%94%EC%86%8C%EC%9D%98%ED%95%A9.html"
+      }
+      ,
+    
       "2018-03-07-period-string-html": {
         "title": "Minimum Sliding Window",
         "tags": "알고리즘, Minimum Sliding Window",
@@ -232,7 +243,7 @@
         "date": "March 6, 2018",
         "author": "",
         "category": "",
-        "content": "Word Ladder 문제  전형적인 BFS 문제  생각보단 어렵지 않다  시작 단어에서 한글자씩 바꿔서 사전에 있는지 확인하고 있으면 탐색 큐에 넣는다  다음 루프에서 큐에 집어 넣은 단어들을 전부 꺼내서 다시 BFS 이 때 나온 단어가 끝 단어와 같으면 종료  루프를 마치면 거리 + 1Well, this problem has a nice BFS structure.Let’s see the example in the problem statement.start = \"hit\"end = \"cog\"dict = [\"hot\", \"dot\", \"dog\", \"lot\", \"log\"]Since only one letter can be changed at a time, if we start from \"hit\", we can only change to those words which have only one different letter from it, like \"hot\". Putting in graph-theoretic terms, we can say that \"hot\" is a neighbor of \"hit\".The idea is simpy to begin from start, then visit its neighbors, then the non-visited neighbors of its neighbors… Well, this is just the typical BFS structure.To simplify the problem, we insert end into dict. Once we meet end during the BFS, we know we have found the answer. We maintain a variable dist for the current distance of the transformation and update it by dist++ after we finish a round of BFS search (note that it should fit the definition of the distance in the problem statement). Also, to avoid visiting a word for more than once, we erase it from dict once it is visited.코드int ladderLength(string beginWord, string endWord, unordered_set&lt;string&gt;&amp; wordDict) {    wordDict.insert(endWord);    queue&lt;string&gt; toVisit;    addNextWords(beginWord, wordDict, toVisit);    int dist = 2;    while (!toVisit.empty()) {        int num = toVisit.size();        for (int i = 0; i &lt; num; i++) {            string word = toVisit.front();            toVisit.pop();            if (word == endWord) return dist;            addNextWords(word, wordDict, toVisit);        }        dist++;    }    return -1;}void addNextWords(string word, unordered_set&lt;string&gt;&amp; wordDict, queue&lt;string&gt;&amp; toVisit) {    wordDict.erase(word);    for (int p = 0; p &lt; (int)word.length(); p++) {        char letter = word[p];        for (int k = 0; k &lt; 26; k++) {             word[p] = 'a' + k;            if (wordDict.find(word) != wordDict.end()) {                toVisit.push(word);                wordDict.erase(word);            }        }        word[p] = letter;    } } ",
+        "content": "Word Ladder 문제  전형적인 BFS 문제  생각보단 어렵지 않다  시작 단어에서 한글자씩 바꿔서 사전에 있는지 확인하고 있으면 탐색 큐에 넣는다  다음 루프에서 큐에 집어 넣은 단어들을 전부 꺼내서 다시 BFS 이 때 나온 단어가 끝 단어와 같으면 종료  루프를 마치면 거리 + 1          start = “hit”      end = “cog”      dict = [“hot”, “dot”, “dog”, “lot”, “log”]      코드int ladderLength(string beginWord, string endWord, unordered_set&lt;string&gt;&amp; wordDict) {    wordDict.insert(endWord);    queue&lt;string&gt; toVisit;    addNextWords(beginWord, wordDict, toVisit);    int dist = 2;    while (!toVisit.empty()) {        int num = toVisit.size();        for (int i = 0; i &lt; num; i++) {            string word = toVisit.front();            toVisit.pop();            if (word == endWord) return dist;            addNextWords(word, wordDict, toVisit);        }        dist++;    }    return -1;}void addNextWords(string word, unordered_set&lt;string&gt;&amp; wordDict, queue&lt;string&gt;&amp; toVisit) {    wordDict.erase(word);    for (int p = 0; p &lt; (int)word.length(); p++) {        char letter = word[p];        for (int k = 0; k &lt; 26; k++) {             word[p] = 'a' + k;            if (wordDict.find(word) != wordDict.end()) {                toVisit.push(word);                wordDict.erase(word);            }        }        word[p] = letter;    } } ",
         "url": "//2018/03/06/Word-Ladder.html"
       }
       ,
@@ -287,7 +298,7 @@
         "date": "March 5, 2018",
         "author": "",
         "category": "",
-        "content": "2개의 정렬된 Array에서 교차점 찾기  그냥 무식하게 찾으면 O(m*n)  아래 방식으로 하면 최대 O(m+n)vector&lt;int&gt; findIntersection(vector&lt;int&gt; A, vector&lt;int&gt; B) {  vector&lt;int&gt; intersection;  int n1 = A.size();  int n2 = B.size();  int i = 0, j = 0;  while (i &lt; n1 &amp;&amp; j &lt; n2) {    if (A[i] &gt; B[j]) {      j++;    } else if (B[j] &gt; A[i]) {      i++;    } else {      intersection.push_back(A[i]);      i++;      j++;    }  }  return intersection;}",
+        "content": "2개의 정렬된 Array에서 교차점 찾기  그냥 무식하게 찾으면 O(m*n)  아래 방식으로 하면 최대 O(m+n)  하나씩 요소들을 검사해서 A[i] &gt; B[j] , B[j] &gt; A[i]할 때마다 인덱스 변경, 서로 값이 같을때까지 찾기  각 배열 안에 있는 요소들의 크기를 비교해서 어느쪽의 인덱스를 증가시켜줄지를 결정한다vector&lt;int&gt; findIntersection(vector&lt;int&gt; A, vector&lt;int&gt; B) {  vector&lt;int&gt; intersection;  int n1 = A.size();  int n2 = B.size();  int i = 0, j = 0;  while (i &lt; n1 &amp;&amp; j &lt; n2) {    if (A[i] &gt; B[j]) {      j++;    } else if (B[j] &gt; A[i]) {      i++;    } else {      intersection.push_back(A[i]);      i++;      j++;    }  }  return intersection;}",
         "url": "//2018/03/05/find-intersection.html"
       }
       ,

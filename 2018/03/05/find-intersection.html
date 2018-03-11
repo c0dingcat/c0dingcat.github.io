@@ -3,7 +3,7 @@
   <head>
 	<meta charset="utf-8">
 	<title>2개의 정렬된 Array에서 교차점 찾기 | c0dingcat</title>
-	<meta name="description" content="2개의 정렬된 Array에서 교차점 찾기  그냥 무식하게 찾으면 O(m*n)  아래 방식으로 하면 최대 O(m+n)">
+	<meta name="description" content="2개의 정렬된 Array에서 교차점 찾기  그냥 무식하게 찾으면 O(m*n)  아래 방식으로 하면 최대 O(m+n)  하나씩 요소들을 검사해서 A[i] &gt; B[j] , B[j] &gt; A[i]할 때마다 인덱스 변경, 서로 값이 같을때까지 찾기  각 배열 안에 있는 요소들의 ...">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -168,26 +168,28 @@
 <ul>
   <li>그냥 무식하게 찾으면 O(m*n)</li>
   <li>아래 방식으로 하면 최대 O(m+n)</li>
+  <li>하나씩 요소들을 검사해서 A[i] &gt; B[j] , B[j] &gt; A[i]할 때마다 인덱스 변경, 서로 값이 같을때까지 찾기</li>
+  <li>각 배열 안에 있는 요소들의 크기를 비교해서 어느쪽의 인덱스를 증가시켜줄지를 결정한다</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector&lt;int&gt; findIntersection(vector&lt;int&gt; A, vector&lt;int&gt; B) {
-  vector&lt;int&gt; intersection;
-  int n1 = A.size();
-  int n2 = B.size();
-  int i = 0, j = 0;
-  while (i &lt; n1 &amp;&amp; j &lt; n2) {
-    if (A[i] &gt; B[j]) {
-      j++;
-    } else if (B[j] &gt; A[i]) {
-      i++;
-    } else {
-      intersection.push_back(A[i]);
-      i++;
-      j++;
-    }
-  }
-  return intersection;
-}
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">findIntersection</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">B</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">intersection</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">n1</span> <span class="o">=</span> <span class="n">A</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+  <span class="kt">int</span> <span class="n">n2</span> <span class="o">=</span> <span class="n">B</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">n1</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span>
+      <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+      <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">intersection</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+      <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+      <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">intersection</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div></div>
 </section>
   
