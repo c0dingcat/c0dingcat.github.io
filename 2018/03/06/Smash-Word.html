@@ -3,7 +3,7 @@
   <head>
 	<meta charset="utf-8">
 	<title>Smash Word | c0dingcat</title>
-	<meta name="description" content="Smash Word 문제  To a word, and a map, map which is a word, ask this if a word is smash able? That is, you can smash one letter each time, and the rest of the ...">
+	<meta name="description" content="Smash Word 문제  To a word, and a map, map which is a word, ask this if a word is smash able?  That is, you can smash one letter each time, and the rest of the...">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -166,31 +166,33 @@
   </header>
   <section class="post-content"><h2 id="smash-word-문제">Smash Word 문제</h2>
 <ul>
-  <li>To a word, and a map, map which is a word, ask this if a word is smash able? That is, you can smash one letter each time, and the rest of the letters can form a single word (the new word is still in the map) until it is completely hit. 
-For example: sprint -&gt; print -&gt; pint -&gt; pit -&gt; it -&gt; i -&gt; “”</li>
+  <li>To a word, and a map, map which is a word, ask this if a word is smash able?</li>
+  <li>That is, you can smash one letter each time, and the rest of the letters can form a single word</li>
+  <li>the new word is still in the map) until it is completely hit.</li>
+  <li>For example: sprint -&gt; print -&gt; pint -&gt; pit -&gt; it -&gt; i -&gt; “”</li>
 </ul>
 
 <h2 id="코드">코드</h2>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bool smash_word(string&amp; current, stack&lt;string&gt;&amp; wordStack, const map&lt;string, int&gt;&amp; dic) {
-    int length = current.size();
-    if(length == 0) {
-        cout &lt;&lt; current &lt;&lt; endl;
-        return true;
-    }
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bool</span> <span class="nf">smash_word</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">current</span><span class="p">,</span> <span class="n">stack</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">wordStack</span><span class="p">,</span> <span class="k">const</span> <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">dic</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">current</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">current</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    for(int i = 0 ; i &lt; length; i++ ) {
-        string word = current.erase(i);
-        if(word == "" || dic.count(word)!=0) {
-            wordStack.push(word);
-            if(smash_word(word, wordStack, dic)) {
-                return true;
-            }
-            else
-                wordStack.pop();
-        }
-    }
-    return false;
-}
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="n">string</span> <span class="n">word</span> <span class="o">=</span> <span class="n">current</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">word</span> <span class="o">==</span> <span class="s">""</span> <span class="o">||</span> <span class="n">dic</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">wordStack</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">smash_word</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">wordStack</span><span class="p">,</span> <span class="n">dic</span><span class="p">))</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span>
+                <span class="n">wordStack</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 </section>
@@ -200,9 +202,7 @@ For example: sprint -&gt; print -&gt; pint -&gt; pit -&gt; it -&gt; i -&gt; “�
     
     <a class="tag" href="/tags#알고리즘">#알고리즘</a>
     
-    <a class="tag" href="/tags#그래프">#그래프</a>
-    
-    <a class="tag" href="/tags#DFS">#DFS</a>
+    <a class="tag" href="/tags#문자열">#문자열</a>
     
   </div>
 </footer>

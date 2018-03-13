@@ -174,40 +174,43 @@
   <li>이전의 문제는 최대 경로의 합을 구했을뿐, 경로 자체는 구하지 않았다</li>
   <li>최대 경로는 유일하지 않을 수도 있다</li>
   <li>문제를 해결하기 위해 두 개의 다른 동적 계획법 문제를 해결</li>
-  <li>합을 먼저 구하고, 그 합을 구하는 도중에 만든 캐싱을 통해 패스를 구현</li>
+  <li>합을 먼저 구하고, 그 합을 구하는 도중에 만든 메모이제이션을 통해 패스를 구현
+<img src="/assets/img/path.png" alt="패스" /></li>
+  <li>위 형태와 같이 삼각형 모양으로 배치된 자연수들이 있습니다. 맨 위의 숫자에서 시작해, 한 번에 한 칸씩 아래로 내려가 맨 아래 줄로 내려가는 경로를 만들려고 합니다. 경로는 아래 줄로 내려갈 때마다 바로 아래 숫자, 혹은 오른쪽 아래 숫자로 내려갈 수 있습니다. 이 때 모든 경로 중 포함된 숫자의 최대 합을 찾는 프로그램을 작성하세요.</li>
+  <li>https://algospot.com/judge/problem/read/TRIANGLEPATH</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct triangle {
-    vector&lt;vector&lt;int&gt;&gt; input;
-    vector&lt;vector&lt;int&gt;&gt; cache;
-    vector&lt;vector&lt;int&gt;&gt; countCache;
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">triangle</span> <span class="p">{</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">input</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">cache</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">countCache</span><span class="p">;</span>
     
-    int path(int y, int x) {
-        if(y == input.size() -1)
-            return input[y][x];
+    <span class="kt">int</span> <span class="nf">path</span><span class="p">(</span><span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">input</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">input</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">];</span>
         
-        int&amp; ret = cache[y][x];
-        if(ret != -1)
-            return ret;
+        <span class="kt">int</span><span class="o">&amp;</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
         
-        return ret = max(path(y+1,x), path(y+1,x+1))+input[y][x];
-    }
+        <span class="k">return</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">path</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="p">),</span> <span class="n">path</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">+</span><span class="n">input</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">];</span>
+    <span class="p">}</span>
     
-    int count(int y, int x) {
-        if(y==input.size()-1)
-            return 1;
+    <span class="kt">int</span> <span class="nf">count</span><span class="p">(</span><span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">y</span><span class="o">==</span><span class="n">input</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
         
-        int &amp; ret = countCache[y][x];
-        if(ret!=-1)
-            return ret;
+        <span class="kt">int</span> <span class="o">&amp;</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">countCache</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">ret</span><span class="o">!=-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
         
-        if(path(y+1,x+1)&gt;=path(y+1,x))
-            ret += path(y+1,x+1);
-        if(path(y+1,x+1)&lt;=path(y+1,x))
-            ret += path(y+1,x);
-        return ret;
-    }
-}
+        <span class="k">if</span><span class="p">(</span><span class="n">path</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">&gt;=</span><span class="n">path</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="n">path</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+        <span class="k">else</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="n">path</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 </section>
   

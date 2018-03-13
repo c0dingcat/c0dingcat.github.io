@@ -175,38 +175,39 @@
 <ul>
   <li>문자열와 패턴을 각각 W, S라고 하자.</li>
   <li>만약 현재 위치 w,s에 대해 W[w] != S[s]이면 해당 없음</li>
-  <li>W[w] == S[s] 이거나 W[w] == ‘?’이면 매칭이고, 다음 글자 를 계속 조사</li>
-  <li>매칭하지 않아도 W[w] == ‘*‘이면 이후의 글자들을 전부 조사해서 매칭이 되는지의 여부를 파악한다</li>
+  <li>W[w] == S[s] 이거나 W[w] == <code class="highlighter-rouge">?</code>이면 매칭이고, 다음 글자 를 계속 조사</li>
+  <li>매칭하지 않아도 W[w] == <code class="highlighter-rouge">*</code>이면 이후의 글자들을 전부 조사해서 매칭이 되는지의 여부를 파악한다</li>
   <li>W의 w+1과 S의 s+1 이후의 값들을 확인해서 하나라도 참이면 답은 참이 된다</li>
   <li>시간복잡도는 O(n<sup>2</sup>)</li>
 </ul>
 
-<h2 id="점화식">점화식</h2>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    bool matchWords(vector&lt;vector&lt;int&gt;&gt;&amp; cache, 
-        const string&amp; W,
-        int w, 
-        const string&amp; S,
-        int s) {
+<h2 id="코드">코드</h2>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">bool</span> <span class="nf">matchWords</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">cache</span><span class="p">,</span> 
+        <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">W</span><span class="p">,</span>
+        <span class="kt">int</span> <span class="n">w</span><span class="p">,</span> 
+        <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">S</span><span class="p">,</span>
+        <span class="kt">int</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
 
-            int&amp; ret = cache[w][s];
-            if(ret != -1)
-                return ret;
+            <span class="kt">int</span><span class="o">&amp;</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="n">s</span><span class="p">];</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
             
-            while(s &lt; S.size() &amp;&amp; w &lt; W.size() &amp;&amp;
-                    (W[w] == '?' || W[w] == S[s]) {
-                        ++w;
-                        ++s;
-                    }
+            <span class="k">while</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;</span> <span class="n">S</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">w</span> <span class="o">&lt;</span> <span class="n">W</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span>
+                    <span class="p">(</span><span class="n">W</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'?'</span> <span class="o">||</span> <span class="n">W</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">==</span> <span class="n">S</span><span class="p">[</span><span class="n">s</span><span class="p">])</span> <span class="p">{</span>
+                        <span class="o">++</span><span class="n">w</span><span class="p">;</span>
+                        <span class="o">++</span><span class="n">s</span><span class="p">;</span>
+                    <span class="p">}</span>
             
-            if(w==W.size()) return ret = (s==S.size());
-            if(W[w] == '*') {
-                if(matchWords(cache, W, w+1, S, s) ||
-                    (s &lt; S.size() &amp;&amp; matchWords(cache, W, w, S, s+1))
-                    return ret = 1;
-            }
+            <span class="k">if</span><span class="p">(</span><span class="n">w</span><span class="o">==</span><span class="n">W</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="k">return</span> <span class="n">ret</span> <span class="o">=</span> <span class="p">(</span><span class="n">s</span><span class="o">==</span><span class="n">S</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">W</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'*'</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">matchWords</span><span class="p">(</span><span class="n">cache</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">w</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="o">||</span>
+                    <span class="p">(</span><span class="n">s</span> <span class="o">&lt;</span> <span class="n">S</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> 
+                        <span class="o">&amp;&amp;</span> <span class="n">matchWords</span><span class="p">(</span><span class="n">cache</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">s</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+                    <span class="k">return</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
 
-            return ret = 0;
-        }
+            <span class="k">return</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
 </code></pre></div></div>
 </section>
   
@@ -218,6 +219,8 @@
     <a class="tag" href="/tags#DP">#DP</a>
     
     <a class="tag" href="/tags#와일드카드">#와일드카드</a>
+    
+    <a class="tag" href="/tags#문자열매칭">#문자열매칭</a>
     
   </div>
 </footer>

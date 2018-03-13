@@ -3,7 +3,7 @@
   <head>
 	<meta charset="utf-8">
 	<title>Minimum Swap | c0dingcat</title>
-	<meta name="description" content="Minimum Swap 문제  Word Ladder 문제와 유사  Minimum number of swaps of chars in only one string to make two strings the same">
+	<meta name="description" content="Minimum Swap 문제  Word Ladder 문제와 유사  Minimum number of swaps of chars in only one string to make two strings the same  https://www.careercup.com/question?id=...">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -168,42 +168,41 @@
 <ul>
   <li>Word Ladder 문제와 유사</li>
   <li>Minimum number of swaps of chars in only one string to make two strings the same</li>
+  <li>https://www.careercup.com/question?id=4725199160213504</li>
 </ul>
 
 <h2 id="코드">코드</h2>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct node {
-    string str;
-    int steps;
-    node(string s, int st):str(s), steps(st){}
-};
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">node</span> <span class="p">{</span>
+    <span class="n">string</span> <span class="n">str</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">steps</span><span class="p">;</span>
+    <span class="n">node</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">st</span><span class="p">)</span><span class="o">:</span><span class="n">str</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">steps</span><span class="p">(</span><span class="n">st</span><span class="p">){}</span>
+<span class="p">};</span>
 
-int numberOfSteps(string&amp; s1, const string&amp; s2) {
-    map&lt;string,int&gt; visited;
-    int steps = 0 ;
-    queue&lt;node&gt; que;
-    que.push(node(s1,0));
+<span class="kt">int</span> <span class="nf">numberOfSteps</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">s1</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">s2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">visited</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">steps</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span>
+    <span class="n">queue</span><span class="o">&lt;</span><span class="n">node</span><span class="o">&gt;</span> <span class="n">que</span><span class="p">;</span>
+    <span class="n">que</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">node</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span>
     
-    while(!que.empty()) {
-        node n = que.front(); 
-        que.pop();
-        if(n.str == s2)
-            return n.steps;
+    <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">que</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">node</span> <span class="n">n</span> <span class="o">=</span> <span class="n">que</span><span class="p">.</span><span class="n">front</span><span class="p">();</span> 
+        <span class="n">que</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">n</span><span class="p">.</span><span class="n">str</span> <span class="o">==</span> <span class="n">s2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">n</span><span class="p">.</span><span class="n">steps</span><span class="p">;</span>
         
-        for(int i = 0; i &lt; n.str.size(); i++){
-            for(int j = i+1; j &lt; n.str.size(); j++) {
-                string derived = n.str;
-                if(derived[i] != derived[j]) {
-                    swap(derived[i], derived[j]);
-                    if(!visited.count(derived)) {
-                        que.push(node(derived, n.steps+1));
-                        visited.insert(make_pair(derived,1));
-                    }
-                }
-            }
-        }
-    }
-    return -1;
-}
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">.</span><span class="n">str</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">.</span><span class="n">str</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">string</span> <span class="n">derived</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="n">str</span><span class="p">;</span>
+                <span class="n">swap</span><span class="p">(</span><span class="n">derived</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">derived</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+                <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">visited</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">derived</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="n">que</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">node</span><span class="p">(</span><span class="n">derived</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">steps</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span>
+                    <span class="n">visited</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">make_pair</span><span class="p">(</span><span class="n">derived</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 </section>

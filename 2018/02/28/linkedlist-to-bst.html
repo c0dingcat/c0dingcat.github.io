@@ -170,25 +170,25 @@
   <li>오른쪽 노드의 값은 n/2에서 n까지의 중간값을 구해서 설정하는 방식으로 재귀적으로 호출해서 BST를 완성한다.</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tnode* llist_to_bst(lnode* head, lnode* tail) {
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tnode</span><span class="o">*</span> <span class="nf">llist_to_bst</span><span class="p">(</span><span class="n">lnode</span><span class="o">*</span> <span class="n">head</span><span class="p">,</span> <span class="n">lnode</span><span class="o">*</span> <span class="n">tail</span><span class="p">)</span> <span class="p">{</span>
     
-    if(head == nullptr)
-        return nullptr;
+    <span class="k">if</span><span class="p">(</span><span class="n">head</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">nullptr</span><span class="p">;</span>
     
-    lnode* fast_ptr = head;
-    lnode* slow_ptr = slow;
-    while(fast_ptr != nullptr &amp;&amp; fast_ptr != tail) {
-        fast_ptr = fast_ptr-&gt;next;
-        slow_ptr = slow_ptr-&gt;next;
-        if(fast_ptr!= nullptr &amp;&amp; fast_ptr != tail)
-            fast_ptr = fast_ptr-&gt;next;
-    }
+    <span class="n">lnode</span><span class="o">*</span> <span class="n">fast_ptr</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+    <span class="n">lnode</span><span class="o">*</span> <span class="n">slow_ptr</span> <span class="o">=</span> <span class="n">slow</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">fast_ptr</span> <span class="o">!=</span> <span class="n">nullptr</span> <span class="o">&amp;&amp;</span> <span class="n">fast_ptr</span> <span class="o">!=</span> <span class="n">tail</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">fast_ptr</span> <span class="o">=</span> <span class="n">fast_ptr</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+        <span class="n">slow_ptr</span> <span class="o">=</span> <span class="n">slow_ptr</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">fast_ptr</span><span class="o">!=</span> <span class="n">nullptr</span> <span class="o">&amp;&amp;</span> <span class="n">fast_ptr</span> <span class="o">!=</span> <span class="n">tail</span><span class="p">)</span>
+            <span class="n">fast_ptr</span> <span class="o">=</span> <span class="n">fast_ptr</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
     
-    tnode * ptr = new tnode(slow_ptr-&gt;value);
-    ptr-&gt;left = llist_to_bst(head, slow_ptr);
-    ptr-&gt;right = llist_to_bst(slow_ptr-&gt;next, tail);
-    return ptr;
-}
+    <span class="n">tnode</span> <span class="o">*</span> <span class="n">ptr</span> <span class="o">=</span> <span class="n">new</span> <span class="n">tnode</span><span class="p">(</span><span class="n">slow_ptr</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">);</span>
+    <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="n">llist_to_bst</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">slow_ptr</span><span class="p">);</span>
+    <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="n">llist_to_bst</span><span class="p">(</span><span class="n">slow_ptr</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">,</span> <span class="n">tail</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">ptr</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div></div>
 </section>
   

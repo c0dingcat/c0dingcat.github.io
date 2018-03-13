@@ -185,22 +185,24 @@
 </ul>
 
 <h2 id="코드">코드</h2>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bool jump(vector&lt;vector&lt;int&gt;&gt;&amp; map, vector&lt;vector&lt;int&gt;&gt;&amp; cache, int x, int y) {
-    int width = map[0].size();
-    int height = map.size();
-    if (x &gt;= width || y &gt;= height )
-        return false;
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bool</span> <span class="nf">jump</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">map</span><span class="p">,</span> 
+            <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">cache</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="n">map</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">map</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">width</span> <span class="o">||</span> <span class="n">y</span> <span class="o">&gt;=</span> <span class="n">height</span> <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
     
-    if(x==width=1 &amp;&amp; y == height-1)
-        return true;
+    <span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="o">==</span><span class="n">width</span><span class="o">=</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">y</span> <span class="o">==</span> <span class="n">height</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
 
-    int&amp; val = cache[y][x];
-    if(val != -1)
-        return (val==1);
+    <span class="kt">int</span><span class="o">&amp;</span> <span class="n">val</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">];</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">val</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">val</span><span class="o">==</span><span class="mi">1</span><span class="p">);</span>
     
-    int jumpSize = map[y][x];
-    return val = (jump(map, cache, x+jumpSize, y) || jump(map,cache, x, y+jumpSize));
-}
+    <span class="kt">int</span> <span class="n">jumpSize</span> <span class="o">=</span> <span class="n">map</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">];</span>
+    <span class="k">return</span> <span class="n">val</span> <span class="o">=</span> <span class="p">(</span><span class="n">jump</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="n">cache</span><span class="p">,</span> <span class="n">x</span><span class="o">+</span><span class="n">jumpSize</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> 
+                    <span class="o">||</span> <span class="n">jump</span><span class="p">(</span><span class="n">map</span><span class="p">,</span><span class="n">cache</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">+</span><span class="n">jumpSize</span><span class="p">));</span>
+<span class="p">}</span>
 </code></pre></div></div>
 </section>
   
